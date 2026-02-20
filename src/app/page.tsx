@@ -77,150 +77,149 @@ const JUDGE_NOTES = [
 
 export default function LandingPage() {
   return (
-    <div className="mx-auto max-w-6xl space-y-8 pb-4 sm:space-y-10">
-      <section className="coverflow-frame">
-        <div className="coverflow-grid px-4 sm:px-6">
-          <article className="coverflow-panel">
-            <div className="coverflow-panel-inner">
-              <div className="flex flex-wrap items-center gap-2">
-                <span className="badge-neutral">Lingo.dev toolkit</span>
-                <span className="badge-neutral">Next.js 16 App Router</span>
-                <span className="badge-neutral">Release-ready flow</span>
-              </div>
-
-              <h1 className="coverflow-headline text-zinc-950">Build. Switch. Translate.</h1>
-
-              <p className="coverflow-copy">
-                LangOS is a guided localization demo with real runtime translation,
-                locale switching, and release checks. No guesswork for judges or junior
-                engineers.
-              </p>
-
-              <div className="mt-7 flex flex-wrap gap-3">
-                <Link className="button-primary" href="/dashboard">
-                  Open Dashboard
-                </Link>
-                <Link className="button-secondary" href="/guide">
-                  Open Step-by-Step Guide
-                </Link>
-              </div>
-
-              <dl className="coverflow-stats">
-                <div className="p-4">
-                  <dt className="coverflow-eyebrow">Locales</dt>
-                  <dd className="mt-1 text-2xl font-semibold tracking-tight text-zinc-950">
-                    en, es, de, ar
-                  </dd>
-                </div>
-                <div className="p-4">
-                  <dt className="coverflow-eyebrow">Mode</dt>
-                  <dd className="mt-1 text-2xl font-semibold tracking-tight text-zinc-950">
-                    Build + Runtime
-                  </dd>
-                </div>
-                <div className="p-4">
-                  <dt className="coverflow-eyebrow">Outcome</dt>
-                  <dd className="mt-1 text-2xl font-semibold tracking-tight text-zinc-950">
-                    Ship readiness
-                  </dd>
-                </div>
-              </dl>
+    <div className="landing-stack w-full">
+      <section className="vercel-block">
+        <div className="vercel-split">
+          <div className="vercel-pane">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="badge-neutral">Lingo.dev toolkit</span>
+              <span className="badge-neutral">Next.js 16 App Router</span>
+              <span className="badge-neutral">Release-ready flow</span>
             </div>
-          </article>
 
-          <aside className="coverflow-panel">
-            <div className="coverflow-panel-inner">
-              <p className="coverflow-eyebrow">Live flow</p>
-              <h2 className="mt-2 text-3xl font-semibold tracking-tight text-zinc-950">
-                End-to-end localization path
-              </h2>
-              <p className="coverflow-copy">
-                This is the exact click path to demo in under three minutes.
-              </p>
+            <h1 className="mt-6 max-w-3xl text-5xl font-semibold tracking-tight text-zinc-950 sm:text-7xl sm:leading-[0.98]">
+              Build. Switch. Translate.
+            </h1>
 
-              <div className="coverflow-step-list">
-                {HERO_FLOW.map((item, index) => (
-                  <div className="coverflow-step" key={item.label}>
-                    <p className="coverflow-eyebrow">Step {index + 1}</p>
-                    <p className="mt-1 text-base font-semibold text-zinc-900">{item.label}</p>
-                    <p className="mt-2 text-sm text-zinc-600">{item.detail}</p>
-                  </div>
-                ))}
+            <p className="mt-5 max-w-2xl text-base text-zinc-600">
+              LangOS is a guided localization demo with real runtime translation,
+              locale switching, and release checks. No guesswork for judges or junior
+              engineers.
+            </p>
+
+            <div className="mt-7 flex flex-wrap gap-3">
+              <Link className="button-primary" href="/dashboard">
+                Open Dashboard
+              </Link>
+              <Link className="button-secondary" href="/guide">
+                Open Step-by-Step Guide
+              </Link>
+            </div>
+
+            <dl className="vercel-stats mt-8">
+              <div className="p-4">
+                <dt className="coverflow-eyebrow">Locales</dt>
+                <dd className="mt-1 text-5xl font-semibold tracking-tight text-zinc-950 sm:text-6xl">
+                  4
+                </dd>
+                <p className="text-sm text-zinc-600">en, es, de, ar</p>
               </div>
+              <div className="p-4">
+                <dt className="coverflow-eyebrow">Mode</dt>
+                <dd className="mt-1 text-3xl font-semibold tracking-tight text-zinc-950">
+                  Build + Runtime
+                </dd>
+              </div>
+              <div className="p-4">
+                <dt className="coverflow-eyebrow">Outcome</dt>
+                <dd className="mt-1 text-3xl font-semibold tracking-tight text-zinc-950">
+                  Ship readiness
+                </dd>
+              </div>
+            </dl>
+          </div>
+
+          <aside className="vercel-pane vercel-pane-divider">
+            <p className="coverflow-eyebrow">Live flow</p>
+            <h2 className="mt-2 text-4xl font-semibold tracking-tight text-zinc-950">
+              End-to-end localization path
+            </h2>
+            <p className="mt-3 max-w-md text-base text-zinc-600">
+              This is the exact click path to demo in under three minutes.
+            </p>
+
+            <div className="vercel-step-list">
+              {HERO_FLOW.map((item, index) => (
+                <div className="vercel-step" key={item.label}>
+                  <p className="coverflow-eyebrow">Step {index + 1}</p>
+                  <p className="mt-1 text-xl font-semibold tracking-tight text-zinc-900">
+                    {item.label}
+                  </p>
+                  <p className="mt-2 text-base text-zinc-600">{item.detail}</p>
+                </div>
+              ))}
             </div>
           </aside>
         </div>
       </section>
 
-      <section className="coverflow-frame">
-        <div className="px-4 sm:px-6">
-          <div className="mb-4 flex items-center justify-between gap-3">
-            <h2 className="text-3xl font-semibold tracking-tight text-zinc-950">What you can demo</h2>
-            <span className="coverflow-eyebrow">6 feature blocks</span>
-          </div>
+      <section className="vercel-block">
+        <div className="vercel-block-header">
+          <h2 className="text-5xl font-semibold tracking-tight text-zinc-950 sm:text-6xl">
+            What you can demo
+          </h2>
+          <span className="coverflow-eyebrow">6 feature blocks</span>
+        </div>
 
-          <div className="coverflow-feature-grid">
-            {DEMO_AREAS.map((area, index) => (
-              <article className="coverflow-feature" key={area.title}>
-                <span className="coverflow-feature-glyph" aria-hidden="true">
-                  {area.glyph}
-                </span>
-                <p className="coverflow-eyebrow">Block {index + 1}</p>
-                <h3 className="mt-2 text-xl font-semibold tracking-tight text-zinc-900">
-                  {area.title}
-                </h3>
-                <p className="mt-2 max-w-[42ch] text-sm leading-6 text-zinc-600">
-                  {area.description}
-                </p>
-                <p className="mt-4 text-xs text-zinc-500">Where: {area.path}</p>
-              </article>
-            ))}
-          </div>
+        <div className="vercel-feature-grid">
+          {DEMO_AREAS.map((area, index) => (
+            <article className="vercel-feature" key={area.title}>
+              <span className="vercel-feature-glyph" aria-hidden="true">
+                {area.glyph}
+              </span>
+              <p className="coverflow-eyebrow">Block {index + 1}</p>
+              <h3 className="mt-2 text-3xl font-semibold tracking-tight text-zinc-900 sm:text-4xl">
+                {area.title}
+              </h3>
+              <p className="mt-3 max-w-[38ch] text-base leading-7 text-zinc-600">
+                {area.description}
+              </p>
+              <p className="mt-5 text-xs text-zinc-500">Where: {area.path}</p>
+            </article>
+          ))}
         </div>
       </section>
 
-      <section className="coverflow-frame">
-        <div className="coverflow-grid-tight px-4 sm:px-6">
-          <article className="coverflow-panel">
-            <div className="coverflow-panel-inner">
-              <div className="flex items-center justify-between gap-3">
-                <h2 className="text-3xl font-semibold tracking-tight text-zinc-950">Quick start</h2>
-                <span className="coverflow-eyebrow">about 5 minutes</span>
-              </div>
-
-              <ol className="dotted-list mt-5 rounded-xl">
-                {QUICK_START_STEPS.map((step, index) => (
-                  <li className="flex items-start gap-3 p-3 text-sm text-zinc-700" key={step}>
-                    <span className="mt-0.5 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-md border border-zinc-300 text-xs font-medium text-zinc-700">
-                      {index + 1}
-                    </span>
-                    <span>{step}</span>
-                  </li>
-                ))}
-              </ol>
+      <section className="vercel-block">
+        <div className="vercel-split-tight">
+          <div className="vercel-pane">
+            <div className="flex items-center justify-between gap-3">
+              <h2 className="text-4xl font-semibold tracking-tight text-zinc-950 sm:text-5xl">
+                Quick start
+              </h2>
+              <span className="coverflow-eyebrow">about 5 minutes</span>
             </div>
-          </article>
 
-          <aside className="coverflow-panel">
-            <div className="coverflow-panel-inner">
-              <p className="coverflow-eyebrow">Demo talking points</p>
-              <h3 className="mt-2 text-3xl font-semibold tracking-tight text-zinc-900">
-                Why this stands out
-              </h3>
+            <ol className="dotted-list mt-6">
+              {QUICK_START_STEPS.map((step, index) => (
+                <li className="flex items-start gap-3 p-4 text-base text-zinc-700" key={step}>
+                  <span className="mt-0.5 inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-md border border-zinc-300 text-sm font-medium text-zinc-700">
+                    {index + 1}
+                  </span>
+                  <span>{step}</span>
+                </li>
+              ))}
+            </ol>
+          </div>
 
-              <ul className="coverflow-list">
-                {JUDGE_NOTES.map((note) => (
-                  <li className="coverflow-list-item" key={note}>
-                    <span className="coverflow-list-dot" />
-                    <span>{note}</span>
-                  </li>
-                ))}
-              </ul>
+          <aside className="vercel-pane vercel-pane-divider">
+            <p className="coverflow-eyebrow">Demo talking points</p>
+            <h3 className="mt-2 text-4xl font-semibold tracking-tight text-zinc-900">
+              Why this stands out
+            </h3>
 
-              <Link className="button-secondary mt-6" href="/dashboard">
-                Run live demo now
-              </Link>
-            </div>
+            <ul className="coverflow-list mt-6">
+              {JUDGE_NOTES.map((note) => (
+                <li className="coverflow-list-item text-base" key={note}>
+                  <span className="coverflow-list-dot" />
+                  <span>{note}</span>
+                </li>
+              ))}
+            </ul>
+
+            <Link className="button-secondary mt-8" href="/dashboard">
+              Run live demo now
+            </Link>
           </aside>
         </div>
       </section>

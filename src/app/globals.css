@@ -366,7 +366,96 @@ button {
   flex-shrink: 0;
 }
 
+.landing-stack > section + section {
+  margin-top: -1px;
+}
+
+.vercel-block {
+  border: 1px dotted var(--frame-line);
+  background: transparent;
+}
+
+.vercel-block-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  border-bottom: 1px dotted var(--frame-line);
+  padding: 1.5rem;
+}
+
+.vercel-split,
+.vercel-split-tight {
+  display: grid;
+}
+
+.vercel-pane {
+  padding: 1.5rem;
+}
+
+.vercel-pane-divider {
+  border-top: 1px dotted var(--frame-line);
+}
+
+.vercel-stats {
+  display: grid;
+  border: 1px dotted var(--frame-line);
+  border-radius: 0.75rem;
+  overflow: hidden;
+}
+
+.vercel-stats > div + div {
+  border-top: 1px dotted var(--frame-line);
+}
+
+.vercel-step-list {
+  margin-top: 1.25rem;
+  border: 1px dotted var(--frame-line);
+  border-radius: 0.75rem;
+  overflow: hidden;
+}
+
+.vercel-step {
+  padding: 1rem;
+}
+
+.vercel-step + .vercel-step {
+  border-top: 1px dotted var(--frame-line);
+}
+
+.vercel-feature-grid {
+  display: grid;
+}
+
+.vercel-feature {
+  position: relative;
+  min-height: 14rem;
+  padding: 1.5rem;
+  border-top: 1px dotted var(--frame-line);
+  overflow: hidden;
+}
+
+.vercel-feature:nth-child(1) {
+  border-top: 0;
+}
+
+.vercel-feature-glyph {
+  position: absolute;
+  inset-inline-end: 1rem;
+  inset-block-end: 0.4rem;
+  font-size: 3.8rem;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  color: color-mix(in srgb, var(--foreground) 12%, transparent);
+  pointer-events: none;
+}
+
 @media (min-width: 640px) {
+  .vercel-block-header,
+  .vercel-pane {
+    padding: 2rem;
+  }
+
   .dotted-grid-2 {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -385,6 +474,50 @@ button {
   .dotted-grid-3 > * + * {
     border-top: 0;
     border-inline-start: 1px dotted var(--border);
+  }
+}
+
+@media (min-width: 768px) {
+  .vercel-feature-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .vercel-feature {
+    border-top: 1px dotted var(--frame-line);
+  }
+
+  .vercel-feature:nth-child(-n + 2) {
+    border-top: 0;
+  }
+
+  .vercel-feature:nth-child(2n) {
+    border-inline-start: 1px dotted var(--frame-line);
+  }
+}
+
+@media (min-width: 1024px) {
+  .vercel-split {
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  }
+
+  .vercel-split-tight {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.72fr);
+  }
+
+  .vercel-pane-divider {
+    border-top: 0;
+    border-inline-start: 1px dotted var(--frame-line);
+  }
+}
+
+@media (min-width: 640px) {
+  .vercel-stats {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .vercel-stats > div + div {
+    border-top: 0;
+    border-inline-start: 1px dotted var(--frame-line);
   }
 }
 
