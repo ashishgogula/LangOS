@@ -1,0 +1,39 @@
+
+> langos-app@0.1.0 build
+> next build
+
+[42m[30m[Lingo.dev][0m 🧹 Cleaned up metadata database: D:\Nothing\LangOS\src\lingo\metadata-build
+▲ Next.js 16.1.6 (Turbopack)
+
+  Creating an optimized production build ...
+
+> Build error occurred
+Error: Turbopack build failed with 1 errors:
+./src/lib/lingo.ts:2:1
+Module not found: Can't resolve 'lingo.dev'
+[0m [90m 1 |[39m [90m// @ts-ignore[39m
+[31m[1m>[22m[39m[90m 2 |[39m [36mimport[39m { translate } [36mfrom[39m [32m"lingo.dev"[39m[33m;[39m
+ [90m   |[39m [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 3 |[39m
+ [90m 4 |[39m [36mexport[39m [36masync[39m [36mfunction[39m translateText(text[33m:[39m string[33m,[39m targetLocale[33m:[39m string) {
+ [90m 5 |[39m     [36mtry[39m {[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/lingo.ts [Client Component Browser]
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/lingo.ts [Client Component SSR]
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+    at <unknown> (./src/lib/lingo.ts:2:1)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+[42m[30m[Lingo.dev][0m 🧹 Cleaned up metadata database: D:\Nothing\LangOS\src\lingo\metadata-build

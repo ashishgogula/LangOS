@@ -1,0 +1,24 @@
+﻿
+> langos-app@0.1.0 build
+> next build
+
+node.exe : Γ¿» Failed to load next.config.ts, 
+see more info here https://nextjs.org/docs/messa
+ges/next-config-error
+At line:1 char:1
++ & "C:\Program Files\nodejs/node.exe" 
+"C:\Users\ashish.gogula\AppData\ ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Γ¿ 
+   » Failed to l...xt-config-error:String) [],  
+   RemoteException
+    + FullyQualifiedErrorId : NativeCommandErro 
+   r
+ 
+
+> Build error occurred
+TypeError: (0 , _next.withLingo)(...) is not a 
+function
+    at Object.<anonymous> 
+(D:\Nothing\LangOS\next.config.compiled.js:21:3)

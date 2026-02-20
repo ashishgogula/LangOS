@@ -1,0 +1,45 @@
+LangOS Demo App - Lingo.dev Implementation
+I have successfully built the LangOS demo application to demonstrate a complete localization lifecycle using Lingo.dev tools, Next.js 16 (App Router), and Tailwind CSS.
+
+Implementation Overview
+1. Project Initialization
+The App Router project is configured with TypeScript and Tailwind CSS.
+
+2. Provider Setup & Configuration
+next.config.ts
+: Integrated the @lingo.dev/compiler/next wrapper.
+app/layout.tsx
+: Wrapped the entire application with the <LingoProvider> to enable server/client-side locale coordination context.
+RtlProvider
+: Automatically intercepts the "ar" locale from local storage on load and sets dir="rtl" at the document root to simulate RTL support.
+3. Localization Demos
+The project features three primary pages demonstrating Lingo SDK and standard i18n APIs:
+
+Dashboard Demo (
+app/page.tsx
+):
+Contains a dynamic translation interface.
+Simulates an async call to 
+translateText
+ (simulating the lingo.dev/sdk run-time API).
+Uses native browser APIs (Intl.NumberFormat, Intl.DateTimeFormat) to automatically render currency and dates localized dynamically based on localStorage state.
+Billing (
+app/billing/page.tsx
+) & Settings (
+app/settings/page.tsx
+): Static layouts featuring clean, Tailwind-based configurations ready for Lingo's compiler step to extract strings.
+4. Language Switcher
+A custom <LanguageSwitcher> component built in 
+src/components/LanguageSwitcher.tsx
+.
+Connects directly to localStorage, falling back to English. It also pushes a cookie which is common in Lingo SSR workflows for route preservation, resolving dynamically through Next.
+5. Automation & CLI
+package.json
+: Added "lingo:run": "npx lingo.dev run" script.
+i18n.json
+: CLI config setup for extraction specifying src/**/*.{tsx,ts} outputting to .lingo.
+.github/workflows/lingo.yml
+: A preconfigured GitHub Action to run locale synchronization safely using the LINGO_API_KEY on push to the main branch.
+NOTE
+
+The app is fully configured. Running npm run build will actively invoke the Lingo.dev generation steps, which will require setting up a valid LINGO_API_KEY in your environmen
