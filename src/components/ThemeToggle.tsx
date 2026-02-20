@@ -12,7 +12,7 @@ function isThemeMode(value: unknown): value is ThemeMode {
 
 function getPreferredTheme(): ThemeMode {
   if (typeof window === "undefined") {
-    return "light";
+    return "dark";
   }
 
   try {
@@ -24,7 +24,7 @@ function getPreferredTheme(): ThemeMode {
     // Ignore storage access failures.
   }
 
-  return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  return "dark";
 }
 
 function applyTheme(theme: ThemeMode): void {
@@ -35,7 +35,7 @@ function applyTheme(theme: ThemeMode): void {
 export default function ThemeToggle() {
   const [theme, setTheme] = useState<ThemeMode>(() => {
     if (typeof document === "undefined") {
-      return "light";
+      return "dark";
     }
 
     const htmlTheme = document.documentElement.dataset.theme;

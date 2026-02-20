@@ -56,7 +56,7 @@ export default function GuidePage() {
         <h2 className="text-lg font-semibold text-zinc-900">Tools used in this project</h2>
         <div className="mt-4 grid gap-3 md:grid-cols-2">
           {TOOLING.map((item) => (
-            <article className="rounded-lg border border-zinc-200 p-4" key={item.label}>
+            <article className="dotted-box p-4" key={item.label}>
               <h3 className="text-sm font-semibold text-zinc-900">{item.label}</h3>
               <p className="mt-2 text-sm text-zinc-600">{item.details}</p>
               <p className="mt-3 text-xs text-zinc-500">File: {item.usedAt}</p>
@@ -69,10 +69,7 @@ export default function GuidePage() {
         <h2 className="text-lg font-semibold text-zinc-900">Walkthrough steps</h2>
         <ol className="mt-4 space-y-2">
           {WALKTHROUGH.map((step, index) => (
-            <li
-              className="flex items-start gap-3 rounded-lg border border-zinc-200 bg-zinc-50 p-3 text-sm text-zinc-700"
-              key={step}
-            >
+            <li className="dotted-box flex items-start gap-3 p-3 text-sm text-zinc-700" key={step}>
               <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-zinc-300 text-xs text-zinc-600">
                 {index + 1}
               </span>
@@ -85,7 +82,7 @@ export default function GuidePage() {
       <section className="surface-card p-6 sm:p-8">
         <h2 className="text-lg font-semibold text-zinc-900">Environment</h2>
         <p className="mt-2 text-sm text-zinc-600">Add this to <span className="code-inline">.env.local</span>:</p>
-        <pre className="mt-3 overflow-x-auto rounded-lg border border-zinc-200 bg-zinc-50 p-3 text-xs text-zinc-700">
+        <pre className="dotted-box mt-3 overflow-x-auto p-3 text-xs text-zinc-700">
 {`LINGODOTDEV_API_KEY=your_key_here`}
         </pre>
       </section>

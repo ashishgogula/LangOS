@@ -22,13 +22,13 @@ const THEME_INIT_SCRIPT = `(() => {
     const stored = window.localStorage.getItem(key);
     const resolved = stored === "light" || stored === "dark"
       ? stored
-      : (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+      : "dark";
 
     document.documentElement.dataset.theme = resolved;
     document.documentElement.style.colorScheme = resolved;
   } catch {
-    document.documentElement.dataset.theme = "light";
-    document.documentElement.style.colorScheme = "light";
+    document.documentElement.dataset.theme = "dark";
+    document.documentElement.style.colorScheme = "dark";
   }
 })();`;
 
@@ -51,8 +51,14 @@ export default function RootLayout({
         <LingoProvider>
           <RtlProvider>
             <div className="min-h-screen">
+              <div className="announcement-bar">
+                <span>
+                  Big localization update launching soon.{" "}
+                  <a href="/guide">See the onboarding guide</a>
+                </span>
+              </div>
               <Navigation />
-              <main className="shell-container py-8 sm:py-10">{children}</main>
+              <main className="site-main shell-container py-8 sm:py-10">{children}</main>
             </div>
           </RtlProvider>
         </LingoProvider>

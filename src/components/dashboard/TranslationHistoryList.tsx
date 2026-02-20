@@ -15,13 +15,13 @@ export default function TranslationHistoryList({
       </div>
 
       {items.length === 0 ? (
-        <p className="rounded-lg border border-zinc-200 bg-zinc-50 p-3 text-sm text-zinc-600">
+        <p className="dotted-box p-3 text-sm text-zinc-600">
           No translation runs yet.
         </p>
       ) : (
         <div className="space-y-2">
           {items.map((item) => (
-            <article className="rounded-lg border border-zinc-200 p-3" key={item.id}>
+            <article className="dotted-box p-3" key={item.id}>
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <p className="text-xs text-zinc-500">
                   {new Date(item.createdAt).toLocaleString()} • {item.locale.toUpperCase()}

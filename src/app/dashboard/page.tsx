@@ -270,7 +270,7 @@ export default function DashboardPage() {
         ) : null}
 
         {translatedText ? (
-          <div className="rounded-lg border border-zinc-200 bg-zinc-50 p-4">
+          <div className="dotted-box p-4">
             <p className="text-xs uppercase tracking-wide text-zinc-500">Result</p>
             <p className="mt-2 text-sm text-zinc-800">{translatedText}</p>
           </div>
@@ -286,12 +286,12 @@ export default function DashboardPage() {
         </div>
 
         <div className="grid gap-4 sm:grid-cols-2">
-          <div className="rounded-lg border border-zinc-200 p-4">
+          <div className="dotted-box p-4">
             <p className="text-xs uppercase tracking-wide text-zinc-500">Price</p>
             <p className="mt-2 text-lg font-semibold text-zinc-900">{formattedPrice}</p>
           </div>
 
-          <div className="rounded-lg border border-zinc-200 p-4">
+          <div className="dotted-box p-4">
             <p className="text-xs uppercase tracking-wide text-zinc-500">Current date</p>
             <p className="mt-2 text-lg font-semibold text-zinc-900">{formattedDate}</p>
           </div>

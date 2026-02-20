@@ -77,15 +77,15 @@ export default function LandingPage() {
         </div>
 
         <dl className="mt-8 grid gap-3 sm:grid-cols-3">
-          <div className="rounded-lg border border-zinc-200 bg-zinc-50 p-4">
+          <div className="dotted-box p-4">
             <dt className="text-xs uppercase tracking-wide text-zinc-500">Locales</dt>
             <dd className="mt-1 text-xl font-semibold text-zinc-900">en, es, de, ar</dd>
           </div>
-          <div className="rounded-lg border border-zinc-200 bg-zinc-50 p-4">
+          <div className="dotted-box p-4">
             <dt className="text-xs uppercase tracking-wide text-zinc-500">Mode</dt>
             <dd className="mt-1 text-xl font-semibold text-zinc-900">Build + Runtime</dd>
           </div>
-          <div className="rounded-lg border border-zinc-200 bg-zinc-50 p-4">
+          <div className="dotted-box p-4">
             <dt className="text-xs uppercase tracking-wide text-zinc-500">Outcome</dt>
             <dd className="mt-1 text-xl font-semibold text-zinc-900">Ship readiness</dd>
           </div>
@@ -100,7 +100,7 @@ export default function LandingPage() {
 
         <div className="mt-5 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {DEMO_AREAS.map((area, index) => (
-            <article className="rounded-lg border border-zinc-200 p-4" key={area.title}>
+            <article className="dotted-box p-4" key={area.title}>
               <p className="text-xs font-medium uppercase tracking-wide text-zinc-500">
                 Block {index + 1}
               </p>
@@ -120,10 +120,7 @@ export default function LandingPage() {
 
         <ol className="mt-4 space-y-2">
           {QUICK_START_STEPS.map((step, index) => (
-            <li
-              className="flex items-start gap-3 rounded-lg border border-zinc-200 bg-zinc-50 p-3 text-sm text-zinc-700"
-              key={step}
-            >
+            <li className="dotted-box flex items-start gap-3 p-3 text-sm text-zinc-700" key={step}>
               <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-zinc-300 text-xs text-zinc-600">
                 {index + 1}
               </span>

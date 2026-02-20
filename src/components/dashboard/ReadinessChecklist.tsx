@@ -35,10 +35,7 @@ export default function ReadinessChecklist({
 
       <div className="space-y-2">
         {checks.map((check) => (
-          <div
-            className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-zinc-200 p-3"
-            key={check.id}
-          >
+          <div className="dotted-box flex flex-wrap items-center justify-between gap-3 p-3" key={check.id}>
             <div>
               <p className="text-sm font-medium text-zinc-900">{check.label}</p>
               <p className="text-xs text-zinc-600">{check.description}</p>
