@@ -24,20 +24,20 @@ export default function Navigation() {
 
   return (
     <header className="nav-shell sticky top-0 z-20 backdrop-blur-xl">
-      <div className="shell-container flex h-14 items-center justify-between gap-6">
+      <div className="shell-container flex h-16 items-center justify-between gap-6">
         <div className="flex items-center gap-8">
-          <Link className="nav-brand flex items-center gap-2 text-sm font-semibold" href="/">
+          <Link className="nav-brand flex items-center gap-2 text-xl font-semibold tracking-tight" href="/">
             <span className="nav-dot inline-flex h-2 w-2 rounded-full" />
             LangOS
           </Link>
 
-          <nav aria-label="Primary" className="hidden items-center gap-1 sm:flex">
+          <nav aria-label="Primary" className="hidden items-center gap-2 sm:flex">
             {NAV_ITEMS.map((item) => {
               const active = isActive(pathname, item.href);
 
               return (
                 <Link
-                  className={`nav-link px-3 py-1.5 text-sm ${active ? "nav-link-active" : ""}`}
+                  className={`nav-link px-4 py-2 text-sm font-medium ${active ? "nav-link-active" : ""}`}
                   href={item.href}
                   key={item.href}
                 >
