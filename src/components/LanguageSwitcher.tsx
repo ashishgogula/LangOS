@@ -1,51 +1,42 @@
 "use client";
 
-import { useEffect, useState } from "react";
-
-const locales = [
-    { code: "en", label: "English" },
-    { code: "es", label: "Español" },
-    { code: "de", label: "Deutsch" },
-    { code: "ar", label: "العربية" },
-];
+import type { ChangeEvent } from "react";
+import { useLingoContext } from "@lingo.dev/compiler/react";
+import {
+  DEFAULT_LOCALE,
+  isAppLocale,
+  LOCALE_OPTIONS,
+  type AppLocale,
+} from "@/lib/locales";
 
 export default function LanguageSwitcher() {
-    const [currentLocale, setCurrentLocale] = useState("en");
+  const { locale, setLocale, isLoading } = useLingoContext();
 
-    useEffect(() => {
-        const saved = localStorage.getItem("lingo-locale");
-        if (saved) {
-            setCurrentLocale(saved);
-        }
-    }, []);
+  const currentLocale: AppLocale = isAppLocale(locale) ? locale : DEFAULT_LOCALE;
 
-    const handleSwitch = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        const val = e.target.value;
-        setCurrentLocale(val);
-        localStorage.setItem("lingo-locale", val);
+  const handleChange = async (event: ChangeEvent<HTMLSelectElement>) => {
+    const nextLocale = event.target.value;
+    if (isAppLocale(nextLocale)) {
+      await setLocale(nextLocale);
+    }
+  };
 
-        // Some Lingo implementations use cookie for SSR
-        document.cookie = `NEXT_LOCALE=${val}; path=/; max-age=31536000`;
-
-        // Reload to apply changes across the app
-        window.location.reload();
-    };
-
-    return (
-        <div className="flex items-center space-x-2 bg-white/10 p-2 rounded-lg backdrop-blur-md">
-            <label htmlFor="locale-select" className="text-sm font-medium">Language:</label>
-            <select
-                id="locale-select"
-                value={currentLocale}
-                onChange={handleSwitch}
-                className="bg-gray-800 text-white border border-gray-600 rounded px-2 py-1 text-sm focus:ring-2 focus:ring-blue-500"
-            >
-                {locales.map((loc) => (
-                    <option key={loc.code} value={loc.code}>
-                        {loc.label}
-                    </option>
-                ))}
-            </select>
-        </div>
-    );
+  return (
+    <label className="flex items-center gap-2 text-xs text-zinc-500">
+      <span className="hidden sm:inline">Locale</span>
+      <select
+        aria-label="Language"
+        className="select-base h-8 w-auto min-w-24 px-2.5 text-xs text-zinc-700"
+        disabled={isLoading}
+        onChange={handleChange}
+        value={currentLocale}
+      >
+        {LOCALE_OPTIONS.map((localeOption) => (
+          <option key={localeOption.code} value={localeOption.code}>
+            {localeOption.label}
+          </option>
+        ))}
+      </select>
+    </label>
+  );
 }

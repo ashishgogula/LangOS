@@ -1,32 +1,42 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
-// @ts-ignore
-import { LingoProvider } from "@lingo.dev/compiler/react";
-import RtlProvider from "@/components/RtlProvider";
+import { Geist, Geist_Mono } from "next/font/google";
+import type { ReactNode } from "react";
+import { LingoProvider } from "@lingo.dev/compiler/react/next";
 import Navigation from "@/components/Navigation";
+import RtlProvider from "@/components/RtlProvider";
+import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+const geistSans = Geist({
+  subsets: ["latin"],
+  variable: "--font-geist-sans",
+});
+
+const geistMono = Geist_Mono({
+  subsets: ["latin"],
+  variable: "--font-geist-mono",
+});
 
 export const metadata: Metadata = {
-  title: "LangOS App",
-  description: "Lingo.dev SDK demo app",
+  title: "LangOS",
+  description: "Lingo.dev localization starter with onboarding and release checks",
 };
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${inter.className} bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100 min-h-screen`}>
+    <html dir="ltr" lang="en">
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} min-h-screen bg-[var(--background)] text-[var(--foreground)] antialiased`}
+      >
         <LingoProvider>
           <RtlProvider>
-            <Navigation />
-            <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-              {children}
-            </main>
+            <div className="min-h-screen">
+              <Navigation />
+              <main className="shell-container py-8 sm:py-10">{children}</main>
+            </div>
           </RtlProvider>
         </LingoProvider>
       </body>

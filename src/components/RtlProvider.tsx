@@ -1,17 +1,22 @@
-'use client';
+"use client";
 
-import { useEffect } from 'react';
+import { useLingoContext } from "@lingo.dev/compiler/react";
+import type { ReactNode } from "react";
+import { useEffect } from "react";
+import { DEFAULT_LOCALE, isAppLocale, isRtlLocale } from "@/lib/locales";
 
-export default function RtlProvider({ children }: { children: React.ReactNode }) {
-    useEffect(() => {
-        const locale = localStorage.getItem('lingo-locale') || 'en';
-        if (locale === 'ar') {
-            document.documentElement.dir = 'rtl';
-        } else {
-            document.documentElement.dir = 'ltr';
-        }
-        document.documentElement.lang = locale;
-    }, []);
+export default function RtlProvider({
+  children,
+}: {
+  children: ReactNode;
+}) {
+  const { locale } = useLingoContext();
 
-    return <>{children}</>;
+  useEffect(() => {
+    const activeLocale = isAppLocale(locale) ? locale : DEFAULT_LOCALE;
+    document.documentElement.lang = activeLocale;
+    document.documentElement.dir = isRtlLocale(activeLocale) ? "rtl" : "ltr";
+  }, [locale]);
+
+  return <>{children}</>;
 }
