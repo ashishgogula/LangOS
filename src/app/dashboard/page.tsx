@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { useLingoContext } from "@lingo.dev/compiler/react";
 import ReadinessChecklist, {
@@ -35,6 +36,21 @@ function createHistoryId(): string {
   }
 
   return `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+}
+
+function getRuntimeCheckDescription(
+  runtimeCheckLoaded: boolean,
+  runtimeConfigured: boolean,
+): string {
+  if (!runtimeCheckLoaded) {
+    return "Checking runtime translation API configuration...";
+  }
+
+  if (runtimeConfigured) {
+    return "LINGODOTDEV_API_KEY is configured for runtime translation calls.";
+  }
+
+  return "Configure LINGODOTDEV_API_KEY before production launch.";
 }
 
 export default function DashboardPage() {
@@ -114,7 +130,6 @@ export default function DashboardPage() {
     const hasRequiredLocales = requiredTargetLocales.every((localeCode) =>
       configuredLocales.includes(localeCode),
     );
-
     const hasRtlCoverage = configuredLocales.includes("ar");
     const hasRecentSuccess = historyItems.some((item) => item.status === "success");
 
@@ -135,11 +150,7 @@ export default function DashboardPage() {
       },
       {
         blocking: runtimeCheckLoaded,
-        description: runtimeCheckLoaded
-          ? runtimeConfigured
-          ? "LINGODOTDEV_API_KEY is configured for runtime translation calls."
-          : "Configure LINGODOTDEV_API_KEY before production launch."
-          : "Checking runtime translation API configuration...",
+        description: getRuntimeCheckDescription(runtimeCheckLoaded, runtimeConfigured),
         id: "runtime-translation",
         label: "Runtime translation API",
         passed: runtimeConfigured,
@@ -203,65 +214,65 @@ export default function DashboardPage() {
   };
 
   return (
-    <div className="mx-auto max-w-4xl space-y-6">
+    <div className="mx-auto max-w-5xl space-y-6">
       <section className="surface-card p-6 sm:p-8">
-        <h1 className="text-2xl font-semibold tracking-tight text-slate-900">
-          Dashboard
-        </h1>
-        <p className="mt-2 text-sm text-slate-600">
-          Runtime translation, locale formatting, and release checks for LangOS.
-        </p>
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <p className="text-xs uppercase tracking-wide text-zinc-500">Interactive playground</p>
+            <h1 className="mt-2 text-3xl font-semibold tracking-tight text-zinc-950">Dashboard</h1>
+            <p className="mt-2 text-sm text-zinc-600">
+              Test runtime translation, formatting, and release checks in one place.
+            </p>
+          </div>
+
+          <div className="flex flex-wrap gap-2">
+            <span className="badge-neutral">Locale: {activeLocale.toUpperCase()}</span>
+            <Link className="button-secondary" href="/guide">
+              Open Guide
+            </Link>
+          </div>
+        </div>
       </section>
 
       {readinessError ? (
-        <p className="rounded-md border border-amber-200 bg-amber-50 p-3 text-sm text-amber-700">
+        <p className="alert-warning rounded-lg p-3 text-sm">
           {readinessError}
         </p>
       ) : null}
 
-      <ReadinessChecklist
-        checkedAt={readiness?.checkedAt ?? null}
-        checks={readinessChecks}
-      />
+      <ReadinessChecklist checkedAt={readiness?.checkedAt ?? null} checks={readinessChecks} />
 
       <section className="surface-card space-y-4 p-6 sm:p-8">
         <div>
-          <h2 className="text-lg font-medium text-slate-900">Dynamic Translation</h2>
-          <p className="mt-1 text-sm text-slate-600">
-            Translate user input to the active locale ({activeLocale}).
+          <h2 className="text-lg font-semibold text-zinc-900">Dynamic translation</h2>
+          <p className="mt-1 text-sm text-zinc-600">
+            Translate user input to the current locale ({activeLocale.toUpperCase()}).
           </p>
         </div>
 
         <div className="space-y-3">
           <textarea
-            className="min-h-28 w-full resize-y rounded-md border border-slate-300 p-3 outline-none transition focus:border-slate-400"
+            className="textarea-base"
             onChange={(event) => setInputText(event.target.value)}
             placeholder="Enter text to translate"
             value={inputText}
           />
 
-          <button
-            className="inline-flex h-10 items-center justify-center rounded-md bg-slate-900 px-4 text-sm font-medium text-white transition hover:bg-slate-700 disabled:cursor-not-allowed disabled:bg-slate-300"
-            disabled={translateDisabled}
-            onClick={handleTranslate}
-            type="button"
-          >
+          <button className="button-primary" disabled={translateDisabled} onClick={handleTranslate} type="button">
             {isTranslating ? "Translating..." : "Translate"}
           </button>
         </div>
 
         {translationError ? (
-          <p className="rounded-md border border-red-200 bg-red-50 p-3 text-sm text-red-700">
+          <p className="alert-error rounded-lg p-3 text-sm">
             {translationError}
           </p>
         ) : null}
 
         {translatedText ? (
-          <div className="rounded-md border border-slate-200 bg-slate-50 p-4">
-            <p className="text-xs font-medium uppercase tracking-wide text-slate-500">
-              Result
-            </p>
-            <p className="mt-2 text-sm text-slate-800">{translatedText}</p>
+          <div className="rounded-lg border border-zinc-200 bg-zinc-50 p-4">
+            <p className="text-xs uppercase tracking-wide text-zinc-500">Result</p>
+            <p className="mt-2 text-sm text-zinc-800">{translatedText}</p>
           </div>
         ) : null}
       </section>
@@ -270,25 +281,19 @@ export default function DashboardPage() {
 
       <section className="surface-card space-y-4 p-6 sm:p-8">
         <div>
-          <h2 className="text-lg font-medium text-slate-900">Formatting</h2>
-          <p className="mt-1 text-sm text-slate-600">
-            Locale-aware formatting using Intl APIs.
-          </p>
+          <h2 className="text-lg font-semibold text-zinc-900">Locale formatting</h2>
+          <p className="mt-1 text-sm text-zinc-600">Verify Intl currency and date output per locale.</p>
         </div>
 
         <div className="grid gap-4 sm:grid-cols-2">
-          <div className="rounded-md border border-slate-200 p-4">
-            <p className="text-xs font-medium uppercase tracking-wide text-slate-500">
-              Price
-            </p>
-            <p className="mt-2 text-lg font-semibold text-slate-900">{formattedPrice}</p>
+          <div className="rounded-lg border border-zinc-200 p-4">
+            <p className="text-xs uppercase tracking-wide text-zinc-500">Price</p>
+            <p className="mt-2 text-lg font-semibold text-zinc-900">{formattedPrice}</p>
           </div>
 
-          <div className="rounded-md border border-slate-200 p-4">
-            <p className="text-xs font-medium uppercase tracking-wide text-slate-500">
-              Current Date
-            </p>
-            <p className="mt-2 text-lg font-semibold text-slate-900">{formattedDate}</p>
+          <div className="rounded-lg border border-zinc-200 p-4">
+            <p className="text-xs uppercase tracking-wide text-zinc-500">Current date</p>
+            <p className="mt-2 text-lg font-semibold text-zinc-900">{formattedDate}</p>
           </div>
         </div>
       </section>

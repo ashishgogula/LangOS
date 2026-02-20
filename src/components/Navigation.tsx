@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import LanguageSwitcher from "./LanguageSwitcher";
+import ThemeToggle from "./ThemeToggle";
 
 const NAV_ITEMS = [
   { href: "/", label: "Home" },
@@ -22,11 +23,11 @@ export default function Navigation() {
   const pathname = usePathname();
 
   return (
-    <header className="sticky top-0 z-20 border-b border-zinc-200/80 bg-white/80 backdrop-blur-xl">
+    <header className="nav-shell sticky top-0 z-20 backdrop-blur-xl">
       <div className="shell-container flex h-14 items-center justify-between gap-6">
         <div className="flex items-center gap-8">
-          <Link className="flex items-center gap-2 text-sm font-semibold text-zinc-950" href="/">
-            <span className="inline-flex h-2 w-2 rounded-full bg-zinc-900" />
+          <Link className="nav-brand flex items-center gap-2 text-sm font-semibold" href="/">
+            <span className="nav-dot inline-flex h-2 w-2 rounded-full" />
             LangOS
           </Link>
 
@@ -36,11 +37,7 @@ export default function Navigation() {
 
               return (
                 <Link
-                  className={`rounded-md px-3 py-1.5 text-sm transition ${
-                    active
-                      ? "bg-zinc-900 text-white"
-                      : "text-zinc-600 hover:bg-zinc-100 hover:text-zinc-900"
-                  }`}
+                  className={`nav-link px-3 py-1.5 text-sm ${active ? "nav-link-active" : ""}`}
                   href={item.href}
                   key={item.href}
                 >
@@ -51,7 +48,10 @@ export default function Navigation() {
           </nav>
         </div>
 
-        <LanguageSwitcher />
+        <div className="flex items-center gap-2">
+          <ThemeToggle />
+          <LanguageSwitcher />
+        </div>
       </div>
     </header>
   );

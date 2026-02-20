@@ -16,6 +16,22 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
 });
 
+const THEME_INIT_SCRIPT = `(() => {
+  try {
+    const key = "langos:theme:v1";
+    const stored = window.localStorage.getItem(key);
+    const resolved = stored === "light" || stored === "dark"
+      ? stored
+      : (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+
+    document.documentElement.dataset.theme = resolved;
+    document.documentElement.style.colorScheme = resolved;
+  } catch {
+    document.documentElement.dataset.theme = "light";
+    document.documentElement.style.colorScheme = "light";
+  }
+})();`;
+
 export const metadata: Metadata = {
   title: "LangOS",
   description: "Lingo.dev localization starter with onboarding and release checks",
@@ -27,10 +43,11 @@ export default function RootLayout({
   children: ReactNode;
 }>) {
   return (
-    <html dir="ltr" lang="en">
+    <html dir="ltr" lang="en" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} min-h-screen bg-[var(--background)] text-[var(--foreground)] antialiased`}
       >
+        <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
         <LingoProvider>
           <RtlProvider>
             <div className="min-h-screen">

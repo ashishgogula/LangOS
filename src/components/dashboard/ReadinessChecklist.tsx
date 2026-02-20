@@ -22,9 +22,9 @@ export default function ReadinessChecklist({
     <section className="surface-card space-y-4 p-6 sm:p-8">
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
-          <h2 className="text-lg font-medium text-slate-900">Release Readiness</h2>
-          <p className="mt-1 text-sm text-slate-600">
-            Final checklist before shipping your multilingual release.
+          <h2 className="text-lg font-semibold text-zinc-900">Release readiness</h2>
+          <p className="mt-1 text-sm text-zinc-600">
+            Final checks before shipping your multilingual build.
           </p>
         </div>
 
@@ -36,12 +36,12 @@ export default function ReadinessChecklist({
       <div className="space-y-2">
         {checks.map((check) => (
           <div
-            className="flex flex-wrap items-center justify-between gap-3 rounded-md border border-slate-200 p-3"
+            className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-zinc-200 p-3"
             key={check.id}
           >
             <div>
-              <p className="text-sm font-medium text-slate-900">{check.label}</p>
-              <p className="text-xs text-slate-600">{check.description}</p>
+              <p className="text-sm font-medium text-zinc-900">{check.label}</p>
+              <p className="text-xs text-zinc-600">{check.description}</p>
             </div>
 
             <StatusTag tone={check.passed ? "ready" : check.blocking ? "warning" : "neutral"}>
@@ -51,7 +51,7 @@ export default function ReadinessChecklist({
         ))}
       </div>
 
-      <p className="text-xs text-slate-500">
+      <p className="text-xs text-zinc-500">
         Last checked: {checkedAt ? new Date(checkedAt).toLocaleString() : "Not checked yet"}
       </p>
     </section>
@@ -67,14 +67,10 @@ function StatusTag({
 }) {
   const toneClass =
     tone === "ready"
-      ? "border-emerald-200 bg-emerald-50 text-emerald-700"
+      ? "badge-success"
       : tone === "warning"
-        ? "border-amber-200 bg-amber-50 text-amber-700"
-        : "border-slate-200 bg-slate-50 text-slate-600";
+        ? "badge-warning"
+        : "badge-neutral";
 
-  return (
-    <span className={`rounded-md border px-2 py-1 text-xs font-medium ${toneClass}`}>
-      {children}
-    </span>
-  );
+  return <span className={toneClass}>{children}</span>;
 }
