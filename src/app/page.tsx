@@ -49,8 +49,8 @@ const QUICK_START_STEPS = [
 
 export default function LandingPage() {
   return (
-    <div className="mx-auto max-w-6xl space-y-6">
-      <section className="surface-card overflow-hidden p-6 sm:p-10">
+    <div className="section-stack mx-auto max-w-6xl">
+      <section className="surface-card p-6 sm:p-10">
         <div className="flex flex-wrap items-center gap-2">
           <span className="badge-neutral">Lingo.dev toolkit</span>
           <span className="badge-neutral">Next.js 16 App Router</span>
@@ -76,16 +76,16 @@ export default function LandingPage() {
           </Link>
         </div>
 
-        <dl className="mt-8 grid gap-3 sm:grid-cols-3">
-          <div className="dotted-box p-4">
+        <dl className="dotted-grid-3 mt-8">
+          <div className="p-4">
             <dt className="text-xs uppercase tracking-wide text-zinc-500">Locales</dt>
             <dd className="mt-1 text-xl font-semibold text-zinc-900">en, es, de, ar</dd>
           </div>
-          <div className="dotted-box p-4">
+          <div className="p-4">
             <dt className="text-xs uppercase tracking-wide text-zinc-500">Mode</dt>
             <dd className="mt-1 text-xl font-semibold text-zinc-900">Build + Runtime</dd>
           </div>
-          <div className="dotted-box p-4">
+          <div className="p-4">
             <dt className="text-xs uppercase tracking-wide text-zinc-500">Outcome</dt>
             <dd className="mt-1 text-xl font-semibold text-zinc-900">Ship readiness</dd>
           </div>
@@ -98,9 +98,9 @@ export default function LandingPage() {
           <span className="text-xs text-zinc-500">6 feature blocks</span>
         </div>
 
-        <div className="mt-5 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+        <div className="dotted-list mt-5">
           {DEMO_AREAS.map((area, index) => (
-            <article className="dotted-box p-4" key={area.title}>
+            <article className="p-4" key={area.title}>
               <p className="text-xs font-medium uppercase tracking-wide text-zinc-500">
                 Block {index + 1}
               </p>
@@ -118,10 +118,10 @@ export default function LandingPage() {
           <span className="text-xs text-zinc-500">about 5 minutes</span>
         </div>
 
-        <ol className="mt-4 space-y-2">
+        <ol className="dotted-list mt-4">
           {QUICK_START_STEPS.map((step, index) => (
-            <li className="dotted-box flex items-start gap-3 p-3 text-sm text-zinc-700" key={step}>
-              <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-zinc-300 text-xs text-zinc-600">
+            <li className="flex items-start gap-3 p-3 text-sm text-zinc-700" key={step}>
+              <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center border border-zinc-300 text-xs text-zinc-600">
                 {index + 1}
               </span>
               <span>{step}</span>

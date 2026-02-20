@@ -19,9 +19,9 @@ export default function TranslationHistoryList({
           No translation runs yet.
         </p>
       ) : (
-        <div className="space-y-2">
+        <div className="dotted-list">
           {items.map((item) => (
-            <article className="dotted-box p-3" key={item.id}>
+            <article className="p-3" key={item.id}>
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <p className="text-xs text-zinc-500">
                   {new Date(item.createdAt).toLocaleString()} • {item.locale.toUpperCase()}

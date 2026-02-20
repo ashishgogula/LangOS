@@ -33,7 +33,7 @@ const WALKTHROUGH = [
 
 export default function GuidePage() {
   return (
-    <div className="mx-auto max-w-5xl space-y-6">
+    <div className="section-stack mx-auto max-w-5xl">
       <section className="surface-card p-6 sm:p-8">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
@@ -54,9 +54,9 @@ export default function GuidePage() {
 
       <section className="surface-card p-6 sm:p-8">
         <h2 className="text-lg font-semibold text-zinc-900">Tools used in this project</h2>
-        <div className="mt-4 grid gap-3 md:grid-cols-2">
+        <div className="dotted-list mt-4">
           {TOOLING.map((item) => (
-            <article className="dotted-box p-4" key={item.label}>
+            <article className="p-4" key={item.label}>
               <h3 className="text-sm font-semibold text-zinc-900">{item.label}</h3>
               <p className="mt-2 text-sm text-zinc-600">{item.details}</p>
               <p className="mt-3 text-xs text-zinc-500">File: {item.usedAt}</p>
@@ -67,10 +67,10 @@ export default function GuidePage() {
 
       <section className="surface-card p-6 sm:p-8">
         <h2 className="text-lg font-semibold text-zinc-900">Walkthrough steps</h2>
-        <ol className="mt-4 space-y-2">
+        <ol className="dotted-list mt-4">
           {WALKTHROUGH.map((step, index) => (
-            <li className="dotted-box flex items-start gap-3 p-3 text-sm text-zinc-700" key={step}>
-              <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-zinc-300 text-xs text-zinc-600">
+            <li className="flex items-start gap-3 p-3 text-sm text-zinc-700" key={step}>
+              <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center border border-zinc-300 text-xs text-zinc-600">
                 {index + 1}
               </span>
               <span>{step}</span>

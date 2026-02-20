@@ -33,9 +33,9 @@ export default function ReadinessChecklist({
         </StatusTag>
       </div>
 
-      <div className="space-y-2">
+      <div className="dotted-list">
         {checks.map((check) => (
-          <div className="dotted-box flex flex-wrap items-center justify-between gap-3 p-3" key={check.id}>
+          <div className="flex flex-wrap items-center justify-between gap-3 p-3" key={check.id}>
             <div>
               <p className="text-sm font-medium text-zinc-900">{check.label}</p>
               <p className="text-xs text-zinc-600">{check.description}</p>

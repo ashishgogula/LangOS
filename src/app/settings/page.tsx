@@ -1,6 +1,6 @@
 export default function SettingsPage() {
   return (
-    <div className="mx-auto max-w-4xl space-y-6">
+    <div className="section-stack mx-auto max-w-4xl">
       <section className="surface-card p-6 sm:p-8">
         <p className="text-xs uppercase tracking-wide text-zinc-500">Settings</p>
         <h1 className="mt-2 text-3xl font-semibold tracking-tight text-zinc-950">Workspace profile</h1>
@@ -10,8 +10,8 @@ export default function SettingsPage() {
       </section>
 
       <section className="surface-card p-6 sm:p-8">
-        <div className="space-y-4">
-          <div>
+        <div className="dotted-list">
+          <div className="p-4">
             <label className="mb-1 block text-sm font-medium text-zinc-700" htmlFor="company-name">
               Company Name
             </label>
@@ -23,7 +23,7 @@ export default function SettingsPage() {
             />
           </div>
 
-          <div>
+          <div className="p-4">
             <label className="mb-1 block text-sm font-medium text-zinc-700" htmlFor="email-address">
               Email Address
             </label>

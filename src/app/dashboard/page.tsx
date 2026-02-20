@@ -214,7 +214,7 @@ export default function DashboardPage() {
   };
 
   return (
-    <div className="mx-auto max-w-5xl space-y-6">
+    <div className="section-stack mx-auto max-w-5xl">
       <section className="surface-card p-6 sm:p-8">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
@@ -235,7 +235,7 @@ export default function DashboardPage() {
       </section>
 
       {readinessError ? (
-        <p className="alert-warning rounded-lg p-3 text-sm">
+        <p className="alert-warning p-3 text-sm">
           {readinessError}
         </p>
       ) : null}
@@ -264,15 +264,17 @@ export default function DashboardPage() {
         </div>
 
         {translationError ? (
-          <p className="alert-error rounded-lg p-3 text-sm">
+          <p className="alert-error p-3 text-sm">
             {translationError}
           </p>
         ) : null}
 
         {translatedText ? (
-          <div className="dotted-box p-4">
-            <p className="text-xs uppercase tracking-wide text-zinc-500">Result</p>
-            <p className="mt-2 text-sm text-zinc-800">{translatedText}</p>
+          <div className="dotted-list">
+            <div className="p-4">
+              <p className="text-xs uppercase tracking-wide text-zinc-500">Result</p>
+              <p className="mt-2 text-sm text-zinc-800">{translatedText}</p>
+            </div>
           </div>
         ) : null}
       </section>
@@ -285,13 +287,13 @@ export default function DashboardPage() {
           <p className="mt-1 text-sm text-zinc-600">Verify Intl currency and date output per locale.</p>
         </div>
 
-        <div className="grid gap-4 sm:grid-cols-2">
-          <div className="dotted-box p-4">
+        <div className="dotted-grid-2">
+          <div className="p-4">
             <p className="text-xs uppercase tracking-wide text-zinc-500">Price</p>
             <p className="mt-2 text-lg font-semibold text-zinc-900">{formattedPrice}</p>
           </div>
 
-          <div className="dotted-box p-4">
+          <div className="p-4">
             <p className="text-xs uppercase tracking-wide text-zinc-500">Current date</p>
             <p className="mt-2 text-lg font-semibold text-zinc-900">{formattedDate}</p>
           </div>

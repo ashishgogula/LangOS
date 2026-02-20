@@ -123,15 +123,59 @@ button {
 
 .surface-card {
   border: 1px dotted var(--border);
-  border-radius: 0.9rem;
+  border-radius: 0;
   background: transparent;
   box-shadow: var(--shadow-soft);
 }
 
+.section-stack > * + .surface-card {
+  margin-top: -1px;
+}
+
 .dotted-box {
   border: 1px dotted var(--border);
-  border-radius: 0.75rem;
+  border-radius: 0;
   background: transparent;
+}
+
+.dotted-list {
+  border: 1px dotted var(--border);
+}
+
+.dotted-list > * + * {
+  border-top: 1px dotted var(--border);
+}
+
+.dotted-grid-2,
+.dotted-grid-3 {
+  border: 1px dotted var(--border);
+}
+
+.dotted-grid-2 > * + *,
+.dotted-grid-3 > * + * {
+  border-top: 1px dotted var(--border);
+}
+
+@media (min-width: 640px) {
+  .dotted-grid-2 {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .dotted-grid-2 > * + * {
+    border-top: 0;
+    border-inline-start: 1px dotted var(--border);
+  }
+
+  .dotted-grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .dotted-grid-3 > * + * {
+    border-top: 0;
+    border-inline-start: 1px dotted var(--border);
+  }
 }
 
 .button-primary,
