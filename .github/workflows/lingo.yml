@@ -1,11 +1,13 @@
-name: Lingo Localization
+name: CI
 
 on:
   push:
     branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
-  lingo-sync:
+  quality:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -18,8 +20,39 @@ jobs:
           
       - name: Install dependencies
         run: npm ci
-        
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Build
+        run: npm run build
+
+      - name: Check Lingo CLI prerequisites
+        id: lingo_prereq
+        run: |
+          has_secret=false
+          if [ -n "${{ secrets.LINGO_API_KEY }}" ]; then
+            has_secret=true
+          fi
+
+          has_buckets=false
+          if [ -f i18n.json ]; then
+            node -e 'const fs = require("fs"); const raw = fs.readFileSync("i18n.json", "utf8"); const json = JSON.parse(raw); const buckets = json && typeof json === "object" ? json.buckets : undefined; process.stdout.write(String(Boolean(buckets && Object.keys(buckets).length > 0)));' > /tmp/has_buckets.txt
+            if [ "$(cat /tmp/has_buckets.txt)" = "true" ]; then
+              has_buckets=true
+            fi
+          fi
+
+          echo "has_secret=$has_secret" >> "$GITHUB_OUTPUT"
+          echo "has_buckets=$has_buckets" >> "$GITHUB_OUTPUT"
+          
       - name: Run Lingo CLI
+        if: steps.lingo_prereq.outputs.has_secret == 'true' && steps.lingo_prereq.outputs.has_buckets == 'true'
         run: npm run lingo:run
         env:
           LINGO_API_KEY: ${{ secrets.LINGO_API_KEY }}
+
+      - name: Skip Lingo CLI
+        if: steps.lingo_prereq.outputs.has_secret != 'true' || steps.lingo_prereq.outputs.has_buckets != 'true'
+        run: |
+          echo "Skipping Lingo CLI because LINGO_API_KEY is missing or i18n.json buckets are empty."

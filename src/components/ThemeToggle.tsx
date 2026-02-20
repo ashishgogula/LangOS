@@ -47,15 +47,18 @@ export default function ThemeToggle() {
   }, [theme]);
 
   const switchTheme = () => {
-    const nextTheme: ThemeMode = theme === "dark" ? "light" : "dark";
-    setTheme(nextTheme);
-    applyTheme(nextTheme);
+    setTheme((currentTheme) => {
+      const nextTheme: ThemeMode = currentTheme === "dark" ? "light" : "dark";
+      applyTheme(nextTheme);
 
-    try {
-      window.localStorage.setItem(STORAGE_KEY, nextTheme);
-    } catch {
-      // Ignore storage write failures.
-    }
+      try {
+        window.localStorage.setItem(STORAGE_KEY, nextTheme);
+      } catch {
+        // Ignore storage write failures.
+      }
+
+      return nextTheme;
+    });
   };
 
   const nextLabel = theme === "dark" ? "Light" : "Dark";
@@ -63,12 +66,11 @@ export default function ThemeToggle() {
   return (
     <button
       aria-label={`Switch to ${nextLabel.toLowerCase()} mode`}
-      className="theme-toggle h-8 px-2.5 text-xs"
+      className="theme-toggle h-8 w-8 px-0 text-xs"
       onClick={switchTheme}
       type="button"
     >
       {theme === "dark" ? <SunIcon /> : <MoonIcon />}
-      <span className="hidden sm:inline">{nextLabel}</span>
     </button>
   );
 }

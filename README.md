@@ -1,36 +1,93 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# LangOS
 
-## Getting Started
+LangOS is a production-oriented localization demo built for the Lingo.dev hackathon.
 
-First, run the development server:
+It shows the complete multilingual flow in a Next.js App Router app:
+- build-time localization with Lingo Compiler
+- runtime locale switching (persisted)
+- runtime dynamic translation through an API route
+- RTL support for Arabic
+- locale-aware number/date formatting
+- release readiness checks
+
+## Tech Stack
+
+- Next.js 16 (App Router, TypeScript)
+- React 19
+- Tailwind CSS v4
+- `@lingo.dev/compiler`
+- `lingo.dev` SDK
+
+## Local Setup
+
+1. Install dependencies:
+
+```bash
+npm ci
+```
+
+2. Configure environment:
+
+Create `.env.local` with:
+
+```bash
+LINGODOTDEV_API_KEY=your_lingo_key
+```
+
+3. Run dev server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+4. Open:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```text
+http://localhost:3000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Scripts
 
-## Learn More
+- `npm run dev` - start development server
+- `npm run lint` - run ESLint
+- `npm run build` - production build check
+- `npm run start` - run production server
+- `npm run lingo:run` - execute Lingo CLI sync
 
-To learn more about Next.js, take a look at the following resources:
+## Project Highlights
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- `next.config.ts`  
+  Lingo Compiler config (`sourceLocale: "en"`, `targetLocales: ["es", "de", "ar"]`)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- `src/app/layout.tsx`  
+  Root wrapped in `LingoProvider`, theme bootstrapping script, RTL provider
 
-## Deploy on Vercel
+- `src/components/LanguageSwitcher.tsx`  
+  Runtime locale switcher and persistence
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- `src/app/api/translate/route.ts`  
+  Runtime dynamic translation endpoint using Lingo SDK
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `src/app/dashboard/page.tsx`  
+  Translation input/output, history, readiness checks, Intl formatting demo
+
+## CI / Workflow Notes
+
+Workflow file: `.github/workflows/lingo.yml`
+
+The CI now:
+- runs on `push` and `pull_request` to `main`
+- runs `lint` and `build`
+- runs Lingo CLI only when both are true:
+  - `LINGO_API_KEY` secret is present
+  - `i18n.json` has at least one configured bucket
+
+This avoids false failures from running Lingo CLI with empty bucket config.
+
+## Hackathon Submission Checklist
+
+- [ ] Public repo with clear README
+- [ ] Live deployment URL
+- [ ] 2-3 minute demo video
+- [ ] Demo includes locale switch + runtime translation + RTL + release checks
+- [ ] CI passing on main

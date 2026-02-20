@@ -453,7 +453,7 @@ button {
 @media (min-width: 640px) {
   .vercel-block-header,
   .vercel-pane {
-    padding: 2rem;
+    padding: 1rem;
   }
 
   .dotted-grid-2 {
