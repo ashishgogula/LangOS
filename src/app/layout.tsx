@@ -34,8 +34,8 @@ export default function RootLayout({
           devWidget={{ enabled: false }}
         >
           <Navigation />
-          <main className="shell content-shell">{children}</main>
-          <footer className="shell content-shell border-t border-dashed border-[color:var(--line)] py-5 text-center text-sm text-[color:var(--muted)]">
+          <main className="shell content-shell pb-10 sm:pb-12">{children}</main>
+          <footer className="shell content-shell border-t border-dashed border-[color:var(--line)] py-6 text-center text-sm text-[color:var(--muted)]">
             Built by{" "}
             <a
               className="font-semibold text-[color:var(--text)] underline-offset-4 hover:underline"

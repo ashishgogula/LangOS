@@ -2,40 +2,40 @@ import Link from "next/link";
 
 const FEATURES = [
   {
-    title: "Build-Time Localization (Lingo Compiler)",
+    title: "Lingo Compiler (Next.js)",
     description:
-      "Static UI strings are compiled to locale-aware lookups at build time, then resolved by the active provider.",
+      "withLingo() is configured in next.config.ts to compile source strings and generate locale output for en, es, de, and ar.",
     iconPath:
       "M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129",
   },
   {
-    title: "Runtime Translation API (/api/translate)",
+    title: "Lingo React Provider + Context",
     description:
-      "Dynamic strings are posted to the API route, validated against supported locales, localized with lingo.dev SDK, and cached.",
+      "LingoProvider and useLingoContext handle runtime locale state, language switching, and localized rendering in app/layout and playground scopes.",
     iconPath: "M4 6h16M4 12h16m-7 6h7",
   },
   {
-    title: "Scoped RTL Rendering",
+    title: "Lingo.dev SDK Engine",
     description:
-      "Arabic direction is applied to the target preview only, so source and localized output can be compared side-by-side.",
+      "The /api/translate route uses LingoDotDevEngine.localizeText() with timeout, locale validation, and in-memory response caching.",
     iconPath: "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z",
   },
   {
-    title: "Locale Formatting with Intl",
+    title: "Lingo CLI",
     description:
-      "Numbers, currencies, and dates use Intl formatters with locale currency mapping (USD, EUR, AED).",
+      "The project script lingo:run executes npx lingo.dev run to refresh localization artifacts from source changes.",
     iconPath: "M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4",
   },
   {
-    title: "Typed Locale Boundary",
+    title: "Lingo in CI Pipeline",
     description:
-      "Locale handling is constrained to a strict app set: en, es, de, ar, with runtime guard checks for invalid values.",
+      "GitHub Actions runs npm run lingo:run when LINGO_API_KEY is present and i18n buckets are available, enforcing localization checks in CI.",
     iconPath: "M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z",
   },
   {
-    title: "Coverage Gate Simulation",
+    title: "Lingo Locale Persistence",
     description:
-      "The playground models CI behavior with translation coverage pass/fail states before shipping localization changes.",
+      "Locale persistence is configured through Lingo Compiler to use a cookie (name: locale, maxAge: 31536000) for consistent user language selection.",
     iconPath:
       "M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z",
   },
@@ -89,7 +89,7 @@ export default function LandingPage() {
               What this project implements
             </h2>
             <p className="mt-4 text-lg text-[var(--muted)]">
-              Real mechanisms from this codebase, not marketing claims.
+              Services used from Lingo.dev in this project.
             </p>
           </div>
 

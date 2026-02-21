@@ -387,7 +387,7 @@ export default function PlaygroundPage() {
       <section className="lab-section" aria-labelledby="workflow-heading">
         <header className="section-head">
           <h2 id="workflow-heading" className="section-title">
-            5. Workflow Automation (CLI + CI snippet)
+            5. Workflow Automation (Lingo CLI + CI snippet)
           </h2>
           <p className="section-copy">
             Localization checks run in development and are enforced in CI before shipping.

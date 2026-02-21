@@ -226,7 +226,6 @@ button {
   border-top: 1px dashed var(--line);
   margin-inline: calc(var(--content-gutter) * -1);
   padding-inline: var(--content-gutter);
-  padding-top: 2.4rem;
 }
 
 .section-kicker {
