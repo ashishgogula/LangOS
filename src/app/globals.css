@@ -776,7 +776,7 @@ button {
 
 .playground-page > .section-block.section-divider:first-child {
   padding-top: 2.2rem;
-  padding-bottom: 1.25rem;
+  padding-bottom: 0.35rem;
 }
 
 .playground-page .section-block {
@@ -784,9 +784,12 @@ button {
 }
 
 .playground-page .lab-columns-head {
-  margin-top: 0.9rem;
-  padding-top: 1.35rem;
-  padding-bottom: 0.25rem;
+  align-items: center;
+  background: color-mix(in oklab, var(--surface) 74%, transparent);
+  border: 1px dashed var(--line);
+  border-radius: 0.9rem;
+  margin-top: 0.95rem;
+  padding: 0.9rem 1rem;
 }
 
 .playground-page .lab-section {
@@ -858,13 +861,12 @@ button {
 
   .playground-page > .section-block.section-divider:first-child {
     padding-top: 1.5rem;
-    padding-bottom: 0.9rem;
+    padding-bottom: 0.2rem;
   }
 
   .playground-page .lab-columns-head {
     margin-top: 0.72rem;
-    padding-top: 1.02rem;
-    padding-bottom: 0.1rem;
+    padding: 0.78rem;
   }
 
   .playground-page .lab-section {
