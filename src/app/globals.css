@@ -770,6 +770,10 @@ button {
   padding: 1rem;
 }
 
+.developers-page .section-divider {
+  padding-top: 1.4rem;
+}
+
 @media (max-width: 1024px) {
   .hero-layout,
   .split-section,
@@ -818,5 +822,9 @@ button {
 
   .powered-label {
     display: none;
+  }
+
+  .developers-page .section-divider {
+    padding-top: 1.1rem;
   }
 }
