@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "lingo:run": "npx lingo.dev run"
+    "lingo:run": "node scripts/lingo-run.js"
   },
   "dependencies": {
     "@lingo.dev/compiler": "^0.3.8",
