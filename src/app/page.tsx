@@ -1,146 +1,142 @@
 import Link from "next/link";
 
-const PROBLEM_POINTS = [
-  "Hardcoded strings",
-  "Manual translation",
-  "No RTL support",
-  "No locale-aware formatting",
-  "No translation coverage enforcement",
+const FEATURES = [
+  {
+    title: "Build-Time Localization (Lingo Compiler)",
+    description:
+      "Static UI strings are compiled to locale-aware lookups at build time, then resolved by the active provider.",
+    iconPath:
+      "M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129",
+  },
+  {
+    title: "Runtime Translation API (/api/translate)",
+    description:
+      "Dynamic strings are posted to the API route, validated against supported locales, localized with lingo.dev SDK, and cached.",
+    iconPath: "M4 6h16M4 12h16m-7 6h7",
+  },
+  {
+    title: "Scoped RTL Rendering",
+    description:
+      "Arabic direction is applied to the target preview only, so source and localized output can be compared side-by-side.",
+    iconPath: "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z",
+  },
+  {
+    title: "Locale Formatting with Intl",
+    description:
+      "Numbers, currencies, and dates use Intl formatters with locale currency mapping (USD, EUR, AED).",
+    iconPath: "M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4",
+  },
+  {
+    title: "Typed Locale Boundary",
+    description:
+      "Locale handling is constrained to a strict app set: en, es, de, ar, with runtime guard checks for invalid values.",
+    iconPath: "M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z",
+  },
+  {
+    title: "Coverage Gate Simulation",
+    description:
+      "The playground models CI behavior with translation coverage pass/fail states before shipping localization changes.",
+    iconPath:
+      "M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z",
+  },
 ] as const;
 
-const SOLUTION_ROWS = [
-  {
-    title: "Build-time localization",
-    description:
-      "Static interface text is compiled once and shipped per locale instead of patched manually.",
-  },
-  {
-    title: "Runtime translation",
-    description:
-      "Dynamic text is translated at request time through the SDK-powered translation endpoint.",
-  },
-  {
-    title: "RTL handling",
-    description:
-      "Direction behavior is explicit and testable, including Arabic right-to-left rendering.",
-  },
-  {
-    title: "Locale formatting",
-    description:
-      "Currency, number, and date formatting update with locale-specific conventions.",
-  },
-  {
-    title: "Workflow automation",
-    description:
-      "CLI and CI steps keep localization synchronized and enforce release readiness.",
-  },
-] as const;
-
-const QUICK_FLOW = [
-  "Spot where localization fails.",
-  "Understand the architecture that fixes it.",
-  "Open the live lab and validate behavior.",
-] as const;
+const TECHNOLOGIES = ["Next.js 16", "React 19", "Tailwind CSS v4", "Lingo.dev"] as const;
 
 export default function LandingPage() {
   return (
-    <div className="space-y-14">
-      <section className="-mx-[var(--content-gutter)] border-t border-dashed border-[color:var(--line)] px-[var(--content-gutter)] pt-10">
-        <div className="grid border border-dashed border-[color:var(--line)] lg:grid-cols-[minmax(0,1.12fr)_minmax(0,0.88fr)]">
-          <div className="border-b border-dashed border-[color:var(--line)] bg-[color:color-mix(in_oklab,var(--surface)_86%,transparent)] p-7 sm:p-10 lg:border-b-0 lg:border-r">
-            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[color:color-mix(in_oklab,var(--text)_58%,var(--muted))]">
-              Localization Lab
-            </p>
+    <div className="page-stack landing-page">
+      <section className="section-divider relative overflow-hidden py-22 sm:py-30">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,color-mix(in_oklab,var(--accent)_20%,transparent),transparent_45%),radial-gradient(circle_at_80%_18%,color-mix(in_oklab,var(--line)_60%,transparent),transparent_48%)]"
+        />
 
-            <h1 className="mt-4 max-w-[9ch] text-[clamp(2.25rem,7vw,5.25rem)] font-[680] leading-[0.93] tracking-[-0.065em]">
-              Build. Switch. Translate.
+        <div className="relative mx-auto max-w-5xl">
+          <div className="mx-auto max-w-3xl space-y-8 text-center">
+            <div className="inline-flex items-center rounded-full border border-[var(--line-strong)] bg-[color:color-mix(in_oklab,var(--surface)_88%,transparent)] px-3 py-1 text-sm text-[var(--muted)] shadow-[0_0_0_1px_color-mix(in_oklab,var(--line)_45%,transparent)]">
+              <span className="mr-2 flex h-2 w-2 rounded-full bg-[var(--accent-strong)]" />
+              Powered by Lingo.dev
+            </div>
+
+            <h1 className="text-balance text-5xl font-bold tracking-tight text-[var(--text)] sm:text-7xl">
+              Build global apps <br />
+              <span className="text-[var(--accent-strong)]">without the headache.</span>
             </h1>
 
-            <p className="mt-5 max-w-[48ch] text-[clamp(1rem,1.9vw,1.22rem)] leading-[1.62] text-[color:var(--muted)]">
-              A real-world localization lab for production-grade i18n workflows.
+            <p className="mx-auto max-w-2xl text-lg leading-relaxed text-[var(--muted)]">
+              LangOS is a next-generation localization playground. Experience automated translations,
+              seamless RTL support, and locale-aware formatting—all built with Next.js 16 and
+              Lingo.dev.
             </p>
 
-            <div className="mt-7 flex flex-wrap gap-3">
-              <Link
-                className="inline-flex min-h-10 items-center rounded-full border border-[#c5ccd5] bg-[#eef2f6] px-4 text-[0.95rem] font-semibold text-[#0f141a] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#f8fafc]"
-                href="/playground"
-              >
+            <div className="flex flex-wrap items-center justify-center gap-4">
+              <Link className="primary-link rounded-full shadow-[0_10px_24px_color-mix(in_oklab,var(--accent)_17%,transparent)]" href="/playground">
                 Open Playground
               </Link>
-              <Link
-                className="inline-flex min-h-10 items-center rounded-full border border-[color:var(--line-strong)] bg-transparent px-4 text-[0.95rem] font-semibold text-[color:var(--muted)] transition-all duration-200 hover:-translate-y-0.5 hover:border-[color:color-mix(in_oklab,var(--line-strong)_72%,var(--text))] hover:text-[color:var(--text)]"
-                href="/developers"
-              >
-                For Developers
+              <Link className="secondary-link rounded-full" href="/developers">
+                Documentation
               </Link>
             </div>
-
-            <div className="mt-8 border-t border-dashed border-[color:var(--line)] pt-4">
-              <p className="text-[0.9rem] text-[color:color-mix(in_oklab,var(--text)_74%,var(--muted))]">
-                Understand LangOS in under 30 seconds.
-              </p>
-            </div>
           </div>
-
-          <aside className="bg-[color:color-mix(in_oklab,var(--surface)_72%,transparent)] p-7 sm:p-10">
-            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[color:color-mix(in_oklab,var(--text)_58%,var(--muted))]">
-              30-second flow
-            </p>
-
-            <ol className="mt-4 grid gap-3">
-              {QUICK_FLOW.map((step, index) => (
-                <li
-                  className="group flex min-h-14 items-center gap-3 border border-dashed border-[color:var(--line)] px-4 text-[0.97rem] text-[color:color-mix(in_oklab,var(--text)_76%,var(--muted))] transition-all duration-200 hover:-translate-y-0.5 hover:border-[color:color-mix(in_oklab,var(--line-strong)_76%,var(--text))]"
-                  key={step}
-                >
-                  <span className="inline-flex h-6 w-6 items-center justify-center rounded-full border border-[color:var(--line-strong)] text-[0.78rem] font-semibold text-[color:color-mix(in_oklab,var(--text)_82%,var(--muted))]">
-                    {index + 1}
-                  </span>
-                  <span>{step}</span>
-                </li>
-              ))}
-            </ol>
-          </aside>
         </div>
       </section>
 
-      <section className="-mx-[var(--content-gutter)] border-t border-dashed border-[color:var(--line)] px-[var(--content-gutter)] pt-10">
-        <div className="grid gap-8 border border-dashed border-[color:var(--line)] p-7 sm:p-10 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)]">
-          <h2 className="max-w-[18ch] text-[clamp(2rem,4.7vw,4.1rem)] font-[650] leading-[0.97] tracking-[-0.058em]">
-            Most apps get localization wrong.
+      <section className="section-divider py-18 sm:py-22">
+        <div className="mx-auto max-w-6xl">
+          <div className="mx-auto max-w-3xl text-center">
+            <h2 className="text-3xl font-bold tracking-tight text-[var(--text)] sm:text-4xl">
+              What this project implements
+            </h2>
+            <p className="mt-4 text-lg text-[var(--muted)]">
+              Real mechanisms from this codebase, not marketing claims.
+            </p>
+          </div>
+
+          <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+            {FEATURES.map((feature) => (
+              <article
+                className="group relative overflow-hidden rounded-2xl border border-[var(--line)] bg-[color:color-mix(in_oklab,var(--surface)_90%,transparent)] p-7 transition duration-200 hover:-translate-y-0.5 hover:border-[color:color-mix(in_oklab,var(--line-strong)_65%,var(--accent))]"
+                key={feature.title}
+              >
+                <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-lg border border-[var(--line)] bg-[var(--accent-soft)] text-[var(--accent-strong)]">
+                  <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path
+                      d={feature.iconPath}
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                    />
+                  </svg>
+                </div>
+
+                <h3 className="mb-2 text-xl font-semibold text-[var(--text)]">{feature.title}</h3>
+                <p className="leading-relaxed text-[var(--muted)]">{feature.description}</p>
+
+                <div
+                  aria-hidden="true"
+                  className="pointer-events-none absolute right-0 top-0 h-18 w-18 rounded-bl-3xl bg-[color:color-mix(in_oklab,var(--accent)_8%,transparent)] opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                />
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section-divider py-16">
+        <div className="mx-auto max-w-4xl text-center">
+          <h2 className="mb-8 text-2xl font-semibold text-[var(--text)]">
+            Built with modern technologies
           </h2>
 
-          <ul className="m-0 grid list-disc gap-3 pl-5 text-[1.06rem] leading-[1.45] text-[color:color-mix(in_oklab,var(--text)_86%,var(--muted))]">
-            {PROBLEM_POINTS.map((point) => (
-              <li className="transition-transform duration-200 hover:translate-x-0.5" key={point}>
-                {point}
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
-
-      <section className="-mx-[var(--content-gutter)] border-t border-dashed border-[color:var(--line)] px-[var(--content-gutter)] pt-10">
-        <div className="border border-dashed border-[color:var(--line)]">
-          <div className="flex flex-wrap items-end justify-between gap-3 border-b border-dashed border-[color:var(--line)] px-7 py-7 sm:px-10">
-            <h2 className="max-w-[20ch] text-[clamp(1.95rem,4.2vw,3.6rem)] font-[650] leading-[1.03] tracking-[-0.054em]">
-              LangOS demonstrates production-grade localization.
-            </h2>
-            <p className="text-sm text-[color:var(--muted)]">Five capabilities. One coherent system.</p>
-          </div>
-
-          <div>
-            {SOLUTION_ROWS.map((row, index) => (
-              <article
-                className="grid min-h-[4.7rem] items-start gap-3 border-b border-dashed border-[color:var(--line)] px-7 py-4 transition-all duration-200 hover:-translate-y-0.5 hover:bg-[color:color-mix(in_oklab,var(--surface)_90%,transparent)] sm:px-10 lg:grid-cols-[64px_minmax(190px,0.4fr)_1fr] lg:gap-5"
-                key={row.title}
+          <div className="mx-auto flex max-w-3xl flex-wrap justify-center gap-3">
+            {TECHNOLOGIES.map((technology) => (
+              <span
+                className="rounded-full border border-[var(--line)] bg-[color:color-mix(in_oklab,var(--surface)_85%,transparent)] px-4 py-2 text-sm font-semibold text-[color:color-mix(in_oklab,var(--text)_90%,var(--muted))] transition-colors duration-200 hover:border-[var(--line-strong)]"
+                key={technology}
               >
-                <p className="m-0 text-xs font-semibold tracking-[0.06em] text-[color:color-mix(in_oklab,var(--text)_50%,var(--muted))]">
-                  {String(index + 1).padStart(2, "0")}
-                </p>
-                <h3 className="m-0 text-[1rem] font-semibold tracking-[-0.01em]">{row.title}</h3>
-                <p className="m-0 leading-[1.62] text-[color:var(--muted)]">{row.description}</p>
-              </article>
+                {technology}
+              </span>
             ))}
           </div>
         </div>

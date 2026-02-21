@@ -4,7 +4,7 @@ import ThemeToggle from "./ThemeToggle";
 export default function Navigation() {
   return (
     <header className="nav-shell">
-      <div className="shell nav-inner">
+      <div className="shell nav-inner content-shell">
         <nav aria-label="Primary" className="nav-links">
           <Link className="brand-link" href="/">
             <span className="brand-mark" aria-hidden="true" />

@@ -34,7 +34,7 @@ export default function RootLayout({
           devWidget={{ enabled: false }}
         >
           <Navigation />
-          <main className="shell content-shell py-14 sm:py-16">{children}</main>
+          <main className="shell content-shell">{children}</main>
         </LingoProvider>
       </body>
     </html>
