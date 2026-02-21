@@ -28,18 +28,21 @@ function getInitialTheme(): ThemeMode {
 }
 
 export default function ThemeToggle() {
-  const [theme, setTheme] = useState<ThemeMode>("light");
+  const [theme, setTheme] = useState<ThemeMode>(() => {
+    if (typeof window === "undefined") {
+      return "light";
+    }
+
+    return getInitialTheme();
+  });
 
   useEffect(() => {
-    const initialTheme = getInitialTheme();
-    setTheme(initialTheme);
-    applyTheme(initialTheme);
-  }, []);
+    applyTheme(theme);
+  }, [theme]);
 
   const switchTheme = () => {
     const nextTheme: ThemeMode = theme === "dark" ? "light" : "dark";
     setTheme(nextTheme);
-    applyTheme(nextTheme);
 
     try {
       window.localStorage.setItem(STORAGE_KEY, nextTheme);
