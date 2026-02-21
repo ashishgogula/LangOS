@@ -42,23 +42,7 @@ body {
 }
 
 body {
-  background:
-    repeating-linear-gradient(
-      90deg,
-      transparent 0,
-      transparent 174px,
-      color-mix(in oklab, var(--line) 34%, transparent) 174px,
-      color-mix(in oklab, var(--line) 34%, transparent) 175px
-    ),
-    repeating-linear-gradient(
-      0deg,
-      transparent 0,
-      transparent 174px,
-      color-mix(in oklab, var(--line) 26%, transparent) 174px,
-      color-mix(in oklab, var(--line) 26%, transparent) 175px
-    ),
-    radial-gradient(circle at 84% -6%, color-mix(in oklab, var(--accent) 15%, transparent), transparent 42%),
-    var(--bg);
+  background: var(--bg);
   color: var(--text);
   font-family: var(--font-geist-sans), "Segoe UI", sans-serif;
   text-rendering: optimizeLegibility;
