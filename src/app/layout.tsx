@@ -35,6 +35,18 @@ export default function RootLayout({
         >
           <Navigation />
           <main className="shell content-shell">{children}</main>
+          <footer className="shell content-shell border-t border-dashed border-[color:var(--line)] py-5 text-center text-sm text-[color:var(--muted)]">
+            Built by{" "}
+            <a
+              className="font-semibold text-[color:var(--text)] underline-offset-4 hover:underline"
+              href="https://ashishgogula.in"
+              rel="noreferrer"
+              target="_blank"
+            >
+              ashishgogula
+            </a>
+            .
+          </footer>
         </LingoProvider>
       </body>
     </html>
