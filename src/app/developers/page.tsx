@@ -43,7 +43,7 @@ const FAILURE_CASES = [
 
 export default function DevelopersPage() {
   return (
-    <div className="page-stack">
+    <div className="page-stack developers-page">
       <section className="section-block section-divider">
         <p className="section-kicker">Developer Philosophy</p>
         <h1 className="section-title">Why most apps fail localization</h1>
@@ -54,7 +54,7 @@ export default function DevelopersPage() {
       </section>
 
       {FAILURE_CASES.map((caseItem, index) => (
-        <section className="section-block section-divider" key={caseItem.title}>
+        <section className="section-block section-divider developer-case" key={caseItem.title}>
           <h2 className="section-title">
             {index + 1}. {caseItem.title}
           </h2>

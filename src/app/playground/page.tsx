@@ -143,7 +143,7 @@ export default function PlaygroundPage() {
   };
 
   return (
-    <div className="page-stack">
+    <div className="page-stack playground-page">
       <section className="section-block section-divider">
         <p className="section-kicker">Localization Lab</p>
         <h1 className="section-title">Structured Localization Playground</h1>

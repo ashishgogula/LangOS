@@ -36,32 +36,52 @@ const SOLUTION_ROWS = [
   },
 ] as const;
 
+
 export default function LandingPage() {
   return (
-    <div className="page-stack">
-      <section className="hero-section">
-        <p className="section-kicker">LangOS</p>
-        <h1 className="hero-title">Build. Switch. Translate.</h1>
-        <p className="hero-subtext">
-          A real-world localization lab powered by Lingo.dev.
-        </p>
-        <div className="hero-actions">
-          <Link className="primary-link" href="/playground">
-            Open Playground
-          </Link>
-          <Link className="secondary-link" href="/developers">
-            For Developers
-          </Link>
+    <div className="page-stack landing-page">
+      <section className="hero-section hero-frame section-divider">
+        <div className="hero-layout">
+          <div className="hero-copy-panel">
+            <p className="section-kicker">Localization Lab</p>
+            <h1 className="hero-title">Build. Switch. Translate.</h1>
+            <p className="hero-subtext">
+              A real-world localization lab powered by Lingo.dev.
+            </p>
+            <div className="hero-actions">
+              <Link className="primary-link" href="/playground">
+                Open Playground
+              </Link>
+              <Link className="secondary-link" href="/developers">
+                For Developers
+              </Link>
+            </div>
+          </div>
+
+          <div className="hero-visual" aria-hidden="true">
+            <div className="chip-network">
+              <span className="network-wire wire-1" />
+              <span className="network-wire wire-2" />
+              <span className="network-wire wire-3" />
+              <span className="network-wire wire-4" />
+              <div className="chip-core">
+                <span className="brand-mark brand-mark-large" />
+              </div>
+            </div>
+          </div>
         </div>
+
       </section>
 
       <section className="section-block section-divider">
-        <h2 className="section-title">Most apps get localization wrong.</h2>
-        <ul className="problem-list">
-          {PROBLEM_POINTS.map((point) => (
-            <li key={point}>{point}</li>
-          ))}
-        </ul>
+        <div className="split-section">
+          <h2 className="section-title">Most apps get localization wrong.</h2>
+          <ul className="problem-list">
+            {PROBLEM_POINTS.map((point) => (
+              <li key={point}>{point}</li>
+            ))}
+          </ul>
+        </div>
       </section>
 
       <section className="section-block section-divider">

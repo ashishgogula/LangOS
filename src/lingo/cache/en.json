@@ -93,6 +93,12 @@
     "ba54b8be65b1": "Locale",
     "87cecdd828ce": "Currency",
     "0368d3ae1aba": "Number",
-    "22fed6e6a78d": "Date"
+    "22fed6e6a78d": "Date",
+    "d19e2cd7aaed": "Localization Lab",
+    "7ccebeb3cb21": "Reference brands",
+    "cda1acfee5bb": "The target panel can flip direction without moving source text.",
+    "861582cad2f7": "Checkout",
+    "8ca69074eb0c": "Address",
+    "70821947cf7e": "Payment"
   }
 }
