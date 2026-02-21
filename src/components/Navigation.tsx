@@ -1,61 +1,29 @@
-"use client";
-
-import dynamic from "next/dynamic";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import LanguageSwitcher from "./LanguageSwitcher";
-
-const ThemeToggle = dynamic(() => import("./ThemeToggle"), {
-  ssr: false,
-});
-
-const NAV_ITEMS = [
-  { href: "/", label: "Home" },
-  { href: "/dashboard", label: "Dashboard" },
-  { href: "/guide", label: "Guide" },
-] as const;
-
-function isActive(pathname: string, href: string): boolean {
-  if (href === "/") {
-    return pathname === "/";
-  }
-
-  return pathname.startsWith(href);
-}
+import ThemeToggle from "./ThemeToggle";
 
 export default function Navigation() {
-  const pathname = usePathname();
-
   return (
-    <header className="nav-shell sticky top-0 z-20 backdrop-blur-xl">
-      <div className="shell-container flex h-16 items-center justify-between gap-6">
-        <div className="flex items-center gap-8">
-          <Link className="nav-brand flex items-center gap-2 text-xl font-semibold tracking-tight" href="/">
-            <span className="nav-dot inline-flex h-2 w-2 rounded-full" />
+    <header className="nav-shell">
+      <div className="shell nav-inner">
+        <nav aria-label="Primary" className="nav-links">
+          <Link className="brand-link" href="/">
             LangOS
           </Link>
+          <span className="nav-divider" aria-hidden="true">
+            |
+          </span>
+          <Link className="nav-link" href="/playground">
+            Playground
+          </Link>
+          <span className="nav-divider" aria-hidden="true">
+            |
+          </span>
+          <Link className="nav-link" href="/developers">
+            Developers
+          </Link>
+        </nav>
 
-          <nav aria-label="Primary" className="hidden items-center gap-2 sm:flex">
-            {NAV_ITEMS.map((item) => {
-              const active = isActive(pathname, item.href);
-
-              return (
-                <Link
-                  className={`nav-link px-4 py-2 text-sm font-medium ${active ? "nav-link-active" : ""}`}
-                  href={item.href}
-                  key={item.href}
-                >
-                  {item.label}
-                </Link>
-              );
-            })}
-          </nav>
-        </div>
-
-        <div className="flex items-center gap-2">
-          <ThemeToggle />
-          <LanguageSwitcher />
-        </div>
+        <ThemeToggle />
       </div>
     </header>
   );

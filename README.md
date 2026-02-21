@@ -1,14 +1,21 @@
 # LangOS
 
-LangOS is a production-oriented localization demo built for the Lingo.dev hackathon.
+LangOS is a focused localization playground built with Next.js 16 and Lingo.dev.
 
-It shows the complete multilingual flow in a Next.js App Router app:
-- build-time localization with Lingo Compiler
-- runtime locale switching (persisted)
-- runtime dynamic translation through an API route
-- RTL support for Arabic
-- locale-aware number/date formatting
-- release readiness checks
+## What It Demonstrates
+
+- Build-time localization with Lingo Compiler
+- Runtime translation through an SDK-backed API route
+- Locale switching with persistence
+- RTL layout support for Arabic
+- Locale-aware currency and date formatting
+- CLI and CI localization workflow
+
+## Routes
+
+- `/` - Overview of localization infrastructure
+- `/playground` - Interactive localization demo
+- `/workflow` - Developer workflow and CI example
 
 ## Tech Stack
 
@@ -28,66 +35,29 @@ npm ci
 
 2. Configure environment:
 
-Create `.env.local` with:
-
 ```bash
 LINGODOTDEV_API_KEY=your_lingo_key
 ```
 
-3. Run dev server:
+3. Start development:
 
 ```bash
 npm run dev
 ```
 
-4. Open:
-
-```text
-http://localhost:3000
-```
-
 ## Scripts
 
-- `npm run dev` - start development server
-- `npm run lint` - run ESLint
-- `npm run build` - production build check
-- `npm run start` - run production server
-- `npm run lingo:run` - execute Lingo CLI sync
+- `npm run dev`
+- `npm run lint`
+- `npm run build`
+- `npm run start`
+- `npm run lingo:run`
 
-## Project Highlights
+## Key Files
 
-- `next.config.ts`  
-  Lingo Compiler config (`sourceLocale: "en"`, `targetLocales: ["es", "de", "ar"]`)
-
-- `src/app/layout.tsx`  
-  Root wrapped in `LingoProvider`, theme bootstrapping script, RTL provider
-
-- `src/components/LanguageSwitcher.tsx`  
-  Runtime locale switcher and persistence
-
-- `src/app/api/translate/route.ts`  
-  Runtime dynamic translation endpoint using Lingo SDK
-
-- `src/app/dashboard/page.tsx`  
-  Translation input/output, history, readiness checks, Intl formatting demo
-
-## CI / Workflow Notes
-
-Workflow file: `.github/workflows/lingo.yml`
-
-The CI now:
-- runs on `push` and `pull_request` to `main`
-- runs `lint` and `build`
-- runs Lingo CLI only when both are true:
-  - `LINGO_API_KEY` secret is present
-  - `i18n.json` has at least one configured bucket
-
-This avoids false failures from running Lingo CLI with empty bucket config.
-
-## Hackathon Submission Checklist
-
-- [ ] Public repo with clear README
-- [ ] Live deployment URL
-- [ ] 2-3 minute demo video
-- [ ] Demo includes locale switch + runtime translation + RTL + release checks
-- [ ] CI passing on main
+- `next.config.ts` - Lingo Compiler integration
+- `src/app/layout.tsx` - `LingoProvider`, theme bootstrap, RTL support
+- `src/components/LanguageSwitcher.tsx` - locale switching
+- `src/app/api/translate/route.ts` - runtime translation endpoint
+- `src/app/playground/page.tsx` - static/dynamic localization demo
+- `src/app/workflow/page.tsx` - CLI and CI workflow docs

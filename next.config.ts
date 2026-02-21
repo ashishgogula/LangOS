@@ -8,6 +8,7 @@ export default async function config(): Promise<NextConfig> {
     sourceRoot: "src",
     sourceLocale: "en",
     targetLocales: ["es", "de", "ar"],
+    models: "lingo.dev",
     localePersistence: {
       type: "cookie",
       config: {
@@ -16,7 +17,7 @@ export default async function config(): Promise<NextConfig> {
       },
     },
     dev: {
-      usePseudotranslator: true,
+      usePseudotranslator: false,
     },
   });
 
@@ -25,8 +26,7 @@ export default async function config(): Promise<NextConfig> {
     compiler: {
       ...lingoNextConfig.compiler,
       runAfterProductionCompile: async () => {
-        // Runtime locale switching and dev translation stay enabled;
-        // skip build-time remote translation generation when no API key is present.
+        // Keep CI and local builds deterministic for this playground.
       },
     },
   };

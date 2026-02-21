@@ -10,10 +10,15 @@ const translationCache = new Map<string, string>();
 type TranslateRequest = {
   text?: unknown;
   targetLocale?: unknown;
+  sourceLocale?: unknown;
 };
 
-function createCacheKey(text: string, targetLocale: string): string {
-  return `${targetLocale}::${text}`;
+function createCacheKey(
+  text: string,
+  sourceLocale: string,
+  targetLocale: string,
+): string {
+  return `${sourceLocale}->${targetLocale}::${text}`;
 }
 
 async function withTimeout<T>(promise: Promise<T>, timeoutMs: number): Promise<T> {
@@ -46,18 +51,20 @@ export async function POST(request: Request) {
   }
 
   const text = typeof body.text === "string" ? body.text.trim() : "";
-  const rawLocale =
+  const rawTargetLocale =
     typeof body.targetLocale === "string" ? body.targetLocale : DEFAULT_LOCALE;
+  const rawSourceLocale =
+    typeof body.sourceLocale === "string" ? body.sourceLocale : DEFAULT_LOCALE;
 
   if (!text) {
     return NextResponse.json({ error: "Text is required." }, { status: 400 });
   }
 
-  if (!isAppLocale(rawLocale)) {
+  if (!isAppLocale(rawTargetLocale) || !isAppLocale(rawSourceLocale)) {
     return NextResponse.json({ error: "Unsupported locale." }, { status: 400 });
   }
 
-  if (rawLocale === DEFAULT_LOCALE) {
+  if (rawSourceLocale === rawTargetLocale) {
     return NextResponse.json({ translatedText: text });
   }
 
@@ -68,7 +75,7 @@ export async function POST(request: Request) {
     );
   }
 
-  const cacheKey = createCacheKey(text, rawLocale);
+  const cacheKey = createCacheKey(text, rawSourceLocale, rawTargetLocale);
   const cachedResult = translationCache.get(cacheKey);
   if (cachedResult) {
     return NextResponse.json({ translatedText: cachedResult });
@@ -79,8 +86,8 @@ export async function POST(request: Request) {
 
     const translatedText = await withTimeout(
       engine.localizeText(text, {
-        sourceLocale: DEFAULT_LOCALE,
-        targetLocale: rawLocale,
+        sourceLocale: rawSourceLocale,
+        targetLocale: rawTargetLocale,
         fast: true,
       }),
       TRANSLATION_TIMEOUT_MS,

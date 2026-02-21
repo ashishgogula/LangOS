@@ -3,7 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import type { ReactNode } from "react";
 import { LingoProvider } from "@lingo.dev/compiler/react/next";
 import Navigation from "@/components/Navigation";
-import RtlProvider from "@/components/RtlProvider";
+import { DEFAULT_LOCALE } from "@/lib/locales";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -16,25 +16,9 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
 });
 
-const THEME_INIT_SCRIPT = `(() => {
-  try {
-    const key = "langos:theme:v1";
-    const stored = window.localStorage.getItem(key);
-    const resolved = stored === "light" || stored === "dark"
-      ? stored
-      : "dark";
-
-    document.documentElement.dataset.theme = resolved;
-    document.documentElement.style.colorScheme = resolved;
-  } catch {
-    document.documentElement.dataset.theme = "dark";
-    document.documentElement.style.colorScheme = "dark";
-  }
-})();`;
-
 export const metadata: Metadata = {
   title: "LangOS",
-  description: "Lingo.dev localization starter with onboarding and release checks",
+  description: "LangOS: localization architecture, playground, and developer philosophy.",
 };
 
 export default function RootLayout({
@@ -44,23 +28,10 @@ export default function RootLayout({
 }>) {
   return (
     <html dir="ltr" lang="en" suppressHydrationWarning>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} min-h-screen bg-[var(--background)] text-[var(--foreground)] antialiased`}
-      >
-        <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
-        <LingoProvider>
-          <RtlProvider>
-            <div className="min-h-screen">
-              <div className="announcement-bar">
-                <span>
-                  Big localization update launching soon.{" "}
-                  <a href="/guide">See the onboarding guide</a>
-                </span>
-              </div>
-              <Navigation />
-              <main className="site-main shell-container py-8 sm:py-10">{children}</main>
-            </div>
-          </RtlProvider>
+      <body className={`${geistSans.variable} ${geistMono.variable} min-h-screen antialiased`}>
+        <LingoProvider initialLocale={DEFAULT_LOCALE}>
+          <Navigation />
+          <main className="shell py-14 sm:py-16">{children}</main>
         </LingoProvider>
       </body>
     </html>

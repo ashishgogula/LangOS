@@ -1,10 +1,19 @@
 {
-    "sourceLocale": "en",
-    "targetLocales": [
-        "es",
-        "de",
-        "ar"
-    ],
-    "path": "src/**/*.{js,ts,jsx,tsx}",
-    "outDir": ".lingo"
+  "version": "1.12",
+  "locale": {
+    "source": "en",
+    "targets": [
+      "es",
+      "de",
+      "ar"
+    ]
+  },
+  "buckets": {
+    "json": {
+      "include": [
+        "src/lingo/cache/[locale].json"
+      ]
+    }
+  },
+  "$schema": "https://lingo.dev/schema/i18n.json"
 }

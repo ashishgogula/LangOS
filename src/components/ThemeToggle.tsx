@@ -6,68 +6,54 @@ type ThemeMode = "light" | "dark";
 
 const STORAGE_KEY = "langos:theme:v1";
 
-function isThemeMode(value: unknown): value is ThemeMode {
-  return value === "light" || value === "dark";
+function applyTheme(theme: ThemeMode): void {
+  const root = document.documentElement;
+  root.classList.toggle("dark", theme === "dark");
+  root.style.colorScheme = theme;
 }
 
-function getPreferredTheme(): ThemeMode {
-  if (typeof window === "undefined") {
-    return "dark";
-  }
-
+function getInitialTheme(): ThemeMode {
   try {
-    const storedTheme = window.localStorage.getItem(STORAGE_KEY);
-    if (isThemeMode(storedTheme)) {
-      return storedTheme;
+    const savedTheme = window.localStorage.getItem(STORAGE_KEY);
+    if (savedTheme === "light" || savedTheme === "dark") {
+      return savedTheme;
     }
   } catch {
-    // Ignore storage access failures.
+    // Ignore storage read failures.
   }
 
-  return "dark";
-}
-
-function applyTheme(theme: ThemeMode): void {
-  document.documentElement.dataset.theme = theme;
-  document.documentElement.style.colorScheme = theme;
+  return window.matchMedia("(prefers-color-scheme: dark)").matches
+    ? "dark"
+    : "light";
 }
 
 export default function ThemeToggle() {
-  const [theme, setTheme] = useState<ThemeMode>(() => {
-    if (typeof document === "undefined") {
-      return "dark";
-    }
-
-    const htmlTheme = document.documentElement.dataset.theme;
-    return isThemeMode(htmlTheme) ? htmlTheme : getPreferredTheme();
-  });
+  const [theme, setTheme] = useState<ThemeMode>("light");
 
   useEffect(() => {
-    applyTheme(theme);
-  }, [theme]);
+    const initialTheme = getInitialTheme();
+    setTheme(initialTheme);
+    applyTheme(initialTheme);
+  }, []);
 
   const switchTheme = () => {
-    setTheme((currentTheme) => {
-      const nextTheme: ThemeMode = currentTheme === "dark" ? "light" : "dark";
-      applyTheme(nextTheme);
+    const nextTheme: ThemeMode = theme === "dark" ? "light" : "dark";
+    setTheme(nextTheme);
+    applyTheme(nextTheme);
 
-      try {
-        window.localStorage.setItem(STORAGE_KEY, nextTheme);
-      } catch {
-        // Ignore storage write failures.
-      }
-
-      return nextTheme;
-    });
+    try {
+      window.localStorage.setItem(STORAGE_KEY, nextTheme);
+    } catch {
+      // Ignore storage write failures.
+    }
   };
-
-  const nextLabel = theme === "dark" ? "Light" : "Dark";
 
   return (
     <button
-      aria-label={`Switch to ${nextLabel.toLowerCase()} mode`}
-      className="theme-toggle h-8 w-8 px-0 text-xs"
+      aria-label="Toggle theme"
+      className="icon-btn"
       onClick={switchTheme}
+      title="Toggle theme"
       type="button"
     >
       {theme === "dark" ? <SunIcon /> : <MoonIcon />}
@@ -79,7 +65,7 @@ function SunIcon() {
   return (
     <svg
       aria-hidden="true"
-      className="h-3.5 w-3.5"
+      className="h-4 w-4"
       fill="none"
       viewBox="0 0 24 24"
       xmlns="http://www.w3.org/2000/svg"
@@ -99,7 +85,7 @@ function MoonIcon() {
   return (
     <svg
       aria-hidden="true"
-      className="h-3.5 w-3.5"
+      className="h-4 w-4"
       fill="none"
       viewBox="0 0 24 24"
       xmlns="http://www.w3.org/2000/svg"

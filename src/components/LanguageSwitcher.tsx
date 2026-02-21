@@ -22,11 +22,11 @@ export default function LanguageSwitcher() {
   };
 
   return (
-    <label className="flex items-center gap-2 text-xs text-[var(--muted)]">
-      <span className="hidden sm:inline">Locale</span>
+    <label className="flex items-center gap-2 text-xs text-zinc-600">
+      <span>Language</span>
       <select
         aria-label="Language"
-        className="select-base h-8 w-auto min-w-24 px-2.5 text-xs"
+        className="select-field min-w-26"
         disabled={isLoading}
         onChange={handleChange}
         value={currentLocale}

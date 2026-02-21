@@ -10,6 +10,7 @@ type TranslateApiResponse = {
 export async function translateText(
   text: string,
   targetLocale: AppLocale,
+  sourceLocale: AppLocale,
 ): Promise<string> {
   const controller = new AbortController();
   const timeoutId = setTimeout(() => {
@@ -22,7 +23,7 @@ export async function translateText(
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ text, targetLocale }),
+      body: JSON.stringify({ text, targetLocale, sourceLocale }),
       signal: controller.signal,
     });
 
