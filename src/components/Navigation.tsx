@@ -1,7 +1,14 @@
+import { cookies } from "next/headers";
 import Link from "next/link";
 import ThemeToggle from "./ThemeToggle";
 
-export default function Navigation() {
+type ThemeMode = "light" | "dark";
+
+export default async function Navigation() {
+  const cookieStore = await cookies();
+  const themeCookie = cookieStore.get("langos_theme")?.value;
+  const initialTheme: ThemeMode = themeCookie === "dark" ? "dark" : "light";
+
   return (
     <header className="nav-shell">
       <div className="shell nav-inner content-shell">
@@ -29,7 +36,7 @@ export default function Navigation() {
             <span className="powered-label">Powered by</span>
             <LingoWordmark className="powered-logo" />
           </div>
-          <ThemeToggle />
+          <ThemeToggle initialTheme={initialTheme} />
         </div>
       </div>
     </header>

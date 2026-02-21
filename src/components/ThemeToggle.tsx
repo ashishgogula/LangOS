@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 type ThemeMode = "light" | "dark";
 
 const STORAGE_KEY = "langos:theme:v1";
+const THEME_COOKIE = "langos_theme";
 
 function applyTheme(theme: ThemeMode): void {
   const root = document.documentElement;
@@ -12,29 +13,8 @@ function applyTheme(theme: ThemeMode): void {
   root.style.colorScheme = theme;
 }
 
-function getInitialTheme(): ThemeMode {
-  try {
-    const savedTheme = window.localStorage.getItem(STORAGE_KEY);
-    if (savedTheme === "light" || savedTheme === "dark") {
-      return savedTheme;
-    }
-  } catch {
-    // Ignore storage read failures.
-  }
-
-  return window.matchMedia("(prefers-color-scheme: dark)").matches
-    ? "dark"
-    : "light";
-}
-
-export default function ThemeToggle() {
-  const [theme, setTheme] = useState<ThemeMode>(() => {
-    if (typeof window === "undefined") {
-      return "light";
-    }
-
-    return getInitialTheme();
-  });
+export default function ThemeToggle({ initialTheme }: { initialTheme: ThemeMode }) {
+  const [theme, setTheme] = useState<ThemeMode>(initialTheme);
 
   useEffect(() => {
     applyTheme(theme);
@@ -49,6 +29,8 @@ export default function ThemeToggle() {
     } catch {
       // Ignore storage write failures.
     }
+
+    document.cookie = `${THEME_COOKIE}=${nextTheme}; Path=/; Max-Age=31536000; SameSite=Lax`;
   };
 
   return (
