@@ -770,6 +770,34 @@ button {
   padding: 1rem;
 }
 
+.playground-page .section-divider {
+  padding-top: 1.45rem;
+}
+
+.playground-page > .section-block.section-divider:first-child {
+  padding-top: 2.2rem;
+  padding-bottom: 1.25rem;
+}
+
+.playground-page .section-block {
+  gap: 1.32rem;
+}
+
+.playground-page .lab-columns-head {
+  margin-top: 0.9rem;
+  padding-top: 1.35rem;
+  padding-bottom: 0.25rem;
+}
+
+.playground-page .lab-section {
+  gap: 1.18rem;
+  padding-top: 2.3rem;
+}
+
+.playground-page .section-head {
+  gap: 0.58rem;
+}
+
 .developers-page .section-divider {
   padding-top: 1.4rem;
 }
@@ -822,6 +850,25 @@ button {
 
   .powered-label {
     display: none;
+  }
+
+  .playground-page .section-divider {
+    padding-top: 1.1rem;
+  }
+
+  .playground-page > .section-block.section-divider:first-child {
+    padding-top: 1.5rem;
+    padding-bottom: 0.9rem;
+  }
+
+  .playground-page .lab-columns-head {
+    margin-top: 0.72rem;
+    padding-top: 1.02rem;
+    padding-bottom: 0.1rem;
+  }
+
+  .playground-page .lab-section {
+    padding-top: 1.85rem;
   }
 
   .developers-page .section-divider {
