@@ -31,7 +31,7 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable} min-h-screen antialiased`}>
         <LingoProvider initialLocale={DEFAULT_LOCALE}>
           <Navigation />
-          <main className="shell py-14 sm:py-16">{children}</main>
+          <main className="shell content-shell py-14 sm:py-16">{children}</main>
         </LingoProvider>
       </body>
     </html>

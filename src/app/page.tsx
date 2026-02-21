@@ -40,7 +40,7 @@ const SOLUTION_ROWS = [
 export default function LandingPage() {
   return (
     <div className="page-stack landing-page">
-      <section className="hero-section hero-frame section-divider">
+      <section className="hero-section section-divider">
         <div className="hero-layout">
           <div className="hero-copy-panel">
             <p className="section-kicker">Localization Lab</p>

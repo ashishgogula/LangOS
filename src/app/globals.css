@@ -93,6 +93,12 @@ button {
   width: min(1240px, calc(100% - 2.25rem));
 }
 
+.content-shell {
+  --content-gutter: clamp(0.85rem, 1.5vw, 1.35rem);
+  border-inline: 1px dashed var(--line);
+  padding-inline: var(--content-gutter);
+}
+
 .nav-shell {
   backdrop-filter: blur(8px);
   background: color-mix(in oklab, var(--bg) 88%, transparent);
@@ -203,6 +209,8 @@ button {
 
 .section-divider {
   border-top: 1px dashed var(--line);
+  margin-inline: calc(var(--content-gutter) * -1);
+  padding-inline: var(--content-gutter);
   padding-top: 2.4rem;
 }
 
@@ -229,11 +237,6 @@ button {
   line-height: 1.72;
   margin: 0;
   max-width: 72ch;
-}
-
-.hero-frame {
-  border-inline: 1px dashed var(--line);
-  padding-inline: clamp(1rem, 1.9vw, 1.5rem);
 }
 
 .hero-section {
@@ -460,12 +463,6 @@ button {
   margin: 0;
 }
 
-.playground-page .section-block:first-child,
-.developers-page .section-block:first-child {
-  border-inline: 1px dashed var(--line);
-  padding-inline: clamp(0.85rem, 1.5vw, 1.35rem);
-}
-
 .lab-columns-head {
   border-top: 1px dashed var(--line);
   display: grid;
@@ -500,6 +497,8 @@ button {
   border-top: 1px dotted var(--line-strong);
   display: grid;
   gap: 1.05rem;
+  margin-inline: calc(var(--content-gutter) * -1);
+  padding-inline: var(--content-gutter);
   padding-top: 2rem;
 }
 
