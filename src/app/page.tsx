@@ -46,7 +46,7 @@ export default function LandingPage() {
             <p className="section-kicker">Localization Lab</p>
             <h1 className="hero-title">Build. Switch. Translate.</h1>
             <p className="hero-subtext">
-              A real-world localization lab powered by Lingo.dev.
+              A real-world localization lab for production-grade i18n workflows.
             </p>
             <div className="hero-actions">
               <Link className="primary-link" href="/playground">

@@ -442,7 +442,11 @@ export default function PlaygroundPage() {
 }
 
 function SourceLocaleScope({ children }: { children: ReactNode }) {
-  return <LingoProvider initialLocale={DEFAULT_LOCALE}>{children}</LingoProvider>;
+  return (
+    <LingoProvider initialLocale={DEFAULT_LOCALE} devWidget={{ enabled: false }}>
+      {children}
+    </LingoProvider>
+  );
 }
 
 function TargetLocaleScope({
@@ -455,7 +459,11 @@ function TargetLocaleScope({
   children: ReactNode;
 }) {
   return (
-    <LingoProvider initialLocale={locale} key={`${scopeKey}-${locale}`}>
+    <LingoProvider
+      initialLocale={locale}
+      key={`${scopeKey}-${locale}`}
+      devWidget={{ enabled: false }}
+    >
       {children}
     </LingoProvider>
   );

@@ -132,6 +132,10 @@
     "48c078242eb3": "Developer loop",
     "ff50ab8f87c2": "Source locale baseline coverage: 100%",
     "dd52620e88e2": "Simulated translation coverage: {workflowCoverage}%",
-    "d3e562497d5d": "<strong0>How it works:</strong0> CLI refreshes translation artifacts locally, and CI blocks merges when localized output is missing."
+    "d3e562497d5d": "<strong0>How it works:</strong0> CLI refreshes translation artifacts locally, and CI blocks merges when localized output is missing.",
+    "0de2575243ef": "Powered by Lingo.dev",
+    "32104375dec6": "Powered by",
+    "3e34ee27fada": "Lingo.dev",
+    "41f6c8e2cd26": "A real-world localization lab for production-grade i18n workflows."
   }
 }
