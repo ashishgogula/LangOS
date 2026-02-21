@@ -36,7 +36,7 @@ npm ci
 2. Configure environment:
 
 ```bash
-LINGODOTDEV_API_KEY=your_lingo_key
+LINGO_API_KEY=your_lingo_key
 ```
 
 3. Start development:

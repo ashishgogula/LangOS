@@ -41,7 +41,7 @@ async function withTimeout<T>(promise: Promise<T>, timeoutMs: number): Promise<T
 
 export async function POST(request: Request) {
   const bodyPromise = request.json() as Promise<TranslateRequest>;
-  const apiKey = process.env.LINGODOTDEV_API_KEY;
+  const apiKey = process.env.LINGO_API_KEY;
 
   let body: TranslateRequest;
   try {
@@ -70,7 +70,7 @@ export async function POST(request: Request) {
 
   if (!apiKey) {
     return NextResponse.json(
-      { error: "LINGODOTDEV_API_KEY is not configured." },
+      { error: "LINGO_API_KEY is not configured." },
       { status: 503 },
     );
   }
