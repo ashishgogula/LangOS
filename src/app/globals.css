@@ -45,7 +45,17 @@ body {
   background: var(--bg);
   color: var(--text);
   font-family: var(--font-geist-sans), "Segoe UI", sans-serif;
+  line-height: 1.55;
   text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-geist-sans), "Segoe UI", sans-serif;
 }
 
 a {
@@ -56,6 +66,7 @@ a {
 code,
 pre {
   font-family: var(--font-geist-mono), "SFMono-Regular", Menlo, monospace;
+  font-variant-ligatures: none;
 }
 
 input,
@@ -79,13 +90,14 @@ button {
 
 .content-shell {
   --content-gutter: clamp(1.05rem, 2vw, 1.8rem);
-  border-inline: 1px dashed var(--line);
+  border-inline: 1px dotted var(--line);
   padding-inline: var(--content-gutter);
 }
 
 .nav-shell {
   backdrop-filter: blur(8px);
   background: color-mix(in oklab, var(--bg) 88%, transparent);
+  border-block: 1px dotted var(--line);
   position: sticky;
   top: 0;
   z-index: 50;
@@ -160,7 +172,10 @@ button {
 .nav-meta {
   align-items: center;
   display: inline-flex;
+  flex-shrink: 0;
+  flex-wrap: nowrap;
   gap: 0.58rem;
+  min-width: max-content;
 }
 
 .powered-chip {
@@ -169,16 +184,21 @@ button {
   border: 1px solid var(--line-strong);
   border-radius: 999px;
   display: inline-flex;
+  flex-shrink: 0;
   gap: 0.45rem;
   min-height: 2rem;
+  min-width: max-content;
   padding: 0.2rem 0.6rem 0.2rem 0.52rem;
+  white-space: nowrap;
 }
 
 .powered-label {
   color: var(--muted);
+  font-family: var(--font-geist-pixel-line), var(--font-geist-mono), monospace;
   font-size: 0.72rem;
   font-weight: 560;
   letter-spacing: 0.01em;
+  white-space: nowrap;
 }
 
 .powered-logo {
@@ -223,13 +243,14 @@ button {
 }
 
 .section-divider {
-  border-top: 1px solid var(--line);
+  border-top: 1px dotted var(--line);
   margin-inline: calc(var(--content-gutter) * -1);
   padding-inline: var(--content-gutter);
 }
 
 .section-kicker {
   color: color-mix(in oklab, var(--accent) 55%, var(--muted));
+  font-family: var(--font-geist-pixel-line), var(--font-geist-mono), monospace;
   font-size: 0.74rem;
   font-weight: 600;
   letter-spacing: 0.13em;
@@ -487,6 +508,7 @@ button {
 }
 
 .column-caption {
+  font-family: var(--font-geist-pixel-line), var(--font-geist-mono), monospace;
   font-size: 0.8rem;
   font-weight: 620;
   letter-spacing: 0.09em;
@@ -543,6 +565,7 @@ button {
 }
 
 .field-label {
+  font-family: var(--font-geist-pixel-line), var(--font-geist-mono), monospace;
   font-size: 0.75rem;
   font-weight: 620;
   letter-spacing: 0.09em;
@@ -607,12 +630,14 @@ button {
 
 .demo-note {
   color: var(--muted);
+  font-family: var(--font-geist-mono), "SFMono-Regular", Menlo, monospace;
   font-size: 0.8rem;
   margin: 0;
 }
 
 .runtime-output {
   border-top: 1px dashed var(--line);
+  font-family: var(--font-geist-mono), "SFMono-Regular", Menlo, monospace;
   font-size: 0.96rem;
   line-height: 1.65;
   margin: 0;
@@ -630,6 +655,7 @@ button {
   border: 1px dashed var(--line-strong);
   border-radius: 0.84rem;
   color: color-mix(in oklab, var(--muted) 88%, var(--text));
+  font-family: var(--font-geist-mono), "SFMono-Regular", Menlo, monospace;
   font-size: 0.82rem;
   line-height: 1.62;
   margin: 0;
@@ -638,6 +664,7 @@ button {
 }
 
 .inline-code {
+  font-family: var(--font-geist-mono), "SFMono-Regular", Menlo, monospace;
   margin: 0;
 }
 
@@ -658,6 +685,7 @@ button {
 
 .demo-eyebrow {
   color: color-mix(in oklab, var(--accent) 42%, var(--muted));
+  font-family: var(--font-geist-pixel-line), var(--font-geist-mono), monospace;
   font-size: 0.71rem;
   letter-spacing: 0.1em;
   margin: 0;
@@ -721,6 +749,7 @@ button {
 }
 
 .format-grid dd {
+  font-family: var(--font-geist-mono), "SFMono-Regular", Menlo, monospace;
   font-size: 0.95rem;
   margin: 0;
 }
@@ -732,6 +761,7 @@ button {
 
 .coverage-state {
   border-top: 1px dashed var(--line);
+  font-family: var(--font-geist-mono), "SFMono-Regular", Menlo, monospace;
   font-size: 0.88rem;
   margin: 0;
   padding-top: 0.58rem;
@@ -768,6 +798,90 @@ button {
   display: grid;
   gap: 0.45rem;
   padding: 1rem;
+}
+
+.services-matrix-head {
+  margin-inline: auto;
+  max-width: 44rem;
+  padding-bottom: 2rem;
+  text-align: center;
+}
+
+.services-matrix {
+  border: 1px dotted var(--line-strong);
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 0;
+}
+
+.services-cell {
+  background: color-mix(in oklab, var(--surface) 86%, transparent);
+  border-bottom: 1px dotted var(--line);
+  border-inline-end: 1px dotted var(--line);
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  min-height: 236px;
+  padding: 1.55rem;
+  transition:
+    background-color 180ms ease;
+}
+
+.services-cell:hover {
+  background: color-mix(in oklab, var(--surface) 68%, transparent);
+}
+
+.services-cell:nth-child(3n) {
+  border-inline-end: 0;
+}
+
+.services-cell:nth-last-child(-n + 3) {
+  border-bottom: 0;
+}
+
+.services-cell-icon {
+  align-items: center;
+  background: color-mix(in oklab, var(--accent-soft) 64%, var(--surface));
+  border: 1px dotted color-mix(in oklab, var(--accent) 42%, var(--line-strong));
+  border-radius: 0.7rem;
+  color: color-mix(in oklab, var(--accent-strong) 80%, var(--text));
+  display: inline-flex;
+  flex-shrink: 0;
+  height: 3rem;
+  justify-content: center;
+  width: 3rem;
+}
+
+.services-cell-head {
+  align-items: start;
+  display: grid;
+  gap: 0.95rem;
+  grid-template-columns: auto 1fr auto;
+}
+
+.services-cell-head h3 {
+  font-size: clamp(1.55rem, 2.1vw, 1.95rem);
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  line-height: 1.14;
+  margin: 0;
+  text-wrap: balance;
+}
+
+.services-cell-body {
+  color: color-mix(in oklab, var(--muted) 90%, var(--text));
+  font-size: 1.07rem;
+  line-height: 1.72;
+  margin: 0;
+  max-width: 33ch;
+}
+
+.services-cell-arrow {
+  color: color-mix(in oklab, var(--muted) 86%, transparent);
+  font-size: 1.35rem;
+  font-weight: 500;
+  line-height: 1;
+  padding-top: 0.28rem;
 }
 
 .playground-page .section-divider {
@@ -812,6 +926,31 @@ button {
   .solution-row,
   .developers-grid {
     grid-template-columns: 1fr;
+  }
+
+  .services-matrix {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .services-cell {
+    min-height: 224px;
+    padding: 1.4rem;
+  }
+
+  .services-cell:nth-child(3n) {
+    border-inline-end: 1px dotted var(--line);
+  }
+
+  .services-cell:nth-child(2n) {
+    border-inline-end: 0;
+  }
+
+  .services-cell:nth-last-child(-n + 3) {
+    border-bottom: 1px dotted var(--line);
+  }
+
+  .services-cell:nth-last-child(-n + 2) {
+    border-bottom: 0;
   }
 
   .hero-visual {
@@ -875,5 +1014,38 @@ button {
 
   .developers-page .section-divider {
     padding-top: 1.1rem;
+  }
+
+  .services-matrix {
+    grid-template-columns: 1fr;
+  }
+
+  .services-cell {
+    border-inline-end: 0;
+    gap: 0.9rem;
+    min-height: auto;
+    padding: 1.1rem 1rem 1.2rem;
+  }
+
+  .services-cell:nth-last-child(-n + 2) {
+    border-bottom: 1px dotted var(--line);
+  }
+
+  .services-cell:last-child {
+    border-bottom: 0;
+  }
+
+  .services-cell-head {
+    gap: 0.78rem;
+  }
+
+  .services-cell-head h3 {
+    font-size: 1.22rem;
+  }
+
+  .services-cell-body {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    max-width: none;
   }
 }

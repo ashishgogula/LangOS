@@ -1,20 +1,12 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { GeistMono } from "geist/font/mono";
+import { GeistPixelLine } from "geist/font/pixel";
+import { GeistSans } from "geist/font/sans";
 import type { ReactNode } from "react";
 import { LingoProvider } from "@lingo.dev/compiler/react/next";
 import Navigation from "@/components/Navigation";
 import { DEFAULT_LOCALE } from "@/lib/locales";
 import "./globals.css";
-
-const geistSans = Geist({
-  subsets: ["latin"],
-  variable: "--font-geist-sans",
-});
-
-const geistMono = Geist_Mono({
-  subsets: ["latin"],
-  variable: "--font-geist-mono",
-});
 
 export const metadata: Metadata = {
   title: "LangOS",
@@ -28,14 +20,16 @@ export default function RootLayout({
 }>) {
   return (
     <html dir="ltr" lang="en" suppressHydrationWarning>
-      <body className={`${geistSans.variable} ${geistMono.variable} min-h-screen antialiased`}>
+      <body
+        className={`${GeistSans.variable} ${GeistMono.variable} ${GeistPixelLine.variable} min-h-screen antialiased`}
+      >
         <LingoProvider
           initialLocale={DEFAULT_LOCALE}
           devWidget={{ enabled: false }}
         >
           <Navigation />
           <main className="shell content-shell pb-10 sm:pb-12">{children}</main>
-          <footer className="shell content-shell border-t border-dashed border-[color:var(--line)] py-6 text-center text-sm text-[color:var(--muted)]">
+          <footer className="shell content-shell border-y border-dotted border-[color:var(--line)] py-6 text-center text-sm text-[color:var(--muted)]">
             Built by{" "}
             <a
               className="font-semibold text-[color:var(--text)] underline-offset-4 hover:underline"

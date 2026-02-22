@@ -1,4 +1,13 @@
 import Link from "next/link";
+import { LingoProvider } from "@lingo.dev/compiler/react/next";
+import { DEFAULT_LOCALE } from "@/lib/locales";
+import enCache from "@/lingo/cache/en.json";
+
+type LocaleCacheFile = {
+  entries: Record<string, string>;
+};
+
+const SOURCE_TRANSLATIONS = (enCache as LocaleCacheFile).entries;
 
 const FEATURES = [
   {
@@ -45,102 +54,105 @@ const TECHNOLOGIES = ["Next.js 16", "React 19", "Tailwind CSS v4", "Lingo.dev"] 
 
 export default function LandingPage() {
   return (
-    <div className="page-stack landing-page">
-      <section className="section-divider relative overflow-hidden py-24 sm:py-34">
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,color-mix(in_oklab,var(--accent)_16%,transparent),transparent_44%),radial-gradient(circle_at_80%_18%,color-mix(in_oklab,var(--line)_45%,transparent),transparent_50%)]"
-        />
+    <LingoProvider
+      initialLocale={DEFAULT_LOCALE}
+      initialTranslations={SOURCE_TRANSLATIONS}
+      devWidget={{ enabled: false }}
+    >
+      <div className="page-stack landing-page">
+        <section className="section-divider relative overflow-hidden pt-24">
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,color-mix(in_oklab,var(--accent)_16%,transparent),transparent_44%),radial-gradient(circle_at_80%_18%,color-mix(in_oklab,var(--line)_45%,transparent),transparent_50%)]"
+          />
 
-        <div className="relative mx-auto max-w-6xl">
-          <div className="mx-auto max-w-4xl space-y-10 text-center">
-            <div className="inline-flex items-center rounded-full border border-[var(--line-strong)] bg-[color:color-mix(in_oklab,var(--surface)_88%,transparent)] px-3 py-1 text-sm text-[var(--muted)] shadow-[0_0_0_1px_color-mix(in_oklab,var(--line)_45%,transparent)]">
-              <span className="mr-2 flex h-2 w-2 rounded-full bg-[var(--accent-strong)]" />
-              Powered by Lingo.dev
-            </div>
+          <div className="relative mx-auto max-w-6xl">
+            <div className="mx-auto max-w-4xl space-y-10 text-center">
+              <div className="inline-flex items-center rounded-full border border-[var(--line-strong)] bg-[color:color-mix(in_oklab,var(--surface)_88%,transparent)] px-3 py-1 text-sm text-[var(--muted)] shadow-[0_0_0_1px_color-mix(in_oklab,var(--line)_45%,transparent)]">
+                <span className="mr-2 flex h-2 w-2 rounded-full bg-[var(--accent-strong)]" />
+                Powered by Lingo.dev
+              </div>
 
-            <h1 className="text-balance text-5xl font-bold tracking-tight text-[var(--text)] sm:text-7xl">
-              Build global apps <br />
-              <span className="text-[var(--accent-strong)]">without the headache.</span>
-            </h1>
+              <h1 className="mx-auto inline-flex max-w-5xl flex-col items-center gap-3 text-center text-5xl font-bold tracking-[-0.045em] text-[var(--text)] sm:gap-4 sm:text-7xl">
+                <span className="block leading-[0.95]">Build global apps</span>
+                <span className="block leading-[0.95] text-[var(--accent-strong)]">
+                  without the headache.
+                </span>
+              </h1>
 
-            <p className="mx-auto max-w-3xl text-lg leading-relaxed text-[var(--muted)] sm:text-[1.38rem] sm:leading-relaxed">
-              LangOS is a next-generation localization playground. Experience automated translations,
-              seamless RTL support, and locale-aware formatting—all built with Next.js 16 and
-              Lingo.dev.
-            </p>
+              <p className="mx-auto max-w-3xl text-lg leading-relaxed text-[var(--muted)] sm:text-[1.38rem] sm:leading-relaxed">
+                LangOS is a next-generation localization playground. Experience automated
+                translations, seamless RTL support, and locale-aware formatting, all built
+                with Next.js 16 and Lingo.dev.
+              </p>
 
-            <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
-              <Link className="primary-link rounded-full shadow-[0_10px_24px_color-mix(in_oklab,var(--accent)_17%,transparent)]" href="/playground">
-                Open Playground
-              </Link>
-              <Link className="secondary-link rounded-full" href="/developers">
-                Documentation
-              </Link>
+              <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
+                <Link
+                  className="primary-link rounded-full shadow-[0_10px_24px_color-mix(in_oklab,var(--accent)_17%,transparent)]"
+                  href="/playground"
+                >
+                  Open Playground
+                </Link>
+                <Link className="secondary-link rounded-full" href="/developers">
+                  Documentation
+                </Link>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section className="section-divider py-22 sm:py-28">
-        <div className="mx-auto max-w-6xl">
-          <div className="mx-auto max-w-3xl text-center space-y-4">
-            <h2 className="text-3xl font-bold tracking-tight text-[var(--text)] sm:text-4xl">
-              What this project implements
+        <section className="section-divider pt-20">
+          <div className="mx-auto max-w-6xl">
+            <div className="services-matrix-head">
+              <h2 className="text-3xl font-bold tracking-tight text-[var(--text)] sm:text-4xl">
+                Lingo.dev Across the Stack
+              </h2>
+              <p className="section-kicker pt-4">Build-time, runtime, and CI-level integration.</p>
+            </div>
+
+            <div className="services-matrix" role="list" aria-label="Lingo.dev services">
+              {FEATURES.map((feature) => (
+                <article className="services-cell" key={feature.title} role="listitem">
+                  <div className="services-cell-head">
+                    <div className="services-cell-icon">
+                      <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path
+                          d={feature.iconPath}
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                        />
+                      </svg>
+                    </div>
+                    <h3>{feature.title}</h3>
+                   
+                  </div>
+                  <p className="services-cell-body">{feature.description}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="section-divider pt-20">
+          <div className="mx-auto max-w-4xl text-center">
+            <h2 className="mb-10 text-2xl font-semibold text-[var(--text)]">
+              Built with modern technologies
             </h2>
-            <p className="text-lg leading-relaxed text-[var(--muted)]">
-              Services used from Lingo.dev in this project.
-            </p>
+
+            <div className="mx-auto flex max-w-3xl flex-wrap justify-center gap-4">
+              {TECHNOLOGIES.map((technology) => (
+                <span
+                  className="rounded-full border border-[var(--line)] bg-[color:color-mix(in_oklab,var(--surface)_85%,transparent)] px-5 py-2.5 text-sm font-semibold text-[color:color-mix(in_oklab,var(--text)_90%,var(--muted))] transition-colors duration-200 hover:border-[var(--line-strong)]"
+                  key={technology}
+                >
+                  {technology}
+                </span>
+              ))}
+            </div>
           </div>
-
-          <div className="mt-14 grid gap-7 md:grid-cols-2 xl:grid-cols-3">
-            {FEATURES.map((feature) => (
-              <article
-                className="group relative overflow-hidden rounded-2xl border border-[var(--line)] bg-[color:color-mix(in_oklab,var(--surface)_90%,transparent)] p-8 transition duration-200 hover:-translate-y-0.5 hover:border-[color:color-mix(in_oklab,var(--line-strong)_65%,var(--accent))] sm:p-9"
-                key={feature.title}
-              >
-                <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-lg border border-[var(--line)] bg-[var(--accent-soft)] text-[var(--accent-strong)]">
-                  <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path
-                      d={feature.iconPath}
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                    />
-                  </svg>
-                </div>
-
-                <h3 className="mb-3 text-xl font-semibold text-[var(--text)]">{feature.title}</h3>
-                <p className="leading-7 text-[var(--muted)]">{feature.description}</p>
-
-                <div
-                  aria-hidden="true"
-                  className="pointer-events-none absolute right-0 top-0 h-18 w-18 rounded-bl-3xl bg-[color:color-mix(in_oklab,var(--accent)_8%,transparent)] opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-                />
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="section-divider py-20 sm:py-24">
-        <div className="mx-auto max-w-4xl text-center">
-          <h2 className="mb-10 text-2xl font-semibold text-[var(--text)]">
-            Built with modern technologies
-          </h2>
-
-          <div className="mx-auto flex max-w-3xl flex-wrap justify-center gap-4">
-            {TECHNOLOGIES.map((technology) => (
-              <span
-                className="rounded-full border border-[var(--line)] bg-[color:color-mix(in_oklab,var(--surface)_85%,transparent)] px-5 py-2.5 text-sm font-semibold text-[color:color-mix(in_oklab,var(--text)_90%,var(--muted))] transition-colors duration-200 hover:border-[var(--line-strong)]"
-                key={technology}
-              >
-                {technology}
-              </span>
-            ))}
-          </div>
-        </div>
-      </section>
-    </div>
+        </section>
+      </div>
+    </LingoProvider>
   );
 }
