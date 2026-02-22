@@ -11,6 +11,21 @@ import {
   isRtlLocale,
   type AppLocale,
 } from "@/lib/locales";
+import arCache from "@/lingo/cache/ar.json";
+import deCache from "@/lingo/cache/de.json";
+import enCache from "@/lingo/cache/en.json";
+import esCache from "@/lingo/cache/es.json";
+
+type LocaleCacheFile = {
+  entries: Record<string, string>;
+};
+
+const LOCALE_TRANSLATIONS: Record<AppLocale, Record<string, string>> = {
+  en: (enCache as LocaleCacheFile).entries,
+  es: (esCache as LocaleCacheFile).entries,
+  de: (deCache as LocaleCacheFile).entries,
+  ar: (arCache as LocaleCacheFile).entries,
+};
 
 const BUILD_TIME_SNIPPET = `// Build-time localized component
 export function Header({ name }: { name: string }) {
@@ -443,7 +458,11 @@ export default function PlaygroundPage() {
 
 function SourceLocaleScope({ children }: { children: ReactNode }) {
   return (
-    <LingoProvider initialLocale={DEFAULT_LOCALE} devWidget={{ enabled: false }}>
+    <LingoProvider
+      initialLocale={DEFAULT_LOCALE}
+      initialTranslations={LOCALE_TRANSLATIONS[DEFAULT_LOCALE]}
+      devWidget={{ enabled: false }}
+    >
       {children}
     </LingoProvider>
   );
@@ -461,6 +480,7 @@ function TargetLocaleScope({
   return (
     <LingoProvider
       initialLocale={locale}
+      initialTranslations={LOCALE_TRANSLATIONS[locale]}
       key={`${scopeKey}-${locale}`}
       devWidget={{ enabled: false }}
     >
