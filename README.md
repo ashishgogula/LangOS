@@ -1,25 +1,152 @@
 # LangOS
 
-LangOS is a Next.js 16 localization lab that demonstrates build-time and runtime i18n workflows with [Lingo.dev](https://lingo.dev/).
+LangOS is a production-style i18n reference architecture built with Next.js 16 and Lingo.dev.
 
-It is designed as a practical reference project, not a marketing site: you can inspect real code paths for compiler integration, runtime translation, RTL behavior, locale formatting, and CI gating.
+This project was built for the Lingo.dev Hackathon to demonstrate that localization is not a UI toggle problem. It is a system design problem.
 
-## Highlights
+LangOS shows how localization should be wired across build time, runtime, formatting, RTL behavior, and CI enforcement.
 
-- Build-time localization with `@lingo.dev/compiler` (`withLingo` in `next.config.ts`)
-- Runtime translation through a typed `POST /api/translate` route using `lingo.dev/sdk`
-- Locale coverage in the app: `en` (source), `es`, `de`, `ar`
-- Scoped RTL rendering for Arabic demos
-- Locale-aware currency/number/date formatting using `Intl`
-- CLI workflow via `npm run lingo:run`
-- GitHub Actions quality pipeline with conditional Lingo CLI execution
+Live Demo  
+http://langos.ashishgogula.in/
+
+Full Architecture Breakdown  
+https://www.ashishgogula.in/blogs/localization-is-an-architecture-problem-building-a-production-grade-i18n-system-with-langos-and-lingo-dev
+
+---
+
+## Core Idea
+
+Most localization failures do not start in translation tooling.
+
+They start in architecture.
+
+LangOS demonstrates:
+
+• Deterministic build-time localization  
+• Safe runtime translation boundaries  
+• Scoped RTL rendering  
+• Locale-aware formatting  
+• CI-level enforcement  
+
+This is not a wrapper.  
+It is not a mock.  
+It is a working reference architecture.
+
+---
+
+## Architecture Overview
+
+Localization is implemented across five distinct layers:
+
+### 1. Build-Time Localization
+
+Static UI strings are compiled using `@lingo.dev/compiler` with `withLingo` in `next.config.ts`.
+
+Configuration includes:
+
+- sourceLocale: `en`
+- targetLocales: `es`, `de`, `ar`
+- sourceRoot: `src`
+- cookie-based locale persistence
+
+Static translations are generated as real JSON artifacts and resolved through a scoped provider.
+
+This guarantees predictable release artifacts.
+
+---
+
+### 2. Runtime Translation
+
+Dynamic content is handled via a typed API route:
+
+`POST /api/translate`
+
+Features:
+
+- Node runtime
+- Locale validation
+- Early exit when source equals target
+- Required `LINGO_API_KEY`
+- In-memory response caching
+- Timeout safety using AbortController
+- SDK call isolation
+
+Build-time and runtime concerns are intentionally separated.
+
+---
+
+### 3. Scoped RTL Handling
+
+RTL behavior is applied only where required.
+
+The source panel renders with `dir="ltr"`.
+
+The target panel dynamically computes direction and applies `dir="rtl"` for Arabic.
+
+The entire document is not flipped.
+
+This prevents layout instability and improves clarity.
+
+---
+
+### 4. Locale-Aware Formatting
+
+Localization includes numeric and temporal formatting.
+
+Implemented using the `Intl` API:
+
+- `Intl.NumberFormat` for currency and numbers
+- `Intl.DateTimeFormat` for date and time
+
+Currency mapping:
+
+- en → USD
+- es → EUR
+- de → EUR
+- ar → AED
+
+Formatting differences are visible and testable.
+
+---
+
+### 5. Developer Workflow and CI Enforcement
+
+Localization is part of delivery quality.
+
+CLI Workflow: npm run lingo:run
+
+
+Custom script:
+
+- Loads environment variables
+- Normalizes API key usage
+- Executes `npx lingo.dev run`
+- Streams logs directly
+
+GitHub Actions:
+
+- Runs on push and pull request
+- Installs dependencies
+- Lints and builds
+- Validates `LINGO_API_KEY`
+- Executes localization only when configured
+- Logs skip reasons explicitly
+
+Localization is enforced, not optional.
+
+Live CI Runs:
+https://github.com/ashishgogula/LangOS/actions
+
+---
 
 ## Routes
 
-- `/` - Landing page and Lingo.dev services overview
-- `/playground` - Interactive localization playground (5 demo sections)
-- `/developers` - Failure modes and implementation notes
-- `/api/translate` - Runtime translation API endpoint
+- `/` → Landing and overview
+- `/playground` → Interactive localization lab
+- `/developers` → Failure modes and architectural notes
+- `/api/translate` → Runtime translation endpoint
+
+---
 
 ## Tech Stack
 
@@ -27,160 +154,59 @@ It is designed as a practical reference project, not a marketing site: you can i
 - React 19
 - TypeScript
 - Tailwind CSS v4
-- `@lingo.dev/compiler`
-- `lingo.dev` SDK
-- ESLint (Next.js config)
+- @lingo.dev/compiler
+- lingo.dev SDK
+- GitHub Actions CI
 
-## Project Structure
+---
 
-```text
-src/
-  app/
-    page.tsx                  # Landing page
-    playground/page.tsx       # Interactive localization lab
-    developers/page.tsx       # Developer-facing architecture notes
-    api/translate/route.ts    # Runtime translation endpoint
-    layout.tsx                # Root layout + LingoProvider + navigation
-  components/
-    Navigation.tsx
-    ThemeToggle.tsx
-    LanguageSwitcher.tsx
-    RtlProvider.tsx
-  lib/
-    locales.ts                # Locale typing + helpers
-    lingo.ts                  # Client-side translate API helper
-  lingo/
-    cache/{en,es,de,ar}.json  # Locale cache artifacts
-    locale-resolver.client.ts # Client locale persistence helpers
-scripts/
-  lingo-run.js                # Wrapper for `npx lingo.dev run`
-.github/workflows/lingo.yml   # CI pipeline
-```
+## Why This Project Matters
 
-## Prerequisites
+Browser translation tools translate rendered output.
 
-- Node.js 20+ recommended
-- npm 10+
-- Lingo.dev API key for runtime translation and CLI sync
+Production systems require:
 
-## Quick Start
+- Deterministic artifacts
+- Locale contracts
+- Scoped direction handling
+- Formatting correctness
+- Pipeline enforcement
 
-1. Install dependencies:
+LangOS demonstrates how these concerns fit together.
+
+---
+
+## Running Locally
 
 ```bash
-npm ci
+git clone https://github.com/ashishgogula/LangOS
+cd LangOS
+npm install
 ```
 
-2. Create `.env.local` in the project root:
-
+Create .env.local:
 ```bash
-LINGO_API_KEY=your_lingo_api_key
+LINGO_API_KEY=your_key_here
 ```
 
-Notes:
-- `LINGO_API_KEY` is used by the runtime API route.
-- `scripts/lingo-run.js` supports both `LINGO_API_KEY` and `LINGODOTDEV_API_KEY`.
-
-3. Start the app:
-
+Then run:
 ```bash
 npm run dev
 ```
 
-4. Open [http://localhost:3000](http://localhost:3000)
+# Hackathon Submission
 
-## Scripts
+Built for the Lingo.dev Hackathon to demonstrate full lifecycle localization:
 
-- `npm run dev` - Start local dev server
-- `npm run lint` - Run ESLint
-- `npm run build` - Production build
-- `npm run start` - Start production server
-- `npm run lingo:run` - Run Lingo CLI sync (`npx lingo.dev run`)
+Build → Runtime → Rendering → Formatting → CI
 
-## Runtime API
+Localization should be infrastructure from day one.
 
-### `POST /api/translate`
+Author
 
-Request body:
+Ashish Gogula |
+Design Engineer |
+https://www.ashishgogula.in
 
-```json
-{
-  "text": "Ship this release after QA sign-off.",
-  "sourceLocale": "en",
-  "targetLocale": "es"
-}
-```
 
-Success response:
 
-```json
-{
-  "translatedText": "..."
-}
-```
-
-Error behavior:
-- `400` for invalid payload or unsupported locale
-- `503` when `LINGO_API_KEY` is missing
-- `500` for translation engine failures/timeouts
-
-Implementation details:
-- Runtime: `nodejs`
-- In-memory translation cache for repeated requests
-- Server timeout guard to avoid hanging requests
-
-## Localization Configuration
-
-`next.config.ts` uses `withLingo` with:
-
-- `sourceLocale: "en"`
-- `targetLocales: ["es", "de", "ar"]`
-- `models: "lingo.dev"`
-- cookie-based locale persistence (`locale`, max-age 1 year)
-- pseudotranslator disabled in dev
-
-`i18n.json` config maps bucket output to:
-- `src/lingo/cache/[locale].json`
-
-## CI/CD
-
-GitHub Actions workflow: `.github/workflows/lingo.yml`
-
-Quality job order:
-1. `npm ci`
-2. `npm run lint`
-3. `npm run build`
-4. Conditional `npm run lingo:run` only when:
-   - `secrets.LINGO_API_KEY` exists
-   - `i18n.json` has non-empty buckets
-
-This avoids failing public PRs/forks where secrets are unavailable.
-
-## Contributing
-
-Issues and pull requests are welcome.
-
-Recommended contribution flow:
-1. Fork the repository
-2. Create a branch
-3. Run `npm run lint` and `npm run build`
-4. Open a PR with a clear summary and screenshots for UI changes
-
-## Security
-
-Do not commit API keys. `.env*` files are gitignored by default.
-
-If you find a security issue, report it privately to the maintainer before opening a public issue.
-
-## Open-Source Compliance Notes
-
-To distribute this project as fully open-source, make sure the repository includes:
-
-- `LICENSE` (with an SPDX-recognized license text)
-- `CONTRIBUTING.md` (contribution policy)
-- `CODE_OF_CONDUCT.md` (community standards)
-- `SECURITY.md` (vulnerability reporting process)
-
-## Maintainer
-
-- [ashishgogula](https://ashishgogula.in)
