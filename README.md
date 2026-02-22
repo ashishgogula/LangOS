@@ -1,212 +1,204 @@
 # LangOS
 
-LangOS is a production-style i18n reference architecture built with Next.js 16 and Lingo.dev.
+Built for the Lingo.dev Hackathon 2026.
 
-This project was built for the Lingo.dev Hackathon to demonstrate that localization is not a UI toggle problem. It is a system design problem.
+LangOS is a production-grade internationalization reference architecture built with Next.js 16 and Lingo.dev.
 
-LangOS shows how localization should be wired across build time, runtime, formatting, RTL behavior, and CI enforcement.
+Localization is often treated as string replacement. In production systems, it is an architectural concern.
 
-Live Demo  
+This project demonstrates how localization should be wired across build time, runtime, rendering, formatting, and CI enforcement.
+
+---
+
+## Demo
+
+<img width="1707" height="980" alt="LangOS Playground" src="https://github.com/user-attachments/assets/a83e4d99-0a64-47c1-a741-3a803f73b971" />
+
+Live application  
 http://langos.ashishgogula.in/
 
-Full Architecture Breakdown  
+Architecture write-up  
 https://www.ashishgogula.in/blogs/localization-is-an-architecture-problem-building-a-production-grade-i18n-system-with-langos-and-lingo-dev
 
 ---
 
-## Core Idea
+## Core Principles
 
-Most localization failures do not start in translation tooling.
+Production localization requires:
 
-They start in architecture.
-
-LangOS demonstrates:
-
-• Deterministic build-time localization  
-• Safe runtime translation boundaries  
-• Scoped RTL rendering  
+• Deterministic build artifacts  
+• Explicit runtime boundaries  
+• Scoped RTL handling  
 • Locale-aware formatting  
-• CI-level enforcement  
+• CI enforcement  
 
-This is not a wrapper.  
-It is not a mock.  
-It is a working reference architecture.
+LangOS serves as a reference implementation of these concerns working together as a cohesive system.
 
 ---
 
 ## Architecture Overview
 
-Localization is implemented across five distinct layers:
+Localization is intentionally separated into five layers.
 
 ### 1. Build-Time Localization
 
-Static UI strings are compiled using `@lingo.dev/compiler` with `withLingo` in `next.config.ts`.
+Static UI copy is compiled using `@lingo.dev/compiler` via `withLingo` in `next.config.ts`.
 
-Configuration includes:
+Configuration:
 
-- sourceLocale: `en`
-- targetLocales: `es`, `de`, `ar`
-- sourceRoot: `src`
-- cookie-based locale persistence
+- sourceLocale: en  
+- targetLocales: es, de, ar  
+- sourceRoot: src  
+- Cookie-based locale persistence  
 
-Static translations are generated as real JSON artifacts and resolved through a scoped provider.
-
-This guarantees predictable release artifacts.
+Translations are generated as real JSON artifacts and included in build outputs. This guarantees deterministic releases.
 
 ---
 
-### 2. Runtime Translation
+### 2. Runtime Translation Boundary
 
-Dynamic content is handled via a typed API route:
+Dynamic content is translated through:
 
-`POST /api/translate`
+POST `/api/translate`
 
-Features:
+The route:
 
-- Node runtime
-- Locale validation
-- Early exit when source equals target
-- Required `LINGO_API_KEY`
-- In-memory response caching
-- Timeout safety using AbortController
-- SDK call isolation
+- Runs on Node runtime  
+- Validates locale inputs  
+- Short-circuits when source equals target  
+- Requires `LINGO_API_KEY`  
+- Caches successful responses  
+- Applies timeout safety  
 
-Build-time and runtime concerns are intentionally separated.
+Build-time and runtime concerns are explicitly separated.
 
 ---
 
-### 3. Scoped RTL Handling
+### 3. Scoped RTL Rendering
 
 RTL behavior is applied only where required.
 
-The source panel renders with `dir="ltr"`.
+- Source panel renders with `dir="ltr"`  
+- Target panel computes direction dynamically  
+- The entire document is not flipped  
 
-The target panel dynamically computes direction and applies `dir="rtl"` for Arabic.
-
-The entire document is not flipped.
-
-This prevents layout instability and improves clarity.
+This prevents layout instability and enables side-by-side verification.
 
 ---
 
 ### 4. Locale-Aware Formatting
 
-Localization includes numeric and temporal formatting.
+Formatting is implemented using the `Intl` API.
 
-Implemented using the `Intl` API:
-
-- `Intl.NumberFormat` for currency and numbers
-- `Intl.DateTimeFormat` for date and time
+- `Intl.NumberFormat` for currency and numeric grouping  
+- `Intl.DateTimeFormat` for date and time  
 
 Currency mapping:
 
-- en → USD
-- es → EUR
-- de → EUR
-- ar → AED
+- en → USD  
+- es → EUR  
+- de → EUR  
+- ar → AED  
 
 Formatting differences are visible and testable.
 
 ---
 
-### 5. Developer Workflow and CI Enforcement
+### 5. Workflow and CI Enforcement
 
 Localization is part of delivery quality.
 
-CLI Workflow: npm run lingo:run
+CLI workflow:
 
+```
+npm run lingo:run
+```
 
 Custom script:
 
-- Loads environment variables
-- Normalizes API key usage
-- Executes `npx lingo.dev run`
-- Streams logs directly
+- Loads environment variables  
+- Normalizes API key usage  
+- Executes `lingo.dev` CLI  
+- Streams logs directly  
 
 GitHub Actions:
 
-- Runs on push and pull request
-- Installs dependencies
-- Lints and builds
-- Validates `LINGO_API_KEY`
-- Executes localization only when configured
-- Logs skip reasons explicitly
+- Runs on push and pull request  
+- Installs dependencies  
+- Lints and builds  
+- Validates `LINGO_API_KEY`  
+- Executes localization only when configured  
+- Logs skip reasons explicitly  
+
+Live CI runs:  
+https://github.com/ashishgogula/LangOS/actions
 
 Localization is enforced, not optional.
-
-Live CI Runs:
-https://github.com/ashishgogula/LangOS/actions
 
 ---
 
 ## Routes
 
-- `/` → Landing and overview
-- `/playground` → Interactive localization lab
-- `/developers` → Failure modes and architectural notes
-- `/api/translate` → Runtime translation endpoint
+`/`  
+Landing and architectural overview  
+
+`/playground`  
+Interactive localization lab  
+
+`/developers`  
+Failure modes and architectural notes  
+
+`/api/translate`  
+Runtime translation endpoint  
 
 ---
 
 ## Tech Stack
 
-- Next.js 16 (App Router)
-- React 19
-- TypeScript
-- Tailwind CSS v4
-- @lingo.dev/compiler
-- lingo.dev SDK
-- GitHub Actions CI
-
----
-
-## Why This Project Matters
-
-Browser translation tools translate rendered output.
-
-Production systems require:
-
-- Deterministic artifacts
-- Locale contracts
-- Scoped direction handling
-- Formatting correctness
-- Pipeline enforcement
-
-LangOS demonstrates how these concerns fit together.
+Next.js 16  
+React 19  
+TypeScript  
+Tailwind CSS v4  
+@lingo.dev/compiler  
+lingo.dev SDK  
+GitHub Actions  
 
 ---
 
 ## Running Locally
 
-```bash
+```
 git clone https://github.com/ashishgogula/LangOS
 cd LangOS
 npm install
 ```
 
-Create .env.local:
-```bash
+Create `.env.local`:
+
+```
 LINGO_API_KEY=your_key_here
 ```
 
-Then run:
-```bash
+Run:
+
+```
 npm run dev
 ```
 
-# Hackathon Submission
+---
 
-Built for the Lingo.dev Hackathon to demonstrate full lifecycle localization:
+## Hackathon Context
+
+LangOS was built to demonstrate full lifecycle localization:
 
 Build → Runtime → Rendering → Formatting → CI
 
 Localization should be infrastructure from day one.
 
-Author
+---
 
-Ashish Gogula |
-Design Engineer |
+## Author
+
+Ashish Gogula  
+Design Engineer  
 https://www.ashishgogula.in
-
-
-
