@@ -5,7 +5,7 @@ const FAILURE_CASES = [
     issue:
       "Hardcoded copy creates hidden localization debt because every string change becomes a code change.",
     fix:
-      "LangOS routes static copy through build-time localization so UI strings are extracted and translated before release.",
+      "Build-time localization routes static copy through extracted translation keys so UI strings are translated before release.",
   },
   {
     title: "Manual translation",
@@ -13,7 +13,7 @@ const FAILURE_CASES = [
     issue:
       "Manual dictionaries drift from source text, get incomplete, and consume review time on every feature branch.",
     fix:
-      "LangOS uses Lingo Compiler plus runtime SDK translation for dynamic strings, with automation handling refreshes.",
+      "Localization tooling combines build-time extraction and runtime SDK translation for dynamic strings, with automation handling refreshes.",
   },
   {
     title: "No RTL support",
@@ -21,7 +21,7 @@ const FAILURE_CASES = [
     issue:
       "Without explicit direction handling, Arabic and Hebrew interfaces feel broken and inaccessible.",
     fix:
-      "LangOS scopes RTL behavior intentionally and demonstrates where direction should flip at the UI boundary.",
+      "The localization layer scopes RTL behavior intentionally and defines where direction should flip at the UI boundary.",
   },
   {
     title: "No locale-aware formatting",
@@ -29,7 +29,7 @@ const FAILURE_CASES = [
     issue:
       "String concatenation ignores local conventions for separators, symbols, and date ordering.",
     fix:
-      "LangOS uses Intl APIs to format currency, numbers, and dates according to the active locale.",
+      "Locale-aware formatting uses Intl APIs for currency, numbers, and dates according to the active locale.",
   },
   {
     title: "No translation coverage enforcement",
@@ -37,7 +37,7 @@ const FAILURE_CASES = [
     issue:
       "Teams ship untranslated surfaces when pipelines do not verify localization artifacts.",
     fix:
-      "LangOS integrates CLI + CI checks so missing translations are surfaced before merge.",
+      "CLI + CI localization checks surface missing translations before merge.",
   },
 ] as const;
 
@@ -49,7 +49,8 @@ export default function DevelopersPage() {
         <h1 className="section-title">Why most apps fail localization</h1>
         <p className="section-copy">
           Localization failures are rarely translation failures. They are architecture failures.
-          LangOS is designed to make these failure modes explicit and preventable.
+          This localization toolchain is designed to make these failure modes explicit
+          and preventable.
         </p>
       </section>
 
@@ -73,7 +74,7 @@ export default function DevelopersPage() {
             </div>
 
             <div className="insight-block">
-              <p className="section-kicker">How LangOS solves it</p>
+              <p className="section-kicker">How we handle it with Lingo.dev</p>
               <p className="section-copy">{caseItem.fix}</p>
             </div>
           </div>

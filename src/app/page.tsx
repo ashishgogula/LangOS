@@ -46,14 +46,14 @@ const TECHNOLOGIES = ["Next.js 16", "React 19", "Tailwind CSS v4", "Lingo.dev"] 
 export default function LandingPage() {
   return (
     <div className="page-stack landing-page">
-      <section className="section-divider relative overflow-hidden py-22 sm:py-30">
+      <section className="section-divider relative overflow-hidden py-24 sm:py-34">
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,color-mix(in_oklab,var(--accent)_20%,transparent),transparent_45%),radial-gradient(circle_at_80%_18%,color-mix(in_oklab,var(--line)_60%,transparent),transparent_48%)]"
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,color-mix(in_oklab,var(--accent)_16%,transparent),transparent_44%),radial-gradient(circle_at_80%_18%,color-mix(in_oklab,var(--line)_45%,transparent),transparent_50%)]"
         />
 
-        <div className="relative mx-auto max-w-5xl">
-          <div className="mx-auto max-w-3xl space-y-8 text-center">
+        <div className="relative mx-auto max-w-6xl">
+          <div className="mx-auto max-w-4xl space-y-10 text-center">
             <div className="inline-flex items-center rounded-full border border-[var(--line-strong)] bg-[color:color-mix(in_oklab,var(--surface)_88%,transparent)] px-3 py-1 text-sm text-[var(--muted)] shadow-[0_0_0_1px_color-mix(in_oklab,var(--line)_45%,transparent)]">
               <span className="mr-2 flex h-2 w-2 rounded-full bg-[var(--accent-strong)]" />
               Powered by Lingo.dev
@@ -64,13 +64,13 @@ export default function LandingPage() {
               <span className="text-[var(--accent-strong)]">without the headache.</span>
             </h1>
 
-            <p className="mx-auto max-w-2xl text-lg leading-relaxed text-[var(--muted)]">
+            <p className="mx-auto max-w-3xl text-lg leading-relaxed text-[var(--muted)] sm:text-[1.38rem] sm:leading-relaxed">
               LangOS is a next-generation localization playground. Experience automated translations,
               seamless RTL support, and locale-aware formatting—all built with Next.js 16 and
               Lingo.dev.
             </p>
 
-            <div className="flex flex-wrap items-center justify-center gap-4">
+            <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
               <Link className="primary-link rounded-full shadow-[0_10px_24px_color-mix(in_oklab,var(--accent)_17%,transparent)]" href="/playground">
                 Open Playground
               </Link>
@@ -82,21 +82,21 @@ export default function LandingPage() {
         </div>
       </section>
 
-      <section className="section-divider py-18 sm:py-22">
+      <section className="section-divider py-22 sm:py-28">
         <div className="mx-auto max-w-6xl">
-          <div className="mx-auto max-w-3xl text-center">
+          <div className="mx-auto max-w-3xl text-center space-y-4">
             <h2 className="text-3xl font-bold tracking-tight text-[var(--text)] sm:text-4xl">
               What this project implements
             </h2>
-            <p className="mt-4 text-lg text-[var(--muted)]">
+            <p className="text-lg leading-relaxed text-[var(--muted)]">
               Services used from Lingo.dev in this project.
             </p>
           </div>
 
-          <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-14 grid gap-7 md:grid-cols-2 xl:grid-cols-3">
             {FEATURES.map((feature) => (
               <article
-                className="group relative overflow-hidden rounded-2xl border border-[var(--line)] bg-[color:color-mix(in_oklab,var(--surface)_90%,transparent)] p-7 transition duration-200 hover:-translate-y-0.5 hover:border-[color:color-mix(in_oklab,var(--line-strong)_65%,var(--accent))]"
+                className="group relative overflow-hidden rounded-2xl border border-[var(--line)] bg-[color:color-mix(in_oklab,var(--surface)_90%,transparent)] p-8 transition duration-200 hover:-translate-y-0.5 hover:border-[color:color-mix(in_oklab,var(--line-strong)_65%,var(--accent))] sm:p-9"
                 key={feature.title}
               >
                 <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-lg border border-[var(--line)] bg-[var(--accent-soft)] text-[var(--accent-strong)]">
@@ -110,8 +110,8 @@ export default function LandingPage() {
                   </svg>
                 </div>
 
-                <h3 className="mb-2 text-xl font-semibold text-[var(--text)]">{feature.title}</h3>
-                <p className="leading-relaxed text-[var(--muted)]">{feature.description}</p>
+                <h3 className="mb-3 text-xl font-semibold text-[var(--text)]">{feature.title}</h3>
+                <p className="leading-7 text-[var(--muted)]">{feature.description}</p>
 
                 <div
                   aria-hidden="true"
@@ -123,16 +123,16 @@ export default function LandingPage() {
         </div>
       </section>
 
-      <section className="section-divider py-16">
+      <section className="section-divider py-20 sm:py-24">
         <div className="mx-auto max-w-4xl text-center">
-          <h2 className="mb-8 text-2xl font-semibold text-[var(--text)]">
+          <h2 className="mb-10 text-2xl font-semibold text-[var(--text)]">
             Built with modern technologies
           </h2>
 
-          <div className="mx-auto flex max-w-3xl flex-wrap justify-center gap-3">
+          <div className="mx-auto flex max-w-3xl flex-wrap justify-center gap-4">
             {TECHNOLOGIES.map((technology) => (
               <span
-                className="rounded-full border border-[var(--line)] bg-[color:color-mix(in_oklab,var(--surface)_85%,transparent)] px-4 py-2 text-sm font-semibold text-[color:color-mix(in_oklab,var(--text)_90%,var(--muted))] transition-colors duration-200 hover:border-[var(--line-strong)]"
+                className="rounded-full border border-[var(--line)] bg-[color:color-mix(in_oklab,var(--surface)_85%,transparent)] px-5 py-2.5 text-sm font-semibold text-[color:color-mix(in_oklab,var(--text)_90%,var(--muted))] transition-colors duration-200 hover:border-[var(--line-strong)]"
                 key={technology}
               >
                 {technology}

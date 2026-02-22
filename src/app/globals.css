@@ -78,7 +78,7 @@ button {
 }
 
 .content-shell {
-  --content-gutter: clamp(0.85rem, 1.5vw, 1.35rem);
+  --content-gutter: clamp(1.05rem, 2vw, 1.8rem);
   border-inline: 1px dashed var(--line);
   padding-inline: var(--content-gutter);
 }
@@ -94,7 +94,7 @@ button {
 .nav-inner {
   align-items: center;
   display: flex;
-  height: 64px;
+  height: 68px;
   justify-content: space-between;
   gap: 1rem;
 }
@@ -214,16 +214,16 @@ button {
 
 .page-stack {
   display: grid;
-  gap: 3.25rem;
+  gap: 4.5rem;
 }
 
 .section-block {
   display: grid;
-  gap: 1.18rem;
+  gap: 1.35rem;
 }
 
 .section-divider {
-  border-top: 1px dashed var(--line);
+  border-top: 1px solid var(--line);
   margin-inline: calc(var(--content-gutter) * -1);
   padding-inline: var(--content-gutter);
 }
@@ -238,19 +238,19 @@ button {
 }
 
 .section-title {
-  font-size: clamp(1.45rem, 2.2vw, 2.38rem);
-  font-weight: 640;
+  font-size: clamp(1.7rem, 2.8vw, 2.95rem);
+  font-weight: 660;
   letter-spacing: -0.038em;
-  line-height: 1.1;
+  line-height: 1.06;
   margin: 0;
 }
 
 .section-copy {
   color: var(--muted);
-  font-size: 1.01rem;
-  line-height: 1.72;
+  font-size: 1.08rem;
+  line-height: 1.76;
   margin: 0;
-  max-width: 72ch;
+  max-width: 68ch;
 }
 
 .hero-section {
