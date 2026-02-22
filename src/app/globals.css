@@ -659,7 +659,6 @@ button {
 .code-block {
   background: color-mix(in oklab, var(--surface) 78%, transparent);
   border: 1px dashed var(--line-strong);
-  border-radius: 0.84rem;
   color: color-mix(in oklab, var(--muted) 88%, var(--text));
   font-family: var(--font-geist-mono), "SFMono-Regular", Menlo, monospace;
   font-size: 0.82rem;
