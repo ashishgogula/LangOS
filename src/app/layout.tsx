@@ -32,12 +32,30 @@ export default function RootLayout({
           <footer className="shell content-shell border-y border-dotted border-[color:var(--line)] py-6 text-center text-sm text-[color:var(--muted)]">
             Built by{" "}
             <a
-              className="font-semibold text-[color:var(--text)] underline-offset-4 hover:underline"
+              className="font-semibold text-[color:var(--text)] underline decoration-current underline-offset-4"
               href="https://ashishgogula.in"
               rel="noreferrer"
               target="_blank"
             >
-              ashishgogula
+              AshishGogula
+            </a>
+            {" "}with Next.js 16 and{" "}
+            <a
+              className="font-semibold text-[color:var(--text)] underline decoration-current underline-offset-4"
+              href="https://lingo.dev/"
+              rel="noreferrer"
+              target="_blank"
+            >
+              lingo.dev
+            </a>
+            .{" "}
+            <a
+              className="font-semibold text-[color:var(--text)] underline decoration-current underline-offset-4"
+              href="https://github.com/ashishgogula/LangOS/"
+              rel="noreferrer"
+              target="_blank"
+            >
+              GitHub
             </a>
             .
           </footer>

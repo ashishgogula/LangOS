@@ -191,9 +191,9 @@ button {
   gap: 0.45rem;
   justify-content: center;
   min-height: 2rem;
-  min-width: 10.7rem;
-  width: 10.7rem;
-  padding: 0.2rem 0.6rem 0.2rem 0.52rem;
+  min-width: 12rem;
+  width: 12rem;
+  padding: 0.2rem;
   white-space: nowrap;
 }
 
