@@ -1008,6 +1008,10 @@ button {
   gap: 0.58rem;
 }
 
+.playground-body .lab-section + .lab-section {
+  margin-top: 4.5rem;
+}
+
 .sticky-locale-anchor {
   display: block;
   height: 0;
@@ -1234,6 +1238,10 @@ button {
 
   .playground-page .lab-section {
     padding-top: 1.85rem;
+  }
+
+  .playground-body .lab-section + .lab-section {
+    margin-top: 3.2rem;
   }
 
   .developers-page .section-divider {

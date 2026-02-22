@@ -259,7 +259,7 @@ export default function PlaygroundPage() {
         </div>
       </section>
 
-      <section className="lab-section" aria-labelledby="build-time-heading">
+      <div className="playground-body">
         <div className={`sticky-locale-anchor ${showStickyLocaleDock ? "is-visible" : ""}`}>
           <div className="sticky-locale-dock" role="region" aria-label="Locale quick controls">
             <div className="sticky-locale-group">
@@ -292,6 +292,7 @@ export default function PlaygroundPage() {
           </div>
         </div>
 
+        <section className="lab-section" aria-labelledby="build-time-heading">
         <header className="section-head">
           <h2 id="build-time-heading" className="section-title">
             1. Build-Time Localization (Lingo Compiler)
@@ -333,9 +334,9 @@ export default function PlaygroundPage() {
           <strong>How it works:</strong> Lingo Compiler rewrites static copy to keyed lookups,
           and the target provider resolves those keys for the selected locale.
         </p>
-      </section>
+        </section>
 
-      <section className="lab-section" aria-labelledby="runtime-heading">
+        <section className="lab-section" aria-labelledby="runtime-heading">
         <header className="section-head">
           <h2 id="runtime-heading" className="section-title">
             2. Runtime Translation (Lingo SDK / MCP)
@@ -392,9 +393,9 @@ export default function PlaygroundPage() {
           <strong>How it works:</strong> The client posts source text to <code>/api/translate</code>,
           which calls Lingo SDK and returns locale-specific output.
         </p>
-      </section>
+        </section>
 
-      <section className="lab-section" aria-labelledby="rtl-heading">
+        <section className="lab-section" aria-labelledby="rtl-heading">
         <header className="section-head">
           <h2 id="rtl-heading" className="section-title">
             3. RTL Behavior (target column only)
@@ -430,9 +431,9 @@ export default function PlaygroundPage() {
           <strong>How it works:</strong> Direction is derived from the selected target locale,
           and applied to the right demo container only so the source column stays stable.
         </p>
-      </section>
+        </section>
 
-      <section className="lab-section" aria-labelledby="formatting-heading">
+        <section className="lab-section" aria-labelledby="formatting-heading">
         <header className="section-head">
           <h2 id="formatting-heading" className="section-title">
             4. Locale Formatting (currency, date, number)
@@ -511,9 +512,9 @@ export default function PlaygroundPage() {
           <strong>How it works:</strong> Locale-specific formatters apply proper grouping,
           symbols, and date ordering with no string templates.
         </p>
-      </section>
+        </section>
 
-      <section className="lab-section" aria-labelledby="workflow-heading">
+        <section className="lab-section" aria-labelledby="workflow-heading">
         <header className="section-head">
           <h2 id="workflow-heading" className="section-title">
             5. Workflow Automation (Lingo CLI + CI snippet)
@@ -565,7 +566,8 @@ export default function PlaygroundPage() {
           <strong>How it works:</strong> CLI refreshes translation artifacts locally, and CI
           blocks merges when localized output is missing.
         </p>
-      </section>
+        </section>
+      </div>
     </div>
   );
 }
