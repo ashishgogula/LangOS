@@ -105,17 +105,19 @@ button {
 
 .nav-inner {
   align-items: center;
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
   height: 68px;
-  justify-content: space-between;
   gap: 1rem;
 }
 
 .nav-links {
   align-items: center;
   display: inline-flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: 0.6rem;
+  min-width: 0;
+  overflow: hidden;
 }
 
 .brand-link {
@@ -184,10 +186,13 @@ button {
   border: 1px solid var(--line-strong);
   border-radius: 999px;
   display: inline-flex;
+  flex: 0 0 auto;
   flex-shrink: 0;
   gap: 0.45rem;
+  justify-content: center;
   min-height: 2rem;
-  min-width: max-content;
+  min-width: 10.7rem;
+  width: 10.7rem;
   padding: 0.2rem 0.6rem 0.2rem 0.52rem;
   white-space: nowrap;
 }
@@ -204,9 +209,10 @@ button {
 .powered-logo {
   color: var(--text);
   display: block;
+  flex-shrink: 0;
   height: 1.1rem;
   transform: translateY(1px);
-  width: auto;
+  width: 6.6rem;
 }
 
 .icon-btn {
@@ -251,7 +257,7 @@ button {
 .section-kicker {
   color: color-mix(in oklab, var(--accent) 55%, var(--muted));
   font-family: var(--font-geist-pixel-line), var(--font-geist-mono), monospace;
-  font-size: 0.74rem;
+  font-size: 1rem;
   font-weight: 600;
   letter-spacing: 0.13em;
   margin: 0;

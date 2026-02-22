@@ -50,8 +50,6 @@ const FEATURES = [
   },
 ] as const;
 
-const TECHNOLOGIES = ["Next.js 16", "React 19", "Tailwind CSS v4", "Lingo.dev"] as const;
-
 export default function LandingPage() {
   return (
     <LingoProvider
@@ -68,7 +66,7 @@ export default function LandingPage() {
 
           <div className="relative mx-auto max-w-6xl">
             <div className="mx-auto max-w-4xl space-y-10 text-center">
-              <div className="inline-flex items-center rounded-full border border-[var(--line-strong)] bg-[color:color-mix(in_oklab,var(--surface)_88%,transparent)] px-3 py-1 text-sm text-[var(--muted)] shadow-[0_0_0_1px_color-mix(in_oklab,var(--line)_45%,transparent)]">
+              <div className="inline-flex w-max items-center whitespace-nowrap rounded-full border border-[var(--line-strong)] bg-[color:color-mix(in_oklab,var(--surface)_88%,transparent)] px-3 py-1 text-sm text-[var(--muted)] shadow-[0_0_0_1px_color-mix(in_oklab,var(--line)_45%,transparent)]">
                 <span className="mr-2 flex h-2 w-2 rounded-full bg-[var(--accent-strong)]" />
                 Powered by Lingo.dev
               </div>
@@ -129,25 +127,6 @@ export default function LandingPage() {
                   </div>
                   <p className="services-cell-body">{feature.description}</p>
                 </article>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="section-divider pt-20">
-          <div className="mx-auto max-w-4xl text-center">
-            <h2 className="mb-10 text-2xl font-semibold text-[var(--text)]">
-              Built with modern technologies
-            </h2>
-
-            <div className="mx-auto flex max-w-3xl flex-wrap justify-center gap-4">
-              {TECHNOLOGIES.map((technology) => (
-                <span
-                  className="rounded-full border border-[var(--line)] bg-[color:color-mix(in_oklab,var(--surface)_85%,transparent)] px-5 py-2.5 text-sm font-semibold text-[color:color-mix(in_oklab,var(--text)_90%,var(--muted))] transition-colors duration-200 hover:border-[var(--line-strong)]"
-                  key={technology}
-                >
-                  {technology}
-                </span>
               ))}
             </div>
           </div>
