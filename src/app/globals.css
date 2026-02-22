@@ -624,7 +624,7 @@ button {
 .input-field,
 .textarea-field,
 .select-field {
-  background: var(--surface);
+  background-color: var(--surface);
   border: 1px solid var(--line-strong);
   border-radius: 0.62rem;
   font-size: 0.93rem;
@@ -638,6 +638,24 @@ button {
 .select-field {
   min-height: 2.36rem;
   padding: 0.42rem 0.68rem;
+}
+
+.select-field {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image:
+    linear-gradient(45deg, transparent 50%, color-mix(in oklab, var(--muted) 86%, var(--text)) 50%),
+    linear-gradient(135deg, color-mix(in oklab, var(--muted) 86%, var(--text)) 50%, transparent 50%);
+  background-position:
+    calc(100% - 1.08rem) 50%,
+    calc(100% - 0.78rem) 50%;
+  background-repeat: no-repeat;
+  background-size:
+    0.34rem 0.34rem,
+    0.34rem 0.34rem;
+  line-height: 1.25;
+  padding-right: 2rem;
 }
 
 .textarea-field {
