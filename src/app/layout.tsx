@@ -33,35 +33,52 @@ export default function RootLayout({
         >
           <Navigation />
           <main className="shell content-shell pb-10 sm:pb-12">{children}</main>
-          <footer className="shell content-shell border-y border-dotted border-[color:var(--line)] py-6 text-center text-sm text-[color:var(--muted)]">
-            Built by{" "}
-            <a
-              className="font-semibold text-[color:var(--text)] underline decoration-current underline-offset-4"
-              href="https://ashishgogula.in"
-              rel="noreferrer"
-              target="_blank"
-            >
-              AshishGogula
-            </a>
-            {" "}with Next.js 16 and{" "}
-            <a
-              className="font-semibold text-[color:var(--text)] underline decoration-current underline-offset-4"
-              href="https://lingo.dev/"
-              rel="noreferrer"
-              target="_blank"
-            >
-              lingo.dev
-            </a>
-            .{" "}
-            <a
-              className="font-semibold text-[color:var(--text)] underline decoration-current underline-offset-4"
-              href="https://github.com/ashishgogula/LangOS/"
-              rel="noreferrer"
-              target="_blank"
-            >
-              GitHub
-            </a>
-            .
+          <footer className="border-t border-[color:var(--line)]">
+            <div className="shell content-shell py-6">
+              <div className="flex flex-col items-start gap-4 text-sm sm:flex-row sm:items-center sm:justify-between">
+                <p className="m-0 text-[color:var(--text)]">
+                  Built by{" "}
+                  <a
+                    className="transition-opacity hover:opacity-70"
+                    href="https://ashishgogula.in"
+                    rel="noreferrer"
+                    target="_blank"
+                  >
+                    Ashish Gogula
+                  </a>
+                </p>
+
+                <nav
+                  aria-label="Footer links"
+                  className="flex flex-wrap items-center gap-4 text-[color:var(--muted)] sm:justify-end sm:gap-6"
+                >
+                  <a
+                    className="transition-opacity hover:opacity-70"
+                    href="https://www.ashishgogula.in/blogs/localization-is-an-architecture-problem-building-a-production-grade-i18n-system-with-langos-and-lingo-dev"
+                    rel="noreferrer"
+                    target="_blank"
+                  >
+                    Blog
+                  </a>
+                  <a
+                    className="transition-opacity hover:opacity-70"
+                    href="https://github.com/ashishgogula/LangOS"
+                    rel="noreferrer"
+                    target="_blank"
+                  >
+                    GitHub
+                  </a>
+                  <a
+                    className="transition-opacity hover:opacity-70"
+                    href="https://lingo.dev"
+                    rel="noreferrer"
+                    target="_blank"
+                  >
+                    Lingo.dev
+                  </a>
+                </nav>
+              </div>
+            </div>
           </footer>
         </LingoProvider>
       </body>

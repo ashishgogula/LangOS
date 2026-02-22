@@ -79,9 +79,7 @@ export default function LandingPage() {
               </h1>
 
               <p className="mx-auto max-w-3xl text-lg leading-relaxed text-[var(--muted)] sm:text-[1.38rem] sm:leading-relaxed">
-                LangOS is a next-generation localization playground. Experience automated
-                translations, seamless RTL support, and locale-aware formatting, all built
-                with Next.js 16 and Lingo.dev.
+               LangOS demonstrates production-grade localization across build-time, runtime, RTL, formatting, and CI using Next.js 16 and Lingo.dev.
               </p>
 
               <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
@@ -92,7 +90,7 @@ export default function LandingPage() {
                   Open Playground
                 </Link>
                 <Link className="secondary-link rounded-full" href="/developers">
-                  Documentation
+                  Developers
                 </Link>
               </div>
             </div>
