@@ -13,6 +13,7 @@
     "@lingo.dev/compiler": "^0.3.8",
     "geist": "^1.7.0",
     "lingo.dev": "^0.131.6",
+    "motion": "^12.34.3",
     "next": "16.1.6",
     "react": "19.2.3",
     "react-dom": "19.2.3"

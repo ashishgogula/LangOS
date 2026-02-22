@@ -1,3 +1,7 @@
+"use client";
+
+import { motion, useReducedMotion } from "motion/react";
+
 const FAILURE_CASES = [
   {
     title: "Hardcoded strings",
@@ -41,45 +45,149 @@ const FAILURE_CASES = [
   },
 ] as const;
 
+const PAGE_FADE_VARIANTS = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { duration: 0.28, ease: "easeOut" } },
+} as const;
+
+const SECTION_REVEAL_VARIANTS = {
+  hidden: { opacity: 0, y: 16 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      type: "spring",
+      stiffness: 300,
+      damping: 28,
+      mass: 0.8,
+      staggerChildren: 0.08,
+      delayChildren: 0.05,
+    },
+  },
+} as const;
+
+const SECTION_ITEM_VARIANTS = {
+  hidden: { opacity: 0, y: 10 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      type: "spring",
+      stiffness: 320,
+      damping: 26,
+      mass: 0.75,
+    },
+  },
+} as const;
+
+const CASE_VIEWPORT = { once: true, amount: 0.2 } as const;
+
+const CASE_HOVER_TRANSITION = {
+  duration: 0.2,
+  ease: "easeInOut",
+} as const;
+
 export default function DevelopersPage() {
+  const prefersReducedMotion = useReducedMotion();
+  const motionInitial = prefersReducedMotion ? false : "hidden";
+
   return (
-    <div className="page-stack developers-page">
-      <section className="section-block section-divider">
-        <p className="section-kicker">Developer Philosophy</p>
-        <h1 className="section-title">Why most apps fail localization</h1>
-        <p className="section-copy">
+    <motion.div
+      className="page-stack developers-page"
+      variants={PAGE_FADE_VARIANTS}
+      initial={motionInitial}
+      animate="visible"
+    >
+      <motion.section
+        className="section-block section-divider"
+        variants={SECTION_REVEAL_VARIANTS}
+        initial={motionInitial}
+        animate="visible"
+      >
+        <motion.p className="section-kicker" variants={SECTION_ITEM_VARIANTS}>
+          Developer Philosophy
+        </motion.p>
+        <motion.h1 className="section-title" variants={SECTION_ITEM_VARIANTS}>
+          Why most apps fail localization
+        </motion.h1>
+        <motion.p className="section-copy" variants={SECTION_ITEM_VARIANTS}>
           Localization failures are rarely translation failures. They are architecture failures.
           This localization toolchain is designed to make these failure modes explicit
           and preventable.
-        </p>
-      </section>
+        </motion.p>
+      </motion.section>
 
       {FAILURE_CASES.map((caseItem, index) => (
-        <section className="section-block section-divider developer-case" key={caseItem.title}>
-          <h2 className="section-title">
+        <motion.section
+          className="section-block section-divider developer-case"
+          key={caseItem.title}
+          variants={SECTION_REVEAL_VARIANTS}
+          initial={motionInitial}
+          whileInView="visible"
+          viewport={CASE_VIEWPORT}
+        >
+          <motion.h2 className="section-title" variants={SECTION_ITEM_VARIANTS}>
             {index + 1}. {caseItem.title}
-          </h2>
+          </motion.h2>
 
-          <div className="developers-grid">
-            <div>
+          <motion.div className="developers-grid" variants={SECTION_ITEM_VARIANTS}>
+            <motion.div
+              variants={SECTION_ITEM_VARIANTS}
+              whileHover={
+                prefersReducedMotion
+                  ? undefined
+                  : {
+                      scale: 1.01,
+                      boxShadow:
+                        "0 12px 28px color-mix(in oklab, var(--line) 36%, transparent)",
+                    }
+              }
+              transition={CASE_HOVER_TRANSITION}
+            >
               <p className="section-kicker">Bad example</p>
               <pre className="code-block">
                 <code>{caseItem.badExample}</code>
               </pre>
-            </div>
+            </motion.div>
 
-            <div className="insight-block">
+            <motion.div
+              className="insight-block"
+              variants={SECTION_ITEM_VARIANTS}
+              whileHover={
+                prefersReducedMotion
+                  ? undefined
+                  : {
+                      scale: 1.01,
+                      boxShadow:
+                        "0 12px 30px color-mix(in oklab, var(--accent) 13%, transparent)",
+                    }
+              }
+              transition={CASE_HOVER_TRANSITION}
+            >
               <p className="section-kicker">Issue</p>
               <p className="section-copy">{caseItem.issue}</p>
-            </div>
+            </motion.div>
 
-            <div className="insight-block">
+            <motion.div
+              className="insight-block"
+              variants={SECTION_ITEM_VARIANTS}
+              whileHover={
+                prefersReducedMotion
+                  ? undefined
+                  : {
+                      scale: 1.01,
+                      boxShadow:
+                        "0 12px 30px color-mix(in oklab, var(--accent) 16%, transparent)",
+                    }
+              }
+              transition={CASE_HOVER_TRANSITION}
+            >
               <p className="section-kicker">How we handle it with Lingo.dev</p>
               <p className="section-copy">{caseItem.fix}</p>
-            </div>
-          </div>
-        </section>
+            </motion.div>
+          </motion.div>
+        </motion.section>
       ))}
-    </div>
+    </motion.div>
   );
 }

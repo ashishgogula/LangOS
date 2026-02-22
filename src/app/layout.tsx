@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { GeistMono } from "geist/font/mono";
 import { GeistPixelLine } from "geist/font/pixel";
 import { GeistSans } from "geist/font/sans";
+import { cookies } from "next/headers";
 import type { ReactNode } from "react";
 import { LingoProvider } from "@lingo.dev/compiler/react/next";
 import Navigation from "@/components/Navigation";
@@ -17,13 +18,23 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: ReactNode;
 }>) {
+  const cookieStore = await cookies();
+  const themeCookie = cookieStore.get("langos_theme")?.value;
+  const initialTheme = themeCookie === "dark" ? "dark" : "light";
+
   return (
-    <html dir="ltr" lang="en" suppressHydrationWarning>
+    <html
+      className={initialTheme === "dark" ? "dark" : undefined}
+      dir="ltr"
+      lang="en"
+      style={{ colorScheme: initialTheme }}
+      suppressHydrationWarning
+    >
       <body
         className={`${GeistSans.variable} ${GeistMono.variable} ${GeistPixelLine.variable} min-h-screen antialiased`}
       >

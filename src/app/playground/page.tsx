@@ -3,6 +3,7 @@
 import type { ChangeEvent, ReactNode } from "react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { LingoProvider } from "@lingo.dev/compiler/react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { translateText } from "@/lib/lingo";
 import {
   DEFAULT_LOCALE,
@@ -50,8 +51,64 @@ const WORKFLOW_SNIPPET = `# .github/workflows/localization.yml
 - run: npx lingo.dev run
 - run: npm run build`;
 
+const LAYOUT_TRANSITION = {
+  type: "spring",
+  stiffness: 380,
+  damping: 34,
+  mass: 0.72,
+} as const;
+
+const TEXT_SWAP_VARIANTS = {
+  initial: { opacity: 0, y: 6 },
+  animate: { opacity: 1, y: 0 },
+  exit: { opacity: 0, y: -6 },
+} as const;
+
+const TEXT_SWAP_TRANSITION = {
+  duration: 0.2,
+  ease: "easeInOut",
+} as const;
+
+const PAGE_FADE_VARIANTS = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { duration: 0.28, ease: "easeOut" } },
+} as const;
+
+const SECTION_REVEAL_VARIANTS = {
+  hidden: { opacity: 0, y: 16 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      type: "spring",
+      stiffness: 300,
+      damping: 28,
+      mass: 0.8,
+      staggerChildren: 0.08,
+      delayChildren: 0.05,
+    },
+  },
+} as const;
+
+const SECTION_ITEM_VARIANTS = {
+  hidden: { opacity: 0, y: 10 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      type: "spring",
+      stiffness: 320,
+      damping: 26,
+      mass: 0.75,
+    },
+  },
+} as const;
+
+const SECTION_VIEWPORT = { once: true, amount: 0.18 } as const;
+
 export default function PlaygroundPage() {
   const introSectionRef = useRef<HTMLElement | null>(null);
+  const prefersReducedMotion = useReducedMotion();
   const [selectedLocale, setSelectedLocale] = useState<AppLocale>("es");
   const [showStickyLocaleDock, setShowStickyLocaleDock] = useState(false);
   const [buildName, setBuildName] = useState("Ashish");
@@ -181,6 +238,8 @@ export default function PlaygroundPage() {
 
   const rtlEnabled = isRtlLocale(selectedLocale);
   const ciPasses = workflowCoverage >= 100;
+  const shouldAnimateLayout = !prefersReducedMotion;
+  const motionInitial = prefersReducedMotion ? false : "hidden";
 
   const handleLocaleChange = (event: ChangeEvent<HTMLSelectElement>) => {
     setSelectedLocale(event.target.value as AppLocale);
@@ -211,16 +270,38 @@ export default function PlaygroundPage() {
   };
 
   return (
-    <div className="page-stack playground-page">
-      <section className="section-block section-divider" ref={introSectionRef}>
-        <p className="section-kicker">Localization Lab</p>
-        <h1 className="section-title">Structured Localization Playground</h1>
-        <p className="section-copy">
+    <motion.div
+      className="page-stack playground-page"
+      variants={PAGE_FADE_VARIANTS}
+      initial={motionInitial}
+      animate="visible"
+    >
+      <motion.section
+        className="section-block section-divider"
+        ref={introSectionRef}
+        variants={SECTION_REVEAL_VARIANTS}
+        initial={motionInitial}
+        animate="visible"
+      >
+        <motion.p className="section-kicker" variants={SECTION_ITEM_VARIANTS}>
+          Localization Lab
+        </motion.p>
+        <motion.h1 className="section-title" variants={SECTION_ITEM_VARIANTS}>
+          Structured Localization Playground
+        </motion.h1>
+        <motion.p className="section-copy" variants={SECTION_ITEM_VARIANTS}>
           Left column stays English as the source of truth. Right column renders
           the selected locale for side-by-side comparison.
-        </p>
+        </motion.p>
 
-        <div className="lab-columns-head" role="group" aria-label="Localization columns">
+        <motion.div
+          className="lab-columns-head"
+          role="group"
+          aria-label="Localization columns"
+          variants={SECTION_ITEM_VARIANTS}
+          layout={shouldAnimateLayout}
+          transition={LAYOUT_TRANSITION}
+        >
           <div className="locale-head-pane">
             <p className="locale-pane-kicker">Source</p>
             <p className="column-caption">English baseline</p>
@@ -256,20 +337,36 @@ export default function PlaygroundPage() {
               </select>
             </div>
           </div>
-        </div>
-      </section>
+        </motion.div>
+      </motion.section>
 
       <div className="playground-body">
         <div className={`sticky-locale-anchor ${showStickyLocaleDock ? "is-visible" : ""}`}>
           <div className="sticky-locale-dock" role="region" aria-label="Locale quick controls">
-            <div className="sticky-locale-group">
+            <motion.div
+              className="sticky-locale-group"
+              layout={shouldAnimateLayout}
+              transition={LAYOUT_TRANSITION}
+            >
               <div className="sticky-locale-item">
                 <p className="sticky-locale-key">Source</p>
                 <p className="sticky-locale-value">English</p>
               </div>
               <div className="sticky-locale-item">
                 <p className="sticky-locale-key">Target</p>
-                <p className="sticky-locale-value">{localeLabel}</p>
+                <AnimatePresence mode="wait" initial={false}>
+                  <motion.p
+                    className="sticky-locale-value"
+                    key={`sticky-locale-${selectedLocale}`}
+                    variants={prefersReducedMotion ? undefined : TEXT_SWAP_VARIANTS}
+                    initial={prefersReducedMotion ? false : "initial"}
+                    animate={prefersReducedMotion ? { opacity: 1, y: 0 } : "animate"}
+                    exit={prefersReducedMotion ? undefined : "exit"}
+                    transition={prefersReducedMotion ? undefined : TEXT_SWAP_TRANSITION}
+                  >
+                    {localeLabel}
+                  </motion.p>
+                </AnimatePresence>
               </div>
               <div className="sticky-locale-item sticky-locale-select-wrap">
                 <label className="sticky-locale-key" htmlFor="sticky-target-locale">
@@ -288,21 +385,33 @@ export default function PlaygroundPage() {
                   ))}
                 </select>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
 
-        <section className="lab-section" aria-labelledby="build-time-heading">
-        <header className="section-head">
-          <h2 id="build-time-heading" className="section-title">
-            1. Build-Time Localization (Lingo Compiler)
-          </h2>
-          <p className="section-copy">
-            Static UI strings are extracted at build time and served in the target locale.
-          </p>
-        </header>
+        <motion.section
+          className="lab-section"
+          aria-labelledby="build-time-heading"
+          variants={SECTION_REVEAL_VARIANTS}
+          initial={motionInitial}
+          whileInView="visible"
+          viewport={SECTION_VIEWPORT}
+        >
+          <motion.header className="section-head" variants={SECTION_ITEM_VARIANTS}>
+            <h2 id="build-time-heading" className="section-title">
+              1. Build-Time Localization (Lingo Compiler)
+            </h2>
+            <p className="section-copy">
+              Static UI strings are extracted at build time and served in the target locale.
+            </p>
+          </motion.header>
 
-        <div className="lab-demo-grid">
+          <motion.div
+            className="lab-demo-grid"
+            variants={SECTION_ITEM_VARIANTS}
+            layout={shouldAnimateLayout}
+            transition={LAYOUT_TRANSITION}
+          >
           <SourceLocaleScope>
             <div className="demo-pane">
               <label className="field-label" htmlFor="build-name">
@@ -319,34 +428,61 @@ export default function PlaygroundPage() {
           </SourceLocaleScope>
 
           <TargetLocaleScope locale={selectedLocale} scopeKey="build-time">
-            <div className="demo-pane">
-              <p className="demo-note">Target locale: {localeLabel}</p>
-              <BuildTimeDemo name={buildName} />
-            </div>
+            <motion.div
+              className="demo-pane"
+              layout={shouldAnimateLayout}
+              transition={LAYOUT_TRANSITION}
+            >
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.div
+                  key={`build-time-${selectedLocale}`}
+                  variants={prefersReducedMotion ? undefined : TEXT_SWAP_VARIANTS}
+                  initial={prefersReducedMotion ? false : "initial"}
+                  animate={prefersReducedMotion ? { opacity: 1, y: 0 } : "animate"}
+                  exit={prefersReducedMotion ? undefined : "exit"}
+                  transition={prefersReducedMotion ? undefined : TEXT_SWAP_TRANSITION}
+                >
+                  <p className="demo-note">Target locale: {localeLabel}</p>
+                  <BuildTimeDemo name={buildName} />
+                </motion.div>
+              </AnimatePresence>
+            </motion.div>
           </TargetLocaleScope>
-        </div>
+          </motion.div>
 
-        <pre className="code-block">
-          <code>{BUILD_TIME_SNIPPET}</code>
-        </pre>
+          <motion.pre className="code-block" variants={SECTION_ITEM_VARIANTS}>
+            <code>{BUILD_TIME_SNIPPET}</code>
+          </motion.pre>
 
-        <p className="how-it-works">
-          <strong>How it works:</strong> Lingo Compiler rewrites static copy to keyed lookups,
-          and the target provider resolves those keys for the selected locale.
-        </p>
-        </section>
+          <motion.p className="how-it-works" variants={SECTION_ITEM_VARIANTS}>
+            <strong>How it works:</strong> Lingo Compiler rewrites static copy to keyed lookups,
+            and the target provider resolves those keys for the selected locale.
+          </motion.p>
+        </motion.section>
 
-        <section className="lab-section" aria-labelledby="runtime-heading">
-        <header className="section-head">
-          <h2 id="runtime-heading" className="section-title">
-            2. Runtime Translation (Lingo SDK / MCP)
-          </h2>
-          <p className="section-copy">
-            Dynamic text is translated on demand through the SDK-backed API route.
-          </p>
-        </header>
+        <motion.section
+          className="lab-section"
+          aria-labelledby="runtime-heading"
+          variants={SECTION_REVEAL_VARIANTS}
+          initial={motionInitial}
+          whileInView="visible"
+          viewport={SECTION_VIEWPORT}
+        >
+          <motion.header className="section-head" variants={SECTION_ITEM_VARIANTS}>
+            <h2 id="runtime-heading" className="section-title">
+              2. Runtime Translation (Lingo SDK / MCP)
+            </h2>
+            <p className="section-copy">
+              Dynamic text is translated on demand through the SDK-backed API route.
+            </p>
+          </motion.header>
 
-        <div className="lab-demo-grid">
+          <motion.div
+            className="lab-demo-grid"
+            variants={SECTION_ITEM_VARIANTS}
+            layout={shouldAnimateLayout}
+            transition={LAYOUT_TRANSITION}
+          >
           <SourceLocaleScope>
             <div className="demo-pane">
               <label className="field-label" htmlFor="runtime-input">
@@ -364,7 +500,11 @@ export default function PlaygroundPage() {
           </SourceLocaleScope>
 
           <TargetLocaleScope locale={selectedLocale} scopeKey="runtime">
-            <div className="demo-pane">
+            <motion.div
+              className="demo-pane"
+              layout={shouldAnimateLayout}
+              transition={LAYOUT_TRANSITION}
+            >
               <button
                 className="mini-button runtime-translate-button"
                 disabled={isTranslating}
@@ -374,76 +514,167 @@ export default function PlaygroundPage() {
                 {isTranslating ? "Translating..." : "Translate via SDK"}
               </button>
 
-              <p className="demo-note">Target locale: {localeLabel}</p>
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.p
+                  className="demo-note"
+                  key={`runtime-locale-${selectedLocale}`}
+                  variants={prefersReducedMotion ? undefined : TEXT_SWAP_VARIANTS}
+                  initial={prefersReducedMotion ? false : "initial"}
+                  animate={prefersReducedMotion ? { opacity: 1, y: 0 } : "animate"}
+                  exit={prefersReducedMotion ? undefined : "exit"}
+                  transition={prefersReducedMotion ? undefined : TEXT_SWAP_TRANSITION}
+                >
+                  Target locale: {localeLabel}
+                </motion.p>
+              </AnimatePresence>
 
-              {runtimeError ? <p className="error-text">{runtimeError}</p> : null}
+              <AnimatePresence mode="wait" initial={false}>
+                {runtimeError ? (
+                  <motion.p
+                    className="error-text"
+                    key={`runtime-error-${runtimeError}`}
+                    variants={prefersReducedMotion ? undefined : TEXT_SWAP_VARIANTS}
+                    initial={prefersReducedMotion ? false : "initial"}
+                    animate={prefersReducedMotion ? { opacity: 1, y: 0 } : "animate"}
+                    exit={prefersReducedMotion ? undefined : "exit"}
+                    transition={prefersReducedMotion ? undefined : TEXT_SWAP_TRANSITION}
+                  >
+                    {runtimeError}
+                  </motion.p>
+                ) : null}
+              </AnimatePresence>
 
-              <p className="runtime-output">
-                {runtimeOutput || "Translation output appears here after request."}
-              </p>
-            </div>
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.p
+                  className="runtime-output"
+                  key={`runtime-output-${selectedLocale}-${runtimeOutput || "empty"}`}
+                  variants={prefersReducedMotion ? undefined : TEXT_SWAP_VARIANTS}
+                  initial={prefersReducedMotion ? false : "initial"}
+                  animate={prefersReducedMotion ? { opacity: 1, y: 0 } : "animate"}
+                  exit={prefersReducedMotion ? undefined : "exit"}
+                  transition={prefersReducedMotion ? undefined : TEXT_SWAP_TRANSITION}
+                >
+                  {runtimeOutput || "Translation output appears here after request."}
+                </motion.p>
+              </AnimatePresence>
+            </motion.div>
           </TargetLocaleScope>
-        </div>
+          </motion.div>
 
-        <pre className="code-block">
-          <code>{RUNTIME_SNIPPET}</code>
-        </pre>
+          <motion.pre className="code-block" variants={SECTION_ITEM_VARIANTS}>
+            <code>{RUNTIME_SNIPPET}</code>
+          </motion.pre>
 
-        <p className="how-it-works">
-          <strong>How it works:</strong> The client posts source text to <code>/api/translate</code>,
-          which calls Lingo SDK and returns locale-specific output.
-        </p>
-        </section>
+          <motion.p className="how-it-works" variants={SECTION_ITEM_VARIANTS}>
+            <strong>How it works:</strong> The client posts source text to <code>/api/translate</code>,
+            which calls Lingo SDK and returns locale-specific output.
+          </motion.p>
+        </motion.section>
 
-        <section className="lab-section" aria-labelledby="rtl-heading">
-        <header className="section-head">
-          <h2 id="rtl-heading" className="section-title">
-            3. RTL Behavior (target column only)
-          </h2>
-          <p className="section-copy">
-            Arabic applies right-to-left direction only inside the target preview.
-          </p>
-        </header>
+        <motion.section
+          className="lab-section"
+          aria-labelledby="rtl-heading"
+          variants={SECTION_REVEAL_VARIANTS}
+          initial={motionInitial}
+          whileInView="visible"
+          viewport={SECTION_VIEWPORT}
+        >
+          <motion.header className="section-head" variants={SECTION_ITEM_VARIANTS}>
+            <h2 id="rtl-heading" className="section-title">
+              3. RTL Behavior (target column only)
+            </h2>
+            <p className="section-copy">
+              Arabic applies right-to-left direction only inside the target preview.
+            </p>
+          </motion.header>
 
-        <div className="lab-demo-grid">
+          <motion.div
+            className="lab-demo-grid"
+            variants={SECTION_ITEM_VARIANTS}
+            layout={shouldAnimateLayout}
+            transition={LAYOUT_TRANSITION}
+          >
           <SourceLocaleScope>
-            <div className="demo-pane" dir="ltr">
+            <motion.div
+              className="demo-pane"
+              dir="ltr"
+              layout={shouldAnimateLayout}
+              transition={LAYOUT_TRANSITION}
+            >
               <p className="demo-note">Direction: ltr</p>
               <RtlMessage />
-            </div>
+            </motion.div>
           </SourceLocaleScope>
 
           <TargetLocaleScope locale={selectedLocale} scopeKey="rtl">
-            <div className="demo-pane" dir={rtlEnabled ? "rtl" : "ltr"}>
-              <p className="demo-note">
-                Direction: {rtlEnabled ? "rtl" : "ltr"} ({selectedLocale.toUpperCase()})
-              </p>
-              <RtlMessage />
-            </div>
+            <motion.div
+              className="demo-pane"
+              dir={rtlEnabled ? "rtl" : "ltr"}
+              layout={shouldAnimateLayout}
+              transition={LAYOUT_TRANSITION}
+            >
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.p
+                  className="demo-note"
+                  key={`rtl-direction-${selectedLocale}`}
+                  variants={prefersReducedMotion ? undefined : TEXT_SWAP_VARIANTS}
+                  initial={prefersReducedMotion ? false : "initial"}
+                  animate={prefersReducedMotion ? { opacity: 1, y: 0 } : "animate"}
+                  exit={prefersReducedMotion ? undefined : "exit"}
+                  transition={prefersReducedMotion ? undefined : TEXT_SWAP_TRANSITION}
+                >
+                  Direction: {rtlEnabled ? "rtl" : "ltr"} ({selectedLocale.toUpperCase()})
+                </motion.p>
+              </AnimatePresence>
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.div
+                  key={`rtl-copy-${selectedLocale}`}
+                  variants={prefersReducedMotion ? undefined : TEXT_SWAP_VARIANTS}
+                  initial={prefersReducedMotion ? false : "initial"}
+                  animate={prefersReducedMotion ? { opacity: 1, y: 0 } : "animate"}
+                  exit={prefersReducedMotion ? undefined : "exit"}
+                  transition={prefersReducedMotion ? undefined : TEXT_SWAP_TRANSITION}
+                >
+                  <RtlMessage />
+                </motion.div>
+              </AnimatePresence>
+            </motion.div>
           </TargetLocaleScope>
-        </div>
+          </motion.div>
 
-        <pre className="code-block">
-          <code>{RTL_SNIPPET}</code>
-        </pre>
+          <motion.pre className="code-block" variants={SECTION_ITEM_VARIANTS}>
+            <code>{RTL_SNIPPET}</code>
+          </motion.pre>
 
-        <p className="how-it-works">
-          <strong>How it works:</strong> Direction is derived from the selected target locale,
-          and applied to the right demo container only so the source column stays stable.
-        </p>
-        </section>
+          <motion.p className="how-it-works" variants={SECTION_ITEM_VARIANTS}>
+            <strong>How it works:</strong> Direction is derived from the selected target locale,
+            and applied to the right demo container only so the source column stays stable.
+          </motion.p>
+        </motion.section>
 
-        <section className="lab-section" aria-labelledby="formatting-heading">
-        <header className="section-head">
-          <h2 id="formatting-heading" className="section-title">
-            4. Locale Formatting (currency, date, number)
-          </h2>
-          <p className="section-copy">
-            Formatting updates through <code>Intl</code> based on locale conventions.
-          </p>
-        </header>
+        <motion.section
+          className="lab-section"
+          aria-labelledby="formatting-heading"
+          variants={SECTION_REVEAL_VARIANTS}
+          initial={motionInitial}
+          whileInView="visible"
+          viewport={SECTION_VIEWPORT}
+        >
+          <motion.header className="section-head" variants={SECTION_ITEM_VARIANTS}>
+            <h2 id="formatting-heading" className="section-title">
+              4. Locale Formatting (currency, date, number)
+            </h2>
+            <p className="section-copy">
+              Formatting updates through <code>Intl</code> based on locale conventions.
+            </p>
+          </motion.header>
 
-        <div className="lab-demo-grid">
+          <motion.div
+            className="lab-demo-grid"
+            variants={SECTION_ITEM_VARIANTS}
+            layout={shouldAnimateLayout}
+            transition={LAYOUT_TRANSITION}
+          >
           <SourceLocaleScope>
             <div className="demo-pane formatting-pane">
               <div className="format-controls">
@@ -483,7 +714,11 @@ export default function PlaygroundPage() {
           </SourceLocaleScope>
 
           <TargetLocaleScope locale={selectedLocale} scopeKey="formatting">
-            <div className="demo-pane formatting-pane">
+            <motion.div
+              className="demo-pane formatting-pane"
+              layout={shouldAnimateLayout}
+              transition={LAYOUT_TRANSITION}
+            >
               <div aria-hidden="true" className="format-controls format-controls-placeholder">
                 <div className="format-control-row">
                   <span className="field-label">Amount</span>
@@ -494,37 +729,60 @@ export default function PlaygroundPage() {
                   <div className="input-field format-placeholder-field" />
                 </div>
               </div>
-              <FormattingPreview
-                currency={targetCurrency}
-                date={targetDate}
-                locale={selectedLocale.toUpperCase()}
-                number={targetNumber}
-              />
-            </div>
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.div
+                  key={`formatting-${selectedLocale}`}
+                  variants={prefersReducedMotion ? undefined : TEXT_SWAP_VARIANTS}
+                  initial={prefersReducedMotion ? false : "initial"}
+                  animate={prefersReducedMotion ? { opacity: 1, y: 0 } : "animate"}
+                  exit={prefersReducedMotion ? undefined : "exit"}
+                  transition={prefersReducedMotion ? undefined : TEXT_SWAP_TRANSITION}
+                >
+                  <FormattingPreview
+                    currency={targetCurrency}
+                    date={targetDate}
+                    locale={selectedLocale.toUpperCase()}
+                    number={targetNumber}
+                  />
+                </motion.div>
+              </AnimatePresence>
+            </motion.div>
           </TargetLocaleScope>
-        </div>
+          </motion.div>
 
-        <pre className="code-block">
-          <code>{FORMATTING_SNIPPET}</code>
-        </pre>
+          <motion.pre className="code-block" variants={SECTION_ITEM_VARIANTS}>
+            <code>{FORMATTING_SNIPPET}</code>
+          </motion.pre>
 
-        <p className="how-it-works">
-          <strong>How it works:</strong> Locale-specific formatters apply proper grouping,
-          symbols, and date ordering with no string templates.
-        </p>
-        </section>
+          <motion.p className="how-it-works" variants={SECTION_ITEM_VARIANTS}>
+            <strong>How it works:</strong> Locale-specific formatters apply proper grouping,
+            symbols, and date ordering with no string templates.
+          </motion.p>
+        </motion.section>
 
-        <section className="lab-section" aria-labelledby="workflow-heading">
-        <header className="section-head">
-          <h2 id="workflow-heading" className="section-title">
-            5. Workflow Automation (Lingo CLI + CI snippet)
-          </h2>
-          <p className="section-copy">
-            Localization checks run in development and are enforced in CI before shipping.
-          </p>
-        </header>
+        <motion.section
+          className="lab-section"
+          aria-labelledby="workflow-heading"
+          variants={SECTION_REVEAL_VARIANTS}
+          initial={motionInitial}
+          whileInView="visible"
+          viewport={SECTION_VIEWPORT}
+        >
+          <motion.header className="section-head" variants={SECTION_ITEM_VARIANTS}>
+            <h2 id="workflow-heading" className="section-title">
+              5. Workflow Automation (Lingo CLI + CI snippet)
+            </h2>
+            <p className="section-copy">
+              Localization checks run in development and are enforced in CI before shipping.
+            </p>
+          </motion.header>
 
-        <div className="lab-demo-grid">
+          <motion.div
+            className="lab-demo-grid"
+            variants={SECTION_ITEM_VARIANTS}
+            layout={shouldAnimateLayout}
+            transition={LAYOUT_TRANSITION}
+          >
           <SourceLocaleScope>
             <div className="demo-pane">
               <p className="demo-note">Developer loop</p>
@@ -556,19 +814,19 @@ export default function PlaygroundPage() {
               </p>
             </div>
           </TargetLocaleScope>
-        </div>
+          </motion.div>
 
-        <pre className="code-block">
-          <code>{WORKFLOW_SNIPPET}</code>
-        </pre>
+          <motion.pre className="code-block" variants={SECTION_ITEM_VARIANTS}>
+            <code>{WORKFLOW_SNIPPET}</code>
+          </motion.pre>
 
-        <p className="how-it-works">
-          <strong>How it works:</strong> CLI refreshes translation artifacts locally, and CI
-          blocks merges when localized output is missing.
-        </p>
-        </section>
+          <motion.p className="how-it-works" variants={SECTION_ITEM_VARIANTS}>
+            <strong>How it works:</strong> CLI refreshes translation artifacts locally, and CI
+            blocks merges when localized output is missing.
+          </motion.p>
+        </motion.section>
       </div>
-    </div>
+    </motion.div>
   );
 }
 
