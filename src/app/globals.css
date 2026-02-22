@@ -1033,7 +1033,6 @@ button {
   justify-content: flex-end;
   margin-top: 0;
   max-width: min(100%, 560px);
-  padding: 0.36rem 0.5rem;
   pointer-events: none;
   position: absolute;
   right: 0;

@@ -32,10 +32,16 @@ export default async function Navigation() {
         </nav>
 
         <div className="nav-meta">
-          <div className="powered-chip" aria-label="Powered by Lingo.dev">
+          <a
+            aria-label="Powered by Lingo.dev"
+            className="powered-chip"
+            href="https://lingo.dev/"
+            rel="noreferrer"
+            target="_blank"
+          >
             <span className="powered-label">Powered by</span>
             <LingoWordmark className="powered-logo" />
-          </div>
+          </a>
           <ThemeToggle initialTheme={initialTheme} />
         </div>
       </div>
