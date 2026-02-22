@@ -267,7 +267,7 @@ export default function PlaygroundPage() {
           <TargetLocaleScope locale={selectedLocale} scopeKey="runtime">
             <div className="demo-pane">
               <button
-                className="action-button"
+                className="mini-button runtime-translate-button"
                 disabled={isTranslating}
                 onClick={handleRuntimeTranslate}
                 type="button"
@@ -346,27 +346,33 @@ export default function PlaygroundPage() {
 
         <div className="lab-demo-grid">
           <SourceLocaleScope>
-            <div className="demo-pane">
-              <label className="field-label" htmlFor="amount-input">
-                Amount
-              </label>
-              <input
-                id="amount-input"
-                className="input-field"
-                onChange={(event) => setAmountInput(event.target.value)}
-                value={amountInput}
-              />
+            <div className="demo-pane formatting-pane">
+              <div className="format-controls">
+                <div className="format-control-row">
+                  <label className="field-label" htmlFor="amount-input">
+                    Amount
+                  </label>
+                  <input
+                    id="amount-input"
+                    className="input-field"
+                    onChange={(event) => setAmountInput(event.target.value)}
+                    value={amountInput}
+                  />
+                </div>
 
-              <label className="field-label" htmlFor="date-input">
-                Date (UTC)
-              </label>
-              <input
-                id="date-input"
-                className="input-field"
-                onChange={(event) => setDateInput(event.target.value)}
-                type="date"
-                value={dateInput}
-              />
+                <div className="format-control-row">
+                  <label className="field-label" htmlFor="date-input">
+                    Date (UTC)
+                  </label>
+                  <input
+                    id="date-input"
+                    className="input-field"
+                    onChange={(event) => setDateInput(event.target.value)}
+                    type="date"
+                    value={dateInput}
+                  />
+                </div>
+              </div>
 
               <FormattingPreview
                 currency={sourceCurrency}
@@ -378,7 +384,17 @@ export default function PlaygroundPage() {
           </SourceLocaleScope>
 
           <TargetLocaleScope locale={selectedLocale} scopeKey="formatting">
-            <div className="demo-pane">
+            <div className="demo-pane formatting-pane">
+              <div aria-hidden="true" className="format-controls format-controls-placeholder">
+                <div className="format-control-row">
+                  <span className="field-label">Amount</span>
+                  <div className="input-field format-placeholder-field" />
+                </div>
+                <div className="format-control-row">
+                  <span className="field-label">Date (UTC)</span>
+                  <div className="input-field format-placeholder-field" />
+                </div>
+              </div>
               <FormattingPreview
                 currency={targetCurrency}
                 date={targetDate}
