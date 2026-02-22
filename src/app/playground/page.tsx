@@ -1,7 +1,7 @@
 "use client";
 
 import type { ChangeEvent, ReactNode } from "react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { LingoProvider } from "@lingo.dev/compiler/react";
 import { translateText } from "@/lib/lingo";
 import {
@@ -51,7 +51,9 @@ const WORKFLOW_SNIPPET = `# .github/workflows/localization.yml
 - run: npm run build`;
 
 export default function PlaygroundPage() {
+  const introSectionRef = useRef<HTMLElement | null>(null);
   const [selectedLocale, setSelectedLocale] = useState<AppLocale>("es");
+  const [showStickyLocaleDock, setShowStickyLocaleDock] = useState(false);
   const [buildName, setBuildName] = useState("Ashish");
 
   const [runtimeInput, setRuntimeInput] = useState(
@@ -69,6 +71,57 @@ export default function PlaygroundPage() {
     setRuntimeOutput("");
     setRuntimeError("");
   }, [selectedLocale]);
+
+  useEffect(() => {
+    let rafId = 0;
+
+    const updateDockVisibility = () => {
+      rafId = 0;
+
+      const introSection = introSectionRef.current;
+      if (!introSection) {
+        return;
+      }
+
+      const navShell = document.querySelector(".nav-shell") as HTMLElement | null;
+      const navHeight = navShell?.offsetHeight ?? 68;
+      const introBottom = introSection.getBoundingClientRect().bottom;
+
+      const showThreshold = navHeight + 4;
+      const hideThreshold = navHeight + 28;
+
+      setShowStickyLocaleDock((isVisible) => {
+        if (!isVisible && introBottom <= showThreshold) {
+          return true;
+        }
+
+        if (isVisible && introBottom >= hideThreshold) {
+          return false;
+        }
+
+        return isVisible;
+      });
+    };
+
+    const scheduleUpdate = () => {
+      if (rafId !== 0) {
+        return;
+      }
+      rafId = window.requestAnimationFrame(updateDockVisibility);
+    };
+
+    scheduleUpdate();
+    window.addEventListener("scroll", scheduleUpdate, { passive: true });
+    window.addEventListener("resize", scheduleUpdate);
+
+    return () => {
+      window.removeEventListener("scroll", scheduleUpdate);
+      window.removeEventListener("resize", scheduleUpdate);
+      if (rafId !== 0) {
+        window.cancelAnimationFrame(rafId);
+      }
+    };
+  }, []);
 
   const localeLabel =
     LOCALE_OPTIONS.find((localeOption) => localeOption.code === selectedLocale)
@@ -159,7 +212,7 @@ export default function PlaygroundPage() {
 
   return (
     <div className="page-stack playground-page">
-      <section className="section-block section-divider">
+      <section className="section-block section-divider" ref={introSectionRef}>
         <p className="section-kicker">Localization Lab</p>
         <h1 className="section-title">Structured Localization Playground</h1>
         <p className="section-copy">
@@ -168,32 +221,77 @@ export default function PlaygroundPage() {
         </p>
 
         <div className="lab-columns-head" role="group" aria-label="Localization columns">
-          <div>
-            <p className="column-caption">English (source)</p>
+          <div className="locale-head-pane">
+            <p className="locale-pane-kicker">Source</p>
+            <p className="column-caption">English baseline</p>
+            <p className="locale-pane-note">
+              Stable reference copy for side-by-side review.
+            </p>
           </div>
 
-          <div className="target-column-head">
-            <p className="column-caption">Selected locale (target)</p>
-            <label className="locale-label" htmlFor="target-locale">
-              Locale
-            </label>
-            <select
-              id="target-locale"
-              className="select-field"
-              onChange={handleLocaleChange}
-              value={selectedLocale}
-            >
-              {LOCALE_OPTIONS.map((localeOption) => (
-                <option key={localeOption.code} value={localeOption.code}>
-                  {localeOption.label}
-                </option>
-              ))}
-            </select>
+          <div className="locale-head-pane target-column-head">
+            <div className="target-column-copy">
+              <p className="locale-pane-kicker">Target</p>
+              <p className="column-caption">Localized preview</p>
+              <p className="locale-pane-note">
+                Active locale: <span className="locale-live-value">{localeLabel}</span>
+              </p>
+            </div>
+
+            <div className="locale-select-wrap">
+              <label className="locale-label" htmlFor="target-locale">
+                Locale
+              </label>
+              <select
+                id="target-locale"
+                className="select-field locale-select-field"
+                onChange={handleLocaleChange}
+                value={selectedLocale}
+              >
+                {LOCALE_OPTIONS.map((localeOption) => (
+                  <option key={localeOption.code} value={localeOption.code}>
+                    {localeOption.label}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
         </div>
       </section>
 
       <section className="lab-section" aria-labelledby="build-time-heading">
+        <div className={`sticky-locale-anchor ${showStickyLocaleDock ? "is-visible" : ""}`}>
+          <div className="sticky-locale-dock" role="region" aria-label="Locale quick controls">
+            <div className="sticky-locale-group">
+              <div className="sticky-locale-item">
+                <p className="sticky-locale-key">Source</p>
+                <p className="sticky-locale-value">English</p>
+              </div>
+              <div className="sticky-locale-item">
+                <p className="sticky-locale-key">Target</p>
+                <p className="sticky-locale-value">{localeLabel}</p>
+              </div>
+              <div className="sticky-locale-item sticky-locale-select-wrap">
+                <label className="sticky-locale-key" htmlFor="sticky-target-locale">
+                  Locale
+                </label>
+                <select
+                  id="sticky-target-locale"
+                  className="select-field sticky-locale-select"
+                  onChange={handleLocaleChange}
+                  value={selectedLocale}
+                >
+                  {LOCALE_OPTIONS.map((localeOption) => (
+                    <option key={localeOption.code} value={localeOption.code}>
+                      {localeOption.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <header className="section-head">
           <h2 id="build-time-heading" className="section-title">
             1. Build-Time Localization (Lingo Compiler)

@@ -277,7 +277,6 @@ button {
   font-size: 1.08rem;
   line-height: 1.76;
   margin: 0;
-  max-width: 68ch;
 }
 
 .hero-section {
@@ -513,26 +512,70 @@ button {
   padding-top: 1.15rem;
 }
 
-.column-caption {
+.locale-head-pane {
+  align-content: start;
+  display: grid;
+  gap: 0.3rem;
+}
+
+.locale-pane-kicker {
+  color: color-mix(in oklab, var(--accent-strong) 72%, var(--muted));
   font-family: var(--font-geist-pixel-line), var(--font-geist-mono), monospace;
-  font-size: 0.8rem;
+  font-size: 0.69rem;
   font-weight: 620;
-  letter-spacing: 0.09em;
+  letter-spacing: 0.11em;
   margin: 0;
   text-transform: uppercase;
 }
 
+.column-caption {
+  font-family: var(--font-geist-pixel-line), var(--font-geist-mono), monospace;
+  font-size: 0.92rem;
+  font-weight: 620;
+  letter-spacing: 0.06em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.locale-pane-note {
+  color: var(--muted);
+  font-size: 0.84rem;
+  line-height: 1.45;
+  margin: 0;
+}
+
+.locale-live-value {
+  color: var(--text);
+  font-weight: 600;
+}
+
 .target-column-head {
-  align-items: center;
+  align-items: end;
   display: grid;
-  gap: 0.45rem;
-  grid-template-columns: auto auto minmax(130px, 180px);
+  gap: 0.8rem;
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+
+.target-column-copy {
+  display: grid;
+  gap: 0.3rem;
+}
+
+.locale-select-wrap {
+  display: grid;
+  gap: 0.35rem;
   justify-items: start;
 }
 
 .locale-label {
   color: var(--muted);
-  font-size: 0.8rem;
+  font-size: 0.77rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.locale-select-field {
+  min-width: 10.4rem;
 }
 
 .lab-section {
@@ -939,11 +982,21 @@ button {
 
 .playground-page .lab-columns-head {
   align-items: center;
-  background: color-mix(in oklab, var(--surface) 74%, transparent);
-  border: 1px dashed var(--line);
+  backdrop-filter: blur(8px);
+  background: color-mix(in oklab, var(--bg) 84%, transparent);
+  border: 1px solid color-mix(in oklab, var(--line-strong) 78%, transparent);
   border-radius: 0.9rem;
+  box-shadow: 0 8px 22px color-mix(in oklab, var(--bg) 88%, transparent);
   margin-top: 0.95rem;
-  padding: 0.9rem 1rem;
+  padding: 0.78rem 0.82rem;
+}
+
+.playground-page .lab-columns-head .locale-head-pane {
+  background: color-mix(in oklab, var(--surface) 77%, transparent);
+  border: 1px dashed var(--line);
+  border-radius: 0.72rem;
+  min-height: 100%;
+  padding: 0.72rem 0.84rem;
 }
 
 .playground-page .lab-section {
@@ -953,6 +1006,100 @@ button {
 
 .playground-page .section-head {
   gap: 0.58rem;
+}
+
+.sticky-locale-anchor {
+  display: block;
+  height: 0;
+  overflow: visible;
+  pointer-events: none;
+  position: sticky;
+  top: 4.9rem;
+  z-index: 45;
+}
+
+.sticky-locale-dock {
+  align-items: center;
+  backdrop-filter: blur(8px);
+  background: color-mix(in oklab, var(--bg) 88%, transparent);
+  border: 1px solid color-mix(in oklab, var(--line-strong) 78%, transparent);
+  border-radius: 0.72rem;
+  box-shadow: 0 8px 18px color-mix(in oklab, var(--bg) 84%, transparent);
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 0;
+  max-width: min(100%, 560px);
+  padding: 0.36rem 0.5rem;
+  pointer-events: none;
+  position: absolute;
+  right: 0;
+  top: 0.15rem;
+  width: 100%;
+  opacity: 0;
+  visibility: hidden;
+  overflow: hidden;
+}
+
+.sticky-locale-anchor.is-visible .sticky-locale-dock {
+  opacity: 1;
+  pointer-events: auto;
+  visibility: visible;
+}
+
+.sticky-locale-group {
+  align-items: stretch;
+  background: color-mix(in oklab, var(--surface) 82%, transparent);
+  border: 1px solid color-mix(in oklab, var(--line-strong) 72%, transparent);
+  border-radius: 0.58rem;
+  display: grid;
+  gap: 0;
+  grid-template-columns: minmax(0, 0.78fr) minmax(0, 0.78fr) minmax(0, 1fr);
+  overflow: hidden;
+  width: 100%;
+}
+
+.sticky-locale-group > * + * {
+  border-left: 1px solid color-mix(in oklab, var(--line-strong) 92%, transparent);
+}
+
+.sticky-locale-item {
+  align-content: center;
+  display: grid;
+  gap: 0.1rem;
+  min-width: 0;
+  padding: 0.36rem 0.74rem;
+}
+
+.sticky-locale-key {
+  color: color-mix(in oklab, var(--accent-strong) 84%, var(--text));
+  font-family: var(--font-geist-pixel-line), var(--font-geist-mono), monospace;
+  font-size: 0.66rem;
+  font-weight: 620;
+  letter-spacing: 0.1em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.sticky-locale-value {
+  color: var(--text);
+  font-size: 0.9rem;
+  font-weight: 620;
+  line-height: 1.2;
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sticky-locale-select {
+  min-height: 1.9rem;
+  min-width: 0;
+  padding-block: 0.24rem;
+  width: 100%;
+}
+
+.sticky-locale-select-wrap {
+  min-width: 0;
 }
 
 .developers-page .section-divider {
@@ -1017,7 +1164,14 @@ button {
   }
 
   .target-column-head {
-    grid-template-columns: auto auto;
+    align-items: start;
+    gap: 0.72rem;
+    grid-template-columns: 1fr;
+  }
+
+  .locale-select-wrap,
+  .locale-select-field {
+    width: 100%;
   }
 
   .lab-demo-grid .demo-pane + .demo-pane {
@@ -1045,7 +1199,37 @@ button {
 
   .playground-page .lab-columns-head {
     margin-top: 0.72rem;
-    padding: 0.78rem;
+    padding: 0.62rem;
+  }
+
+  .playground-page .lab-columns-head .locale-head-pane {
+    padding: 0.68rem 0.74rem;
+  }
+
+  .sticky-locale-dock {
+    max-width: 100%;
+    top: 0.1rem;
+  }
+
+  .sticky-locale-anchor {
+    top: 5.9rem;
+  }
+
+  .sticky-locale-item {
+    min-width: 0;
+    padding: 0.34rem 0.58rem;
+  }
+
+  .sticky-locale-value {
+    font-size: 0.84rem;
+  }
+
+  .sticky-locale-select-wrap {
+    min-width: 0;
+  }
+
+  .sticky-locale-select {
+    min-width: 0;
   }
 
   .playground-page .lab-section {
