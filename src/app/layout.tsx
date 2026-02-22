@@ -39,21 +39,21 @@ export default function RootLayout({
                 <p className="m-0 text-[color:var(--text)]">
                   Built by{" "}
                   <a
-                    className="transition-opacity hover:opacity-70"
+                    className="text-[color:color-mix(in_oklab,var(--accent)_82%,var(--text))] transition-opacity hover:opacity-70"
                     href="https://ashishgogula.in"
                     rel="noreferrer"
                     target="_blank"
                   >
-                    Ashish Gogula
+                    AshishGogula
                   </a>
                 </p>
 
                 <nav
                   aria-label="Footer links"
-                  className="flex flex-wrap items-center gap-4 text-[color:var(--muted)] sm:justify-end sm:gap-6"
+                  className="flex flex-wrap items-center gap-4 sm:justify-end sm:gap-6"
                 >
                   <a
-                    className="transition-opacity hover:opacity-70"
+                    className="text-[color:color-mix(in_oklab,var(--accent)_82%,var(--text))] transition-opacity hover:opacity-70"
                     href="https://www.ashishgogula.in/blogs/localization-is-an-architecture-problem-building-a-production-grade-i18n-system-with-langos-and-lingo-dev"
                     rel="noreferrer"
                     target="_blank"
@@ -61,7 +61,7 @@ export default function RootLayout({
                     Blog
                   </a>
                   <a
-                    className="transition-opacity hover:opacity-70"
+                    className="text-[color:color-mix(in_oklab,var(--accent)_82%,var(--text))] transition-opacity hover:opacity-70"
                     href="https://github.com/ashishgogula/LangOS"
                     rel="noreferrer"
                     target="_blank"
@@ -69,7 +69,7 @@ export default function RootLayout({
                     GitHub
                   </a>
                   <a
-                    className="transition-opacity hover:opacity-70"
+                    className="text-[color:color-mix(in_oklab,var(--accent)_82%,var(--text))] transition-opacity hover:opacity-70"
                     href="https://lingo.dev"
                     rel="noreferrer"
                     target="_blank"
