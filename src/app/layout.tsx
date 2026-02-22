@@ -11,6 +11,10 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "LangOS",
   description: "LangOS: localization architecture, playground, and developer philosophy.",
+  icons: {
+    icon: [{ url: "/langos-icon.svg", type: "image/svg+xml" }],
+    shortcut: "/langos-icon.svg",
+  },
 };
 
 export default function RootLayout({
