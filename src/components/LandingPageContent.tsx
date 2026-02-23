@@ -113,7 +113,7 @@ export default function LandingPageContent() {
 
   return (
     <motion.div
-      className="page-stack landing-page"
+      className="landing-page"
       variants={PAGE_FADE_VARIANTS}
       initial={prefersReducedMotion ? false : "hidden"}
       animate="visible"
@@ -158,7 +158,7 @@ export default function LandingPageContent() {
             </motion.p>
 
             <motion.div
-              className="flex flex-wrap items-center justify-center gap-4 pt-2"
+              className="flex flex-wrap items-center justify-center gap-4 pt-2 pb-20"
               variants={HERO_STAGGER_VARIANTS}
             >
               <Link
