@@ -1,4 +1,11 @@
+
 # LangOS
+
+![Production Ready](https://img.shields.io/badge/Production--Style-Architecture-0A0A0A)
+![Build Time](https://img.shields.io/badge/Build--Time-Localized-success)
+![Runtime](https://img.shields.io/badge/Runtime-Validated-blue)
+![RTL](https://img.shields.io/badge/RTL-Scoped-purple)
+![CI](https://img.shields.io/badge/CI-Enforced-red)
 
 Built for the Lingo.dev Hackathon 2026.
 
@@ -40,7 +47,7 @@ LangOS serves as a reference implementation of these concerns working together a
 
 ## Architecture Overview
 
-Localization is intentionally separated into five layers.
+Localization is intentionally structured into five architectural layers.
 
 ### 1. Build-Time Localization
 
@@ -59,7 +66,7 @@ Translations are generated as real JSON artifacts and included in build outputs.
 
 ### 2. Runtime Translation Boundary
 
-Dynamic content is translated through:
+Dynamic content is translated through a dedicated runtime boundary:
 
 POST `/api/translate`
 
