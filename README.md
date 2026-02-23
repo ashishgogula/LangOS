@@ -10,15 +10,17 @@ This project demonstrates how localization should be wired across build time, ru
 
 ---
 
-## Demo
+## Links
 
-<img width="1707" height="980" alt="LangOS Playground" src="https://github.com/user-attachments/assets/a83e4d99-0a64-47c1-a741-3a803f73b971" />
+🌐 Live Demo: http://langos.ashishgogula.in/
 
-Live application  
-http://langos.ashishgogula.in/
+## 🎥 YouTube Video
 
-Architecture write-up  
-https://www.ashishgogula.in/blogs/localization-is-an-architecture-problem-building-a-production-grade-i18n-system-with-langos-and-lingo-dev
+[![Watch the demo](https://img.youtube.com/vi/TwUG49Fqsmc/maxresdefault.jpg)](https://youtu.be/TwUG49Fqsmc)
+
+## 📝 Blog Breakdown
+
+[![Localization is an Architecture Problem](https://cdn.sanity.io/images/8akiwnq4/production/f117d102064d6dd2b35143e40ddd75d89173a7fa-1920x1080.png?w=2400&h=1350&fm=jpg&q=100&fit=max)](https://www.ashishgogula.in/blogs/localization-is-an-architecture-problem-building-a-production-grade-i18n-system-with-langos-and-lingo-dev)
 
 ---
 
