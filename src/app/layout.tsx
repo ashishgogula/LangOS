@@ -11,10 +11,22 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "LangOS",
-  description: "LangOS: localization architecture, playground, and developer philosophy.",
+  description:
+    "LangOS demonstrates production-grade localization across build-time, runtime, RTL, formatting, and CI using Next.js 16 and Lingo.dev.",
+  openGraph: {
+    title: "LangOS",
+    description:
+      "LangOS demonstrates production-grade localization across build-time, runtime, RTL, formatting, and CI using Next.js 16 and Lingo.dev.",
+    images: [
+      {
+        url: "/langOS.png",
+        alt: "LangOS Image",
+      },
+    ],
+  },
   icons: {
-    icon: [{ url: "/langos-icon.svg", type: "image/svg+xml" }],
-    shortcut: "/langos-icon.svg",
+    icon: [{ url: "/langOS.png", type: "image/png" }],
+    shortcut: "/langOS.png",
   },
 };
 
